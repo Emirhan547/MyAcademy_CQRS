@@ -1,0 +1,30 @@
+﻿@using MyAcademyCQRS.CQRSPattern.Results.ProductResults
+@model GetProductByIdQueryResult
+@{
+    ViewData["Title"] = "UpdateProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>UpdateProduct</h1>
+
+<form method="post">
+    <label>Ürün Adı</label>
+    <input type="hidden"asp-for="Id"/>
+    <input type="text" asp-for="Name" class="form-control" />
+    <br />
+    <label>Açıklama</label>
+    <input type="text" asp-for="Description" class="form-control" />
+    <br />
+    <label>Görsel Url</label>
+    <input type="text" asp-for="ImageUrl" class="form-control" />
+    <br />
+    <label>Fiyat</label>
+    <input type="text" asp-for="Price" class="form-control" />
+    <br />
+    <label>Ürün Adı</label>
+    <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.categories">
+        <option selected>---Kategori Seçiniz---</option>
+    </select>
+    <br />
+    <button class="btn btn-dark">Güncelle</button>
+</form>

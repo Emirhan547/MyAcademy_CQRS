@@ -1,0 +1,36 @@
+﻿@using MyAcademyCQRS.CQRSPattern.Results.ProductResults
+@model List<GetProductsQueryResult>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 0;
+}
+
+<h1>Index</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Ürün Adı</th>
+        <th>Açıklama</th>
+        <th>Fiyat</th>
+        <th>Kategori</th>
+        <th>İşlemler</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <th>@count</th>
+            <th>@item.Name</th>
+            <th>@item.Description</th>
+            <th>@item.Price</th>
+            <th>@item.Category.Name</th>
+            <td>
+                <a asp-controller="Product" asp-action="DeleteProduct" asp-route-id="@item.Id" class="btn btn-danger">Sil</a>
+                <a asp-controller="Product" asp-action="UpdateProduct" asp-route-id="@item.Id" class="btn btn-danger">Güncelle</a>
+            </td>
+        </tr>
+    }
+</table>
+<a asp-controller="Product" asp-action="CreateProduct" class="btn btn-dark">Ekle</a>

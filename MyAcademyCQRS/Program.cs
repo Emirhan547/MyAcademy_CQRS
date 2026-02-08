@@ -1,5 +1,11 @@
-var builder = WebApplication.CreateBuilder(args);
+using MyAcademyCQRS.Context;
+using MyAcademyCQRS.Extensions;
+using System.Reflection;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddCQRSHandlers();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -19,6 +25,11 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+    app.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
 
 app.MapControllerRoute(
     name: "default",
