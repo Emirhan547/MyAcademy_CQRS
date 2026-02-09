@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyAcademyCQRS.CQRSPattern.Commands.CategoryCommands;
-using MyAcademyCQRS.CQRSPattern.Handlers.CategoryHandlers;
+using MyAcademyCQRS.Core.Application.Features.Commands.CategoryCommands;
+using MyAcademyCQRS.Core.Application.Features.Handlers.CategoryHandlers;
 using MyAcademyCQRS.CQRSPattern.Queries.CategoryQueries;
 
 

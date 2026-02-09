@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MyAcademyCQRS.CQRSPattern.Results.CategoryResults;
+using MyAcademyCQRS.Core.Application.Features.Results.CategoryResults;
 
 namespace MyAcademyCQRS.Mappings
 {

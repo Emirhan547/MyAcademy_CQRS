@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using MyAcademyCQRS.CQRSPattern.Commands.ProductCommands;
-using MyAcademyCQRS.CQRSPattern.Handlers.CategoryHandlers;
-using MyAcademyCQRS.CQRSPattern.Handlers.ProductHandlers;
+using MyAcademyCQRS.Core.Application.Features.Commands.ProductCommands;
+using MyAcademyCQRS.Core.Application.Features.Handlers.CategoryHandlers;
+using MyAcademyCQRS.Core.Application.Features.Handlers.ProductHandlers;
 using MyAcademyCQRS.CQRSPattern.Queries.ProductQueries;
 
 namespace MyAcademyCQRS.Areas.Admin.Controllers

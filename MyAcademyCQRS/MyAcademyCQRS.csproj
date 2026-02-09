@@ -22,11 +22,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Core\Application\Features\Commands\" />
-    <Folder Include="Core\Application\Features\Handlers\" />
-    <Folder Include="Core\Application\Features\Results\" />
-    <Folder Include="Core\Application\Features\Queries\" />
-    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>

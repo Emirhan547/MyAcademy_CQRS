@@ -1,6 +1,5 @@
-﻿using MyAcademyCQRS.CQRSPattern.Handlers.CategoryHandlers;
-using MyAcademyCQRS.CQRSPattern.Handlers.ProductHandlers;
-
+﻿using MyAcademyCQRS.Core.Application.Features.Handlers.CategoryHandlers;
+using MyAcademyCQRS.Core.Application.Features.Handlers.ProductHandlers;
 
 namespace MyAcademyCQRS.Extensions
 {
