@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyAcademyCQRS.Context;
 using MyAcademyCQRS.CQRSPattern.Results.CategoryResults;
+using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.CQRSPattern.Handlers.CategoryHandlers
 {

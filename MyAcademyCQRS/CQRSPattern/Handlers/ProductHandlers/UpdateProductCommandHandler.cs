@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Build.Tasks.Deployment.Bootstrapper;
-using MyAcademyCQRS.Context;
 using MyAcademyCQRS.CQRSPattern.Commands.ProductCommands;
+using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.CQRSPattern.Handlers.ProductHandlers
 {

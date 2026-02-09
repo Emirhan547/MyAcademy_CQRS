@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using MyAcademyCQRS.Context;
 using MyAcademyCQRS.CQRSPattern.Results.ProductResults;
+using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.CQRSPattern.Handlers.ProductHandlers
 {

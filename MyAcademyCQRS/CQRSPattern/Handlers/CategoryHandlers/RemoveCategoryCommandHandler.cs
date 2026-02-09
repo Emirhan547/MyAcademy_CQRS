@@ -1,5 +1,5 @@
-﻿using MyAcademyCQRS.Context;
-using MyAcademyCQRS.CQRSPattern.Commands.CategoryCommands;
+﻿using MyAcademyCQRS.CQRSPattern.Commands.CategoryCommands;
+using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.CQRSPattern.Handlers.CategoryHandlers
 {

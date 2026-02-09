@@ -1,6 +1,6 @@
-﻿using MyAcademyCQRS.Context;
-using MyAcademyCQRS.CQRSPattern.Queries.CategoryQueries;
+﻿using MyAcademyCQRS.CQRSPattern.Queries.CategoryQueries;
 using MyAcademyCQRS.CQRSPattern.Results.CategoryResults;
+using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.CQRSPattern.Handlers.CategoryHandlers
 {

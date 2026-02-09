@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using MyAcademyCQRS.Core.Domain.Entities;
 using MyAcademyCQRS.CQRSPattern.Commands.ProductCommands;
 using MyAcademyCQRS.CQRSPattern.Results.ProductResults;
-using MyAcademyCQRS.Entities;
 
 namespace MyAcademyCQRS.Mappings
 {

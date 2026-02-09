@@ -1,5 +1,7 @@
-using MyAcademyCQRS.Context;
+using MyAcademyCQRS.Core.Application;
 using MyAcademyCQRS.Extensions;
+using MyAcademyCQRS.Infrastructure;
+using MyAcademyCQRS.Infrastructure.Persistence.Context;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +10,8 @@ builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddCQRSHandlers();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
