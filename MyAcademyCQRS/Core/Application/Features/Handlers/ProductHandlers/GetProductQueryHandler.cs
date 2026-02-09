@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿
+
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MyAcademyCQRS.Core.Application.Features.Results.ProductResults;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;

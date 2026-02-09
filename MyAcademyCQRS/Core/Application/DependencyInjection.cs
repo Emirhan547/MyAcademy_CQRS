@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
-using MyAcademyCQRS.Core.Application.Common.Behaviors;
+
 
 namespace MyAcademyCQRS.Core.Application
 {
@@ -10,9 +10,9 @@ namespace MyAcademyCQRS.Core.Application
         {
             services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
-            services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+            services.AddValidatorsFromAssembly(typeof(ApplicationAssembly).Assembly);
 
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
             return services;
         }
     }

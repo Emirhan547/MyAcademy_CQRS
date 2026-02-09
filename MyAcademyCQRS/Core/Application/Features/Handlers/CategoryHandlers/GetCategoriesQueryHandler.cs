@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+
+using Microsoft.EntityFrameworkCore;
 using MyAcademyCQRS.Core.Application.Features.Results.CategoryResults;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;
 

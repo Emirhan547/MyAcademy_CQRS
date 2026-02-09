@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿
+
+using AutoMapper;
 using MyAcademyCQRS.Core.Application.Features.Commands.ProductCommands;
 using MyAcademyCQRS.Core.Domain.Entities;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;

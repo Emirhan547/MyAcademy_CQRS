@@ -1,5 +1,5 @@
 ﻿using MyAcademyCQRS.Core.Application.Features.Commands.CategoryCommands;
-using MyAcademyCQRS.Entities;
+using MyAcademyCQRS.Core.Domain.Entities;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.CategoryHandlers
