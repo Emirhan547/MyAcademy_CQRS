@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using MyAcademyCQRS.Core.Application.Features.Commands.SliderCommands;
 
-namespace MyAcademyCQRS.Core.Application.Validators
+namespace MyAcademyCQRS.Core.Application.Validators.SliderValidators
 {
-    public class SliderValidator : AbstractValidator<CreateSliderCommand>
+    public class CreateSliderCommandValidator : AbstractValidator<CreateSliderCommand>
     {
-        public SliderValidator()
+        public CreateSliderCommandValidator()
         {
             RuleFor(x => x.Title)
                 .NotEmpty()

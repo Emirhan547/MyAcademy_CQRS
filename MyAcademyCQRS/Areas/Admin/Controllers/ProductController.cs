@@ -8,7 +8,7 @@ using MyAcademyCQRS.CQRSPattern.Queries.ProductQueries;
 namespace MyAcademyCQRS.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ProductController(GetProductQueryHandler _getProductQueryHandler,GetCategoriesQueryHandler getCategoriesQueryHandler,CreateProductCommandHandler createProductCommandHandler,UpdateProductCommandHandler updateProductCommand,RemoveProductCommandHandler removeProductCommandHandler,GetProducyByIdQueryHandler getProducyByIdQueryHandler) : Controller
+    public class ProductController(GetProductQueryHandler _getProductQueryHandler,GetAllCategoriesQueryHandler getCategoriesQueryHandler,CreateProductCommandHandler createProductCommandHandler,UpdateProductCommandHandler updateProductCommand,RemoveProductCommandHandler removeProductCommandHandler,GetActiveProductsQueryHandler getProducyByIdQueryHandler) : Controller
     {
 
         private async Task GetCategoriesAsync()

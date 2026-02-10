@@ -1,5 +1,11 @@
-﻿namespace MyAcademyCQRS.Core.Application.Features.Commands.ProductCommands
+﻿using MediatR;
+using MyAcademyCQRS.Core.Application.Common.Results;
+
+namespace MyAcademyCQRS.Core.Application.Features.Commands.ProductCommands
 {
-    public record RemoveProductCommand(int Id);
+    public class RemoveProductCommand : IRequest<Result>
+    {
+        public int Id { get; set; }
+    }
 
 }

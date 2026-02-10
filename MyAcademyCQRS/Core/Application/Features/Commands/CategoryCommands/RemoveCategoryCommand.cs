@@ -1,12 +1,10 @@
-﻿namespace MyAcademyCQRS.Core.Application.Features.Commands.CategoryCommands
+﻿using MediatR;
+using MyAcademyCQRS.Core.Application.Common.Results;
+
+namespace MyAcademyCQRS.Core.Application.Features.Commands.CategoryCommands
 {
-    public class RemoveCategoryCommand
+    public class RemoveCategoryCommand : IRequest<Result>
     {
         public int Id { get; set; }
-
-        public RemoveCategoryCommand(int id)
-        {
-            Id = id;
-        }
     }
 }

@@ -9,12 +9,12 @@ namespace MyAcademyCQRS.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly GetCategoriesQueryHandler _handler;
+        private readonly GetAllCategoriesQueryHandler _handler;
         private readonly GetCategoryByIdQueryHandler _queryHandler;
         private readonly UpdateCategoryCommandHandler _updateCategory;
         private readonly CreateCategoryCommandHandler _createCategory;
         private readonly RemoveCategoryCommandHandler _removeCategory;
-        public CategoryController(GetCategoriesQueryHandler handler, GetCategoryByIdQueryHandler queryHandler, UpdateCategoryCommandHandler updateCategory, RemoveCategoryCommandHandler removeCategory, CreateCategoryCommandHandler createCategory)
+        public CategoryController(GetAllCategoriesQueryHandler handler, GetCategoryByIdQueryHandler queryHandler, UpdateCategoryCommandHandler updateCategory, RemoveCategoryCommandHandler removeCategory, CreateCategoryCommandHandler createCategory)
         {
             _handler = handler;
             _queryHandler = queryHandler;

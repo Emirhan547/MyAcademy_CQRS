@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyAcademyCQRS.Core.Application.Contracts;
+using MyAcademyCQRS.Infrastructure.Observeres;
+using MyAcademyCQRS.Infrastructure.Persistence.Concrete;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.Infrastructure
@@ -11,6 +14,9 @@ namespace MyAcademyCQRS.Infrastructure
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderEventHandler, OrderLogEventHandler>();
+            services.AddScoped<IOrderEventHandler, OrderMailEventHandler>();
 
             return services;
         }

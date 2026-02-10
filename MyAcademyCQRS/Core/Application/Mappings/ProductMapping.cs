@@ -9,10 +9,17 @@ namespace MyAcademyCQRS.Core.Application.Mappings
     {
         public ProductMapping()
         {
-           CreateMap<Product,GetProductsQueryResult>(); 
-           CreateMap<CreateProductCommand,Product>(); 
-           CreateMap<Product,GetProductByIdQueryResult>(); 
-           CreateMap<UpdateProductCommand,Product>(); 
+            CreateMap<CreateProductCommand, Product>();
+            CreateMap<UpdateProductCommand, Product>();
+
+            // Read side
+            CreateMap<Product, GetAllProductsQueryResult>()
+                .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name));
+
+            CreateMap<Product, GetActiveProductsQueryResult>()
+                .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name));
+
+            CreateMap<Product, GetProductsByCategoryQueryResult>();
 
         }
     }

@@ -7,7 +7,7 @@ namespace MyAcademyCQRS.Extensions
     {
         public static void AddCQRSHandlers(this IServiceCollection services)
         {
-            services.AddScoped<GetCategoriesQueryHandler>();
+            services.AddScoped<GetAllCategoriesQueryHandler>();
             services.AddScoped<GetCategoryByIdQueryHandler>();
             services.AddScoped<UpdateCategoryCommandHandler>();
             services.AddScoped<CreateCategoryCommandHandler>();

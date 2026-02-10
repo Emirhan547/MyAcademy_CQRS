@@ -8,5 +8,7 @@
         public string BackgroundImageUrl { get; set; }
         public string ProductImageUrl { get; set; }
         public int DisplayOrder { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public bool IsActive { get; set; } = true;
     }
 }
