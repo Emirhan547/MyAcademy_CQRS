@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MyAcademyCQRS.Core.Application.Features.Commands.CategoryCommands;
+using MyAcademyCQRS.Core.Application.Features.Results.CategoryResults;
 using MyAcademyCQRS.Core.Domain.Entities;
 
 

@@ -8,14 +8,14 @@ namespace MyAcademyCQRS.Extensions
         public static void AddCQRSHandlers(this IServiceCollection services)
         {
             services.AddScoped<GetAllCategoriesQueryHandler>();
-            services.AddScoped<GetCategoryByIdQueryHandler>();
+           
             services.AddScoped<UpdateCategoryCommandHandler>();
             services.AddScoped<CreateCategoryCommandHandler>();
             services.AddScoped<RemoveCategoryCommandHandler>();
 
-            services.AddScoped<GetProductQueryHandler>();
+          
             services.AddScoped<CreateProductCommandHandler>();
-            services.AddScoped<GetCategoryByIdQueryHandler>();
+         
             services.AddScoped<UpdateProductCommandHandler>();
             services.AddScoped<RemoveProductCommandHandler>();
         }

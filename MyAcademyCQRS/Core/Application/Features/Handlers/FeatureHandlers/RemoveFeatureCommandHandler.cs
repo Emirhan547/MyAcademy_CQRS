@@ -9,17 +9,12 @@ namespace MyAcademyCQRS.Core.Application.Features.Handlers.FeatureHandlers
 {
     public class RemoveFeatureCommandHandler(
           IRepository<Feature> _repository,
-          IUnitOfWork _unitOfWork,
-          IValidator<RemoveFeatureCommand> _validator)
+          IUnitOfWork _unitOfWork)
           : IRequestHandler<RemoveFeatureCommand, Result>
     {
         public async Task<Result> Handle(RemoveFeatureCommand request, CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
-            if (!validationResult.IsValid)
-            {
-                return Result.Failure(validationResult.Errors.First().ErrorMessage);
-            }
+           
 
             var feature = await _repository.GetByIdAsync(request.Id);
             if (feature is null)

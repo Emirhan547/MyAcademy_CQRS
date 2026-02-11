@@ -12,7 +12,7 @@ namespace MyAcademyCQRS.Core.Application.Mappings
             CreateMap<CreateServiceCommand, Service>();
             CreateMap<UpdateServiceCommand, Service>();
             CreateMap<Service, GetAllServicesQueryResult>();
-            CreateMap<Service,GetActiveServicesResult>
+            CreateMap<Service, GetActiveServicesQueryResult>();
         }
     }
 }

@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@await Component.InvokeAsync("_UILayoutHead")
+
+
+<!-- page wrapper -->
+<body>
+
+    <div class="boxed_wrapper">
+
+
+      
+        <!-- preloader end -->
+        @await Component.InvokeAsync("_UILayoutPreloader")
+
+
+        @await Component.InvokeAsync("_UILayoutSidebar")
+
+        <!-- main header -->
+        @await Component.InvokeAsync("_UILayoutHeader")
+        <!-- main-header end -->
+        <!-- Mobile Menu  -->
+        @await Component.InvokeAsync("_UILayoutMobileMenu")
+        @RenderBody();
+        <!-- main-footer -->
+        @await Component.InvokeAsync("_UILayoutFooter")
+        <!-- main-footer end -->
+        <!--Scroll to top-->
+
+       
+        <button class="scroll-top scroll-to-target" data-target="html">
+            <span class="icon-Arrow-Up"></span>
+        </button>
+    </div>
+
+    @await Component.InvokeAsync("_UILayoutScript")
+   
+
+</body><!-- End of .page_wrapper -->
+</html>

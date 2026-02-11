@@ -1,4 +1,5 @@
-﻿using MyAcademyCQRS.Core.Domain.Enums;
+﻿using MyAcademyCQRS.Core.Application.Features.Results.OrderItems;
+using MyAcademyCQRS.Core.Domain.Enums;
 
 namespace MyAcademyCQRS.Core.Application.Features.Results.OrderDetailResults
 {

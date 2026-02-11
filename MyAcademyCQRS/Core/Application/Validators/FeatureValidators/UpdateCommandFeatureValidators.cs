@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MyAcademyCQRS.Core.Application.Features.Commands.FeatureCommands;
 
 namespace MyAcademyCQRS.Core.Application.Validators.FeatureValidators
 {

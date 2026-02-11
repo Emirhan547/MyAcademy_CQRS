@@ -1,30 +1,36 @@
 ﻿using FluentValidation;
+using MyAcademyCQRS.Core.Application.Features.Commands.FeatureCommands;
+using MyAcademyCQRS.Core.Application.Features.Commands.SliderCommands;
 
 namespace MyAcademyCQRS.Core.Application.Validators.SliderValidators
 {
-    public class UpdateSliderCommandValidator:AbstractValidator<UpdateFeatureCommand>
+    public class UpdateSliderCommandValidator:AbstractValidator<UpdateSliderCommand>
     {
         public UpdateSliderCommandValidator()
         {
-            RuleFor(x => x.Id)
-                .GreaterThan(0)
-                .WithMessage("Geçerli bir Feature Id gereklidir");
-
             RuleFor(x => x.Title)
-                .NotEmpty()
-                .WithMessage("Feature başlığı zorunludur")
-                .MaximumLength(100)
-                .WithMessage("Feature başlığı en fazla 100 karakter olabilir");
+                 .NotEmpty()
+                 .WithMessage("Slider başlığı zorunludur")
+                 .MaximumLength(100)
+                 .WithMessage("Slider başlığı en fazla 100 karakter olabilir");
 
             RuleFor(x => x.Description)
                 .NotEmpty()
-                .WithMessage("Feature açıklaması zorunludur")
+                .WithMessage("Slider açıklaması zorunludur")
                 .MaximumLength(500)
-                .WithMessage("Feature açıklaması en fazla 500 karakter olabilir");
+                .WithMessage("Slider açıklaması en fazla 500 karakter olabilir");
 
-            RuleFor(x => x.StepNumber)
-                .GreaterThan(0)
-                .WithMessage("StepNumber 0'dan büyük olmalıdır");
+            RuleFor(x => x.BackgroundImageUrl)
+                .NotEmpty()
+                .WithMessage("Arka plan görseli zorunludur");
+
+            RuleFor(x => x.ProductImageUrl)
+                .NotEmpty()
+                .WithMessage("Ürün görseli zorunludur");
+
+            RuleFor(x => x.DisplayOrder)
+                .GreaterThanOrEqualTo(0)
+                .WithMessage("Gösterim sırası 0 veya daha büyük olmalıdır");
         }
     }
 }

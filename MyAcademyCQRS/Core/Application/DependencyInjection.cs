@@ -9,11 +9,12 @@ namespace MyAcademyCQRS.Core.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddMediatR(cfg =>
-                cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
-            services.AddValidatorsFromAssembly(typeof(ApplicationAssembly).Assembly);
+                cfg.RegisterServicesFromAssembly(typeof(ApplicationAssembly).Assembly));
 
+            services.AddValidatorsFromAssemblyContaining<ApplicationAssembly>();
 
             return services;
         }
+
     }
 }
