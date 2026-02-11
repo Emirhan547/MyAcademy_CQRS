@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MyAcademyCQRS.Core.Application.Features.Commands.CategoryCommands;
 
-namespace MyAcademyCQRS.Core.Application.Validators.CreateValidators
+namespace MyAcademyCQRS.Core.Application.Validators.CategoryValidators
 {
     public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
     {

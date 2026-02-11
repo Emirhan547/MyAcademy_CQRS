@@ -7,7 +7,6 @@ using MyAcademyCQRS.Core.Application.Common.Results;
 using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Commands.ProductCommands;
 using MyAcademyCQRS.Core.Domain.Entities;
-using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.ProductHandlers
 {

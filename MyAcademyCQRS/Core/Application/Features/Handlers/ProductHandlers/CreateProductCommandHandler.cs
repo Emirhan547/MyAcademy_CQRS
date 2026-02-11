@@ -7,8 +7,7 @@ using MyAcademyCQRS.Core.Application.Common.Results;
 using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Commands.ProductCommands;
 using MyAcademyCQRS.Core.Domain.Entities;
-using MyAcademyCQRS.Infrastructure.Persistence.Context;
-using NuGet.Protocol.Plugins;
+
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.ProductHandlers
 {

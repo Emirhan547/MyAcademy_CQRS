@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Queries.GalleryCategoryQueries;
 using MyAcademyCQRS.Core.Application.Features.Results.GalleryCategoryResults;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;
@@ -8,7 +9,7 @@ using MyAcademyCQRS.Infrastructure.Persistence.Context;
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.GalleryCategoryHandlers
 {
     public class GetGalleryCategoryByIdQueryHandler(
-    AppDbContext _context,
+   IGalleryCategoryReadRepository _galleryCategoryReadRepository,
     IMapper _mapper)
     : IRequestHandler<GetGalleryCategoryByIdQuery, GetGalleryCategoryByIdQueryResult>
     {
@@ -16,9 +17,7 @@ namespace MyAcademyCQRS.Core.Application.Features.Handlers.GalleryCategoryHandle
             GetGalleryCategoryByIdQuery request,
             CancellationToken cancellationToken)
         {
-            var data = await _context.GalleryCategories
-                .Include(x => x.Images)
-                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+            var data = await _galleryCategoryReadRepository.GetByIdWithImagesAsync(request.Id, cancellationToken);
 
             return data is null
                 ? null
