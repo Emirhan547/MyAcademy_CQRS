@@ -13,6 +13,7 @@ namespace MyAcademyCQRS.Core.Application.Mappings
             CreateMap<UpdateFeatureCommand, Feature>();
             CreateMap<Feature, GetAllFeaturesQueryResult>();
             CreateMap<Feature, GetActiveFeaturesQueryResult>();
+            CreateMap<Feature, GetFeatureByIdQueryResult>();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace MyAcademyCQRS.Core.Application.Mappings
 
             CreateMap<Testimonial, GetAllTestimonialsQueryResult>();
             CreateMap<Testimonial, GetActiveTestimonialsQueryResult>();
+            CreateMap<Testimonial, GetTestimonialByIdQueryResult>();
         }
     }
 }

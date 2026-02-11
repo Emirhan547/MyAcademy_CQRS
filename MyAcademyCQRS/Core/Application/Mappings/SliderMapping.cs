@@ -15,7 +15,7 @@ namespace MyAcademyCQRS.Core.Application.Mappings
             CreateMap<UpdateSliderCommand, Slider>();
             CreateMap<Slider, GetAllSlidersQueryResult>();
             CreateMap<Slider, GetActiveSlidersQueryResult>();
-
+            CreateMap<Slider, GetSliderByIdQueryResult>();
         }
     }
 }

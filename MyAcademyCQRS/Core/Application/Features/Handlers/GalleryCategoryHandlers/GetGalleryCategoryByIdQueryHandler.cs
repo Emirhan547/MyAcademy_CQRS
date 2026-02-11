@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Queries.GalleryCategoryQueries;
 using MyAcademyCQRS.Core.Application.Features.Results.GalleryCategoryResults;
-using MyAcademyCQRS.Infrastructure.Persistence.Context;
+
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.GalleryCategoryHandlers
 {

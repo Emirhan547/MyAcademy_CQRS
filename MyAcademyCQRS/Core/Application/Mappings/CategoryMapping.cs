@@ -15,6 +15,7 @@ namespace MyAcademyCQRS.Core.Application.Mappings
 
             CreateMap<Category, GetAllCategoriesQueryResult>();
             CreateMap<Category, GetActiveCategoriesQueryResult>();
+            CreateMap<Category, GetCategoryByIdQueryResult>();
         }
     }
 }

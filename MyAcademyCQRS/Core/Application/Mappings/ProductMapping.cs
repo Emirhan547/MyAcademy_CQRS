@@ -20,6 +20,7 @@ namespace MyAcademyCQRS.Core.Application.Mappings
                 .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name));
 
             CreateMap<Product, GetProductsByCategoryQueryResult>();
+            CreateMap<Product, GetProductByIdQueryResult>();
 
         }
     }

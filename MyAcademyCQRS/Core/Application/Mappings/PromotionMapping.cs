@@ -14,6 +14,7 @@ namespace MyAcademyCQRS.Core.Application.Mappings
 
             CreateMap<Promotion, GetAllPromotionsQueryResult>();
             CreateMap<Promotion, GetActivePromotionsQueryResult>();
+            CreateMap<Promotion, GetPromotionByIdQueryResult>();
         }
     }
 }
