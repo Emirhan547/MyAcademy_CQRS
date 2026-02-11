@@ -2,11 +2,14 @@ using MyAcademyCQRS.Core.Application;
 using MyAcademyCQRS.Extensions;
 using MyAcademyCQRS.Infrastructure;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;
+using MyAcademyCQRS.Infrastructure.Storage;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddScoped<IImageStorageService, GoogleCloudStorageService>();
+
 builder.Services.AddCQRSHandlers();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
