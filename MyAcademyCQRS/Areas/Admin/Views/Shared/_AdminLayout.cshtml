@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Bagery Admin Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#c88e4c",
+                        "sidebar-bg": "#8B5E3C",
+                        "background-light": "#FFFDF9",
+                        "background-dark": "#1e1914",
+                        "neutral-warm": "#F5EFE6",
+                        "text-dark": "#3E3228"
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        header: ["Playfair Display", "serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "1rem",
+                        xl: "1.5rem",
+                        full: "9999px"
+                    },
+                    boxShadow: {
+                        soft: "0 4px 20px -2px rgba(200, 142, 76, 0.1)"
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #DCC2A8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c88e4c; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-dark dark:text-gray-100 antialiased overflow-hidden flex h-screen">
+    <aside class="w-64 bg-sidebar-bg dark:bg-[#2C241B] flex flex-col justify-between shrink-0 transition-all duration-300 relative z-20 shadow-xl">
+        <div>
+            <div class="h-20 flex items-center px-8 border-b border-white/10">
+                <span class="material-icons-outlined text-primary text-3xl mr-2">bakery_dining</span>
+                <span class="text-2xl font-header font-bold text-white tracking-wide">Bagery</span>
+            </div>
+            <nav class="mt-8 px-4 space-y-2">
+                <a class="flex items-center px-4 py-3 bg-white/10 rounded-lg text-white group transition-colors relative overflow-hidden" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                    <div class="absolute inset-y-0 left-0 w-1 bg-primary rounded-r"></div>
+                    <span class="material-icons-outlined text-primary group-hover:text-white mr-4">dashboard</span>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a class="flex items-center px-4 py-3 text-white/70 hover:bg-white/5 hover:text-white rounded-lg transition-colors group" href="#">
+                    <span class="material-icons-outlined text-primary/70 group-hover:text-primary mr-4">receipt_long</span>
+                    <span class="font-medium">Orders</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="p-6 border-t border-white/10">
+            <div class="flex items-center gap-3">
+                <img class="w-10 h-10 rounded-full border-2 border-primary object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC8yJSIAmV4hoo4cRCtD_qqhY5KhIOXAhklznPxBniAcqMkNQqE96_BUG2bbZ3-iCqEROHgVVaL66PrU7JkL6aebThyLoUsnqbXH5LByPtAp8pdT6-X8cGT_yncOOtw9UsYGRaEhuG0wYbHhrOPFFzhAKfp7EOLX3hsKD13NWDV0zd-ZWIcpmUQc5Q6ZUrB5G78qOrK3ognN1osEZnaCpQiqJv5uhK0s-O8Eg7ZpKBuSeu5xN2QjMso-IMvZhun83ycKO6eWqEIsdL" alt="Female profile picture" />
+                <div>
+                    <p class="text-sm font-semibold text-white">Elena R.</p>
+                    <p class="text-xs text-white/50">Admin</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark relative">
+        <header class="h-20 flex items-center justify-between px-8 bg-white dark:bg-[#251e18] shadow-sm shrink-0 z-10">
+            <div class="flex items-center gap-4 w-1/3">
+                <div class="relative w-full max-w-md">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 material-icons-outlined text-gray-400">search</span>
+                    <input class="w-full pl-10 pr-4 py-2 bg-neutral-warm dark:bg-white/5 border-none rounded-full text-sm focus:ring-2 focus:ring-primary/50 text-gray-700 dark:text-gray-200 placeholder-gray-400" placeholder="Search orders, items..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="text-right hidden md:block">
+                    <h2 class="text-lg font-header font-bold text-gray-800 dark:text-white">Good Morning, Elena</h2>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Tuesday, 24 Oct 2023</p>
+                </div>
+                <button class="relative p-2 text-gray-500 hover:text-primary transition-colors">
+                    <span class="material-icons-outlined">notifications</span>
+                </button>
+            </div>
+        </header>
+
+        @RenderBody()
+    </main>
+</body>
+</html>

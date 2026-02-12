@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="flex-1 overflow-y-auto p-8 flex gap-8">
+    <div class="flex-1 space-y-8 max-w-5xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white dark:bg-[#251e18] p-6 rounded-lg shadow-soft border border-primary/20">
+                <h3 class="text-gray-500 text-sm font-medium mb-1">Total Orders</h3>
+                <p class="text-2xl font-bold font-display text-gray-800 dark:text-white">1,204</p>
+            </div>
+            <div class="bg-white dark:bg-[#251e18] p-6 rounded-lg shadow-soft border border-primary/20">
+                <h3 class="text-gray-500 text-sm font-medium mb-1">Total Revenue</h3>
+                <p class="text-2xl font-bold font-display text-gray-800 dark:text-white">$12,450</p>
+            </div>
+            <div class="bg-white dark:bg-[#251e18] p-6 rounded-lg shadow-soft border border-primary/20">
+                <h3 class="text-gray-500 text-sm font-medium mb-1">Active Products</h3>
+                <p class="text-2xl font-bold font-display text-gray-800 dark:text-white">45</p>
+            </div>
+            <div class="bg-white dark:bg-[#251e18] p-6 rounded-lg shadow-soft border border-primary/20">
+                <h3 class="text-gray-500 text-sm font-medium mb-1">Unread Messages</h3>
+                <p class="text-2xl font-bold font-display text-gray-800 dark:text-white">8</p>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-[#251e18] p-6 rounded-lg shadow-soft border border-primary/10">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-header font-bold text-gray-800 dark:text-white">Weekly Revenue</h3>
+                <select class="bg-neutral-warm dark:bg-white/5 border-none text-sm rounded-lg px-3 py-1.5 focus:ring-1 focus:ring-primary text-gray-600 dark:text-gray-300">
+                    <option>This Week</option>
+                </select>
+            </div>
+            <div class="h-64 w-full relative flex items-end justify-between gap-2 px-2 pb-6 border-b border-gray-100 dark:border-gray-700">
+                <div class="relative z-10 w-full h-full flex items-end justify-around">
+                    <div class="w-1/12 bg-primary/20 h-24 rounded-t-sm"></div>
+                    <div class="w-1/12 bg-primary/20 h-32 rounded-t-sm"></div>
+                    <div class="w-1/12 bg-primary/20 h-28 rounded-t-sm"></div>
+                    <div class="w-1/12 bg-primary/20 h-36 rounded-t-sm"></div>
+                    <div class="w-1/12 bg-primary h-48 rounded-t-sm"></div>
+                    <div class="w-1/12 bg-primary/60 h-56 rounded-t-sm"></div>
+                    <div class="w-1/12 bg-primary/40 h-40 rounded-t-sm"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-[#251e18] rounded-lg shadow-soft border border-primary/10 overflow-hidden">
+            <div class="p-6 border-b border-gray-100 dark:border-white/10 flex justify-between items-center">
+                <h3 class="text-xl font-header font-bold text-gray-800 dark:text-white">Recent Orders</h3>
+                <a class="text-sm font-medium text-primary hover:underline" href="#">View All</a>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-neutral-warm dark:bg-white/5 text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-semibold">
+                        <tr>
+                            <th class="px-6 py-4">Order ID</th>
+                            <th class="px-6 py-4">Customer</th>
+                            <th class="px-6 py-4">Items</th>
+                            <th class="px-6 py-4">Total</th>
+                            <th class="px-6 py-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5 text-sm text-gray-700 dark:text-gray-300">
+                        <tr>
+                            <td class="px-6 py-4 font-medium">#ORD-2481</td>
+                            <td class="px-6 py-4">Alice Miller</td>
+                            <td class="px-6 py-4 text-gray-500">Sourdough Loaf x2, Croissant x4</td>
+                            <td class="px-6 py-4 font-semibold">$34.50</td>
+                            <td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-80 shrink-0 space-y-6 hidden xl:block">
+        <div class="bg-white dark:bg-[#251e18] p-6 rounded-lg shadow-soft border border-primary/20">
+            <h3 class="text-lg font-header font-bold text-gray-800 dark:text-white mb-4">Quick Actions</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary hover:text-white transition-all">New Order</button>
+                <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary hover:text-white transition-all">Add Product</button>
+                <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary hover:text-white transition-all">Reports</button>
+                <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary hover:text-white transition-all">Restock</button>
+            </div>
+        </div>
+    </div>
+</div>
