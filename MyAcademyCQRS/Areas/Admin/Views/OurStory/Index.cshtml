@@ -1,0 +1,32 @@
+﻿@model MyAcademyCQRS.Core.Application.Features.Results.OurStoryResults.GetActiveOurStoryQueryResult
+@{
+    ViewData["Title"] = "Hikayemiz";
+}
+
+<div class="flex-1 overflow-y-auto p-8">
+    <section class="bg-white dark:bg-[#251e18] rounded-lg shadow-soft border border-primary/10 overflow-hidden">
+        <header class="p-6 border-b border-gray-100 dark:border-white/10 flex items-center justify-between">
+            <h1 class="text-2xl font-header font-bold text-gray-800 dark:text-white">Hikayemiz</h1>
+            <a asp-area="Admin" asp-controller="OurStory" asp-action="Create" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm hover:opacity-90">
+                <span class="material-icons-outlined text-base">add</span> Yeni Kayıt
+            </a>
+        </header>
+
+        <div class="p-6 grid md:grid-cols-3 gap-6 items-start">
+            <img src="@Model.ImageUrl" alt="@Model.Title" class="w-full h-56 rounded-lg object-cover border border-primary/10" />
+            <div class="md:col-span-2 space-y-4">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white">@Model.Title</h2>
+                <p class="text-sm leading-7 text-gray-600 dark:text-gray-300">@Model.Content</p>
+
+                <div class="flex items-center gap-2 pt-2">
+                    <a asp-area="Admin" asp-controller="OurStory" asp-action="Update" asp-route-id="@Model.Id" class="px-3 py-1.5 rounded-md bg-amber-100 text-amber-700 text-xs font-semibold">Düzenle</a>
+                    <form asp-area="Admin" asp-controller="OurStory" asp-action="Remove" method="post" onsubmit="return confirm('Kayıt pasife alınacak, emin misiniz?');">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button type="submit" class="px-3 py-1.5 rounded-md bg-rose-100 text-rose-700 text-xs font-semibold">Sil</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

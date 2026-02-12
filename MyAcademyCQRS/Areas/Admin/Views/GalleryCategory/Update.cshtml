@@ -1,0 +1,29 @@
+﻿@model MyAcademyCQRS.Core.Application.Features.Results.GalleryCategoryResults.GetGalleryCategoryByIdQueryResult
+@{
+    ViewData["Title"] = "Galeri Kategorileri - Güncelle";
+}
+
+<div class="flex-1 overflow-y-auto p-8">
+    <section class="max-w-3xl bg-white dark:bg-[#251e18] rounded-lg shadow-soft border border-primary/10 p-6">
+        <h1 class="text-2xl font-header font-bold text-gray-800 dark:text-white mb-6">Galeri Kategorileri - Güncelle</h1>
+
+        <form method="post" class="space-y-4">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-sm text-red-500"></div>
+            <input asp-for="Id" type="hidden" />
+            <div class="space-y-2">
+                <label asp-for="Name" class="text-sm font-medium text-gray-700 dark:text-gray-200">Kategori Adı</label>
+                <input asp-for="Name" type="text" class="w-full rounded-lg border-gray-200 bg-neutral-warm dark:bg-white/5 dark:border-white/10 focus:border-primary focus:ring-primary" />
+                <span asp-validation-for="Name" class="text-sm text-red-500"></span>
+            </div>
+            <div class="flex items-center gap-2">
+                <input asp-for="IsActive" class="rounded border-gray-300 text-primary focus:ring-primary" />
+                <label asp-for="IsActive" class="text-sm font-medium text-gray-700 dark:text-gray-200">Aktif</label>
+            </div>
+            <div class="pt-2 flex items-center gap-2">
+                <button type="submit" class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold">Güncelle</button>
+                <a asp-area="Admin" asp-controller="GalleryCategory" asp-action="Index" class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-white/10 text-sm">Vazgeç</a>
+            </div>
+        </form>
+    </section>
+</div>

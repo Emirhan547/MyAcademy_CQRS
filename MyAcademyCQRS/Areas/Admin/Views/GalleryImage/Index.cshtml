@@ -1,0 +1,43 @@
+﻿@model IList<MyAcademyCQRS.Core.Application.Features.Results.GallerImages.GetActiveGalleryImageQueryResult>
+@{
+    ViewData["Title"] = "Galeri Görselleri";
+}
+
+<div class="flex-1 overflow-y-auto p-8 space-y-6">
+    <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-header font-bold text-gray-800 dark:text-white">Galeri Görselleri</h1>
+        <a asp-area="Admin" asp-controller="GalleryImage" asp-action="Create" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm hover:opacity-90">
+            <span class="material-icons-outlined text-base">add_photo_alternate</span> Yeni Görsel
+        </a>
+    </div>
+
+    @foreach (var category in Model)
+    {
+        <section class="bg-white dark:bg-[#251e18] rounded-lg shadow-soft border border-primary/10 overflow-hidden">
+            <header class="px-6 py-4 border-b border-gray-100 dark:border-white/10 flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-800 dark:text-white">@category.Name</h2>
+                <span class="text-xs text-gray-500 dark:text-gray-400">@category.Images.Count kayıt</span>
+            </header>
+
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                @foreach (var image in category.Images)
+                {
+                    <article class="border border-primary/10 rounded-lg overflow-hidden bg-white/50 dark:bg-white/5">
+                        <img src="@image.ImageUrl" alt="@image.Title" class="w-full h-44 object-cover" />
+                        <div class="p-4 space-y-3">
+                            <h3 class="font-semibold text-gray-800 dark:text-white">@image.Title</h3>
+                            <div class="flex items-center gap-2">
+                                <a asp-area="Admin" asp-controller="GalleryImage" asp-action="Update" asp-route-id="@image.Id" class="px-3 py-1.5 rounded-md bg-amber-100 text-amber-700 text-xs font-semibold">Düzenle</a>
+                                <form asp-area="Admin" asp-controller="GalleryImage" asp-action="Remove" method="post" onsubmit="return confirm('Görsel pasife alınacak, devam edilsin mi?');">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@image.Id" />
+                                    <button type="submit" class="px-3 py-1.5 rounded-md bg-rose-100 text-rose-700 text-xs font-semibold">Sil</button>
+                                </form>
+                            </div>
+                        </div>
+                    </article>
+                }
+            </div>
+        </section>
+    }
+</div>
