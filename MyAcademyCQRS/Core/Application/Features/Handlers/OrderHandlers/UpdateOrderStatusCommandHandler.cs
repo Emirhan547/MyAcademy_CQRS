@@ -5,58 +5,54 @@ using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Commands.OrderCommands;
 using MyAcademyCQRS.Core.Domain.Entities;
 using MyAcademyCQRS.Core.Domain.Enums;
-using MyAcademyCQRS.Core.Domain.Events.OrderEvents;
+
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers
 {
     public class UpdateOrderStatusCommandHandler(
-        IRepository<Order> _repository,
-        IUnitOfWork _unitOfWork,
-        IValidator<UpdateOrderStatusCommand> _validator,
-        IEnumerable<IOrderEventHandler> _eventHandlers)
+      IRepository<Order> repository,
+        IUnitOfWork unitOfWork,
+        IValidator<UpdateOrderStatusCommand> validator,
+        IDomainEventPublisher domainEventPublisher)
         : IRequestHandler<UpdateOrderStatusCommand, Result>
     {
         public async Task<Result> Handle(UpdateOrderStatusCommand request, CancellationToken cancellationToken)
         {
             // 1️⃣ Validation
-            var vr = await _validator.ValidateAsync(request, cancellationToken);
+            var vr = await validator.ValidateAsync(request, cancellationToken);
             if (!vr.IsValid)
                 return Result.Failure(vr.Errors.First().ErrorMessage);
 
             // 2️⃣ Order getir
-            var order = await _repository.GetByIdAsync(request.OrderId);
+            var order = await repository.GetByIdAsync(request.OrderId);
             if (order is null)
                 return Result.Failure("Sipariş bulunamadı");
 
-            await using var tx = await _unitOfWork.BeginTransactionAsync();
+            await using var tx = await unitOfWork.BeginTransactionAsync();
 
             try
             {
                 // 3️⃣ Status güncelle
                 order.Status = request.Status;
-                _repository.Update(order);
+                repository.Update(order);
 
-                var saved = await _unitOfWork.SaveChangesAsync();
+                var saved = await unitOfWork.SaveChangesAsync();
                 if (!saved)
                 {
-                    await tx.RollbackAsync();
+                    await tx.RollbackAsync(cancellationToken);
                     return Result.Failure("Sipariş durumu güncellenemedi");
                 }
 
-                await tx.CommitAsync();
+                await tx.CommitAsync(cancellationToken);
 
                 // 🔔 EVENTLER COMMIT SONRASI
-                var evt = new OrderStatusChangedEvent(order.Id, order.Status);
-                foreach (var handler in _eventHandlers)
-                {
-                    await handler.OnOrderStatusChangedAsync(evt);
-                }
+                await domainEventPublisher.PublishAsync(new OrderStatusChangedEvent(order.Id, order.Status), cancellationToken);
 
                 return Result.SuccessResult("Sipariş durumu güncellendi");
             }
             catch
             {
-                await tx.RollbackAsync();
+                await tx.RollbackAsync(cancellationToken);
                 return Result.Failure("Sipariş durumu güncellenirken hata oluştu");
             }
         }

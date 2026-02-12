@@ -4,17 +4,23 @@ using MyAcademyCQRS.Core.Domain.Events.OrderEvents;
 
 namespace MyAcademyCQRS.Infrastructure.Observeres
 {
-    public class OrderMailEventHandler : IOrderEventHandler
+    public class OrderMailEventHandler(ILogger<OrderMailEventHandler> logger) :
+           IDomainEventHandler<OrderCreatedEvent>,
+           IDomainEventHandler<OrderStatusChangedEvent>
     {
-        public Task OnOrderCreatedAsync(OrderCreatedEvent @event)
+        public Task HandleAsync(OrderCreatedEvent @event, CancellationToken cancellationToken = default)
         {
-            // Mail gönderimi (stub)
+            logger.LogInformation("Order confirmation mail queued. OrderId: {OrderId}", @event.OrderId);
             return Task.CompletedTask;
         }
 
-        public Task OnOrderStatusChangedAsync(OrderStatusChangedEvent @event)
+        public Task HandleAsync(OrderStatusChangedEvent @event, CancellationToken cancellationToken = default)
         {
-            // Status değişim maili
+       
+            logger.LogInformation(
+                "Order status notification mail queued. OrderId: {OrderId}, NewStatus: {NewStatus}",
+                @event.OrderId,
+                @event.NewStatus);
             return Task.CompletedTask;
         }
     }

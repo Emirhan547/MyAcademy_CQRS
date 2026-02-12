@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MyAcademyCQRS.Core.Application.Features.Results.OrderDetailResults;
+using MyAcademyCQRS.Core.Application.Features.Results.OrderResults;
 
 namespace MyAcademyCQRS.Core.Application.Features.Queries.OrderQueries
 {

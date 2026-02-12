@@ -4,17 +4,22 @@ using MyAcademyCQRS.Core.Domain.Events.OrderEvents;
 
 namespace MyAcademyCQRS.Infrastructure.Observeres
 {
-    public class OrderLogEventHandler : IOrderEventHandler
+    public class OrderLogEventHandler(ILogger<OrderLogEventHandler> logger) :
+         IDomainEventHandler<OrderCreatedEvent>,
+         IDomainEventHandler<OrderStatusChangedEvent>
     {
-        public Task OnOrderCreatedAsync(OrderCreatedEvent @event)
+        public Task HandleAsync(OrderCreatedEvent @event, CancellationToken cancellationToken = default)
         {
-            Console.WriteLine($"[LOG] Order created -> {@event.OrderId}");
+            logger.LogInformation("Order created. OrderId: {OrderId}", @event.OrderId);
             return Task.CompletedTask;
         }
 
-        public Task OnOrderStatusChangedAsync(OrderStatusChangedEvent @event)
+        public Task HandleAsync(OrderStatusChangedEvent @event, CancellationToken cancellationToken = default)
         {
-            Console.WriteLine($"[LOG] Order {@event.OrderId} status changed -> {@event.NewStatus}");
+            logger.LogInformation(
+                "Order status changed. OrderId: {OrderId}, NewStatus: {NewStatus}",
+                @event.OrderId,
+                @event.NewStatus);
             return Task.CompletedTask;
         }
     }

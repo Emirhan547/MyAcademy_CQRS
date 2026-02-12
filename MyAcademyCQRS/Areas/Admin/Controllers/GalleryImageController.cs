@@ -25,7 +25,7 @@ public class GalleryImageController(IMediator mediator) : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateGalleryImageCommand command)
+    public async Task<IActionResult> Create([FromForm] CreateGalleryImageCommand command)
     {
         var result = await mediator.Send(command);
         if (!result.Success)
@@ -51,7 +51,7 @@ public class GalleryImageController(IMediator mediator) : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(UpdateGalleryImageCommand command)
+    public async Task<IActionResult> Update([FromForm] UpdateGalleryImageCommand command)
     {
         var result = await mediator.Send(command);
         if (!result.Success)

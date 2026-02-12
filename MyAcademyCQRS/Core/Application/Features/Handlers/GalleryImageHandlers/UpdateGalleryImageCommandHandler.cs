@@ -18,12 +18,12 @@ namespace MyAcademyCQRS.Core.Application.Features.Handlers.GalleryImageHandlers
                 return Result.Failure("Resim bulunamadı");
 
             entity.Title = request.Title;
-            entity.ImageUrl = request.ImageUrl;
+          
 
             _repository.Update(entity);
 
             return await _unitOfWork.SaveChangesAsync()
-                ? Result.SuccessResult("Resim güncellendi")
+               ? Result.SuccessResult("Resim bilgileri güncellendi")
                 : Result.Failure("Güncelleme başarısız");
         }
     }

@@ -10,7 +10,7 @@ namespace MyAcademyCQRS.Core.Application.Mappings
         public ContactMessageMapping()
         {
             CreateMap<CreateContactMessageCommand, ContactMessage>();
-
+            CreateMap<UpdateContactCommand, ContactMessage>();
             CreateMap<ContactMessage, GetAllContactMessagesQueryResult>();
             CreateMap<ContactMessage, GetContactMessageByIdQueryResult>();
         }

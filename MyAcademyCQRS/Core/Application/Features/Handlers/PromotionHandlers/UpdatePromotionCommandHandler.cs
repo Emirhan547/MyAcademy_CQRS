@@ -5,32 +5,42 @@ using MyAcademyCQRS.Core.Application.Common.Results;
 using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Commands.PromotionCommands;
 using MyAcademyCQRS.Core.Domain.Entities;
+using MyAcademyCQRS.Core.Domain.Events.PromotionEvents;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.PromotionHandlers
 {
     public class UpdatePromotionCommandHandler(
-    IRepository<Promotion> _repository,
-    IUnitOfWork _unitOfWork,
-    IMapper _mapper,
-    IValidator<UpdatePromotionCommand> _validator)
+    IRepository<Promotion> repository,
+    IUnitOfWork unitOfWork,
+    IMapper mapper,
+    IValidator<UpdatePromotionCommand> validator,
+    IDomainEventPublisher domainEventPublisher)
     : IRequestHandler<UpdatePromotionCommand, Result>
     {
         public async Task<Result> Handle(UpdatePromotionCommand request, CancellationToken cancellationToken)
         {
-            var vr = await _validator.ValidateAsync(request, cancellationToken);
+            var vr = await validator.ValidateAsync(request, cancellationToken);
             if (!vr.IsValid)
                 return Result.Failure(vr.Errors.First().ErrorMessage);
 
-            var entity = await _repository.GetByIdAsync(request.Id);
+            var entity = await repository.GetByIdAsync(request.Id);
             if (entity is null)
                 return Result.Failure("Promotion bulunamadı");
 
-            _mapper.Map(request, entity);
-            _repository.Update(entity);
+            mapper.Map(request, entity);
+            repository.Update(entity);
 
-            return await _unitOfWork.SaveChangesAsync()
-                ? Result.SuccessResult("Promotion güncellendi")
-                : Result.Failure("Güncelleme başarısız");
+            var saved = await unitOfWork.SaveChangesAsync();
+            if (!saved)
+            {
+                return Result.Failure("Güncelleme başarısız");
+            }
+
+            await domainEventPublisher.PublishAsync(
+                new PromotionUpdatedEvent(entity.Id, entity.Title, entity.DiscountPrice, entity.IsActive),
+                cancellationToken);
+
+            return Result.SuccessResult("Promotion güncellendi");
         }
     }
 

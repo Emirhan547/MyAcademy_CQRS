@@ -2,7 +2,7 @@
 using MediatR;
 using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Queries.OrderQueries;
-using MyAcademyCQRS.Core.Application.Features.Results.OrderDetailResults;
+using MyAcademyCQRS.Core.Application.Features.Results.OrderResults;
 using MyAcademyCQRS.Core.Domain.Entities;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers

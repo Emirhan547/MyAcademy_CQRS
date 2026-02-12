@@ -5,28 +5,38 @@ using MyAcademyCQRS.Core.Application.Common.Results;
 using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Commands.PromotionCommands;
 using MyAcademyCQRS.Core.Domain.Entities;
+using MyAcademyCQRS.Core.Domain.Events.PromotionEvents;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.PromotionHandlers
 {
     public class CreatePromotionCommandHandler(
-        IRepository<Promotion> _repository,
-        IUnitOfWork _unitOfWork,
-        IMapper _mapper,
-        IValidator<CreatePromotionCommand> _validator)
+     IRepository<Promotion> repository,
+        IUnitOfWork unitOfWork,
+        IMapper mapper,
+        IValidator<CreatePromotionCommand> validator,
+        IDomainEventPublisher domainEventPublisher)
         : IRequestHandler<CreatePromotionCommand, Result>
     {
         public async Task<Result> Handle(CreatePromotionCommand request, CancellationToken cancellationToken)
         {
-            var vr = await _validator.ValidateAsync(request, cancellationToken);
+            var vr = await validator.ValidateAsync(request, cancellationToken);
             if (!vr.IsValid)
                 return Result.Failure(vr.Errors.First().ErrorMessage);
 
-            var entity = _mapper.Map<Promotion>(request);
-            await _repository.CreateAsync(entity);
+            var entity = mapper.Map<Promotion>(request);
+            await repository.CreateAsync(entity);
 
-            return await _unitOfWork.SaveChangesAsync()
-                ? Result.SuccessResult("Promotion eklendi")
-                : Result.Failure("İşlem başarısız");
+            var saved = await unitOfWork.SaveChangesAsync();
+            if (!saved)
+            {
+                return Result.Failure("İşlem başarısız");
+            }
+
+            await domainEventPublisher.PublishAsync(
+                new PromotionCreatedEvent(entity.Id, entity.Title, entity.DiscountPrice),
+                cancellationToken);
+
+            return Result.SuccessResult("Promotion eklendi");
         }
     }
 }

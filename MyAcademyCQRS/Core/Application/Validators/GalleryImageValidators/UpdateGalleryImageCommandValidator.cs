@@ -10,7 +10,7 @@ namespace MyAcademyCQRS.Core.Application.Validators.GalleryImageValidators
         {
             RuleFor(x => x.Id).GreaterThan(0);
             RuleFor(x => x.Title).NotEmpty().MaximumLength(150);
-            RuleFor(x => x.ImageUrl).NotEmpty();
+           
         }
     }
 

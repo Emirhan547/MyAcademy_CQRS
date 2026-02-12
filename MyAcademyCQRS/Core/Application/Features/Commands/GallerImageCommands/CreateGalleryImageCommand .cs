@@ -7,7 +7,6 @@ namespace MyAcademyCQRS.Core.Application.Features.Commands.GallerImageCommands
     {
         public int GalleryCategoryId { get; set; }
         public string Title { get; set; }
-        public string ImageUrl { get; set; }
         public IFormFile File { get; set; }
     }
 }
