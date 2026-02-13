@@ -135,6 +135,7 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li><a asp-area="User" asp-controller="Profile" asp-action="Index">Hesabım</a></li>
+                            <li><a asp-area="User" asp-controller="Order" asp-action="Index">Siparişlerim</a></li>
                             @if (User.IsInRole("Admin"))
                             {
                                 <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a></li>
@@ -197,6 +198,7 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li><a asp-area="User" asp-controller="Profile" asp-action="Index">Hesabım</a></li>
+                            <li><a asp-area="User" asp-controller="Order" asp-action="Index">Siparişlerim</a></li>
                             @if (User.IsInRole("Admin"))
                             {
                                 <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a></li>

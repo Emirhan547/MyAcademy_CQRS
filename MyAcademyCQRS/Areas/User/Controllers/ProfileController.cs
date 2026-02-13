@@ -11,7 +11,7 @@ namespace MyAcademyCQRS.Areas.User.Controllers;
 
 [Area("User")]
 [Authorize(Roles = "User,Admin")]
-public class ProfileController(UserManager<AppUser> userManager, AppDbContext context) : Controller
+public class ProfileController(UserManager<AppUser> userManager) : Controller
 {
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -22,18 +22,13 @@ public class ProfileController(UserManager<AppUser> userManager, AppDbContext co
             return RedirectToAction("Login", "Auth", new { area = string.Empty });
         }
 
-        var orders = await context.Orders
-            .Include(x => x.OrderItems)
-            .Where(x => x.UserId == user.Id)
-            .OrderByDescending(x => x.CreatedDate)
-            .ToListAsync();
+      
 
         var model = new ProfileViewModel
         {
             FullName = user.FullName,
             Email = user.Email ?? string.Empty,
-            PhoneNumber = user.PhoneNumber ?? string.Empty,
-            Orders = orders
+            PhoneNumber = user.PhoneNumber ?? string.Empty
         };
 
         return View(model);
