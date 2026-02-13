@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyAcademyCQRS.Core.Application.Features.Commands.TestimonialCommands;
 using MyAcademyCQRS.Core.Application.Features.Queries.TestimonialQueries;
@@ -6,6 +7,7 @@ using MyAcademyCQRS.Core.Application.Features.Queries.TestimonialQueries;
 namespace MyAcademyCQRS.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class TestimonialController(IMediator mediator) : Controller
 {
     [HttpGet]

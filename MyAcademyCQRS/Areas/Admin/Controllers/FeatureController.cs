@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyAcademyCQRS.Core.Application.Features.Commands.FeatureCommands;
 using MyAcademyCQRS.Core.Application.Features.Queries.FeatureQueries;
@@ -6,6 +7,7 @@ using MyAcademyCQRS.Core.Application.Features.Queries.FeatureQueries;
 namespace MyAcademyCQRS.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class FeatureController(IMediator mediator) : Controller
 {
     [HttpGet]

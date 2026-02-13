@@ -3,48 +3,17 @@
 <div class="flex-1 overflow-y-auto p-8">
 
     <section class="max-w-3xl bg-white dark:bg-[#251e18] rounded-lg shadow-soft border border-primary/10 p-6">
-
-        <h1 class="text-2xl font-header font-bold mb-6">
-            Haber - Yeni Kayıt
-        </h1>
-
-        <form method="post" class="space-y-4">
-
+        <h1 class="text-2xl font-header font-bold mb-6">Haber - Yeni Kayıt</h1>
+        <form method="post" enctype="multipart/form-data" class="space-y-4">
             @Html.AntiForgeryToken()
-
-            <input asp-for="Title"
-                   class="w-full rounded-lg"
-                   placeholder="Başlık" />
-
-            <textarea asp-for="Summary"
-                      rows="3"
-                      class="w-full rounded-lg"
-                      placeholder="Özet">
-            </textarea>
-
-            <input asp-for="ImageUrl"
-                   class="w-full rounded-lg"
-                   placeholder="Görsel Url" />
-
-            <input asp-for="Category"
-                   class="w-full rounded-lg"
-                   placeholder="Kategori" />
-
-            <input asp-for="Author"
-                   class="w-full rounded-lg"
-                   placeholder="Yazar" />
-
-            <input asp-for="PublishDate"
-                   type="date"
-                   class="w-full rounded-lg" />
-
-            <button type="submit"
-                    class="px-4 py-2 rounded-lg bg-primary text-white">
-                Kaydet
-            </button>
-
+            <input asp-for="ImageUrl" type="hidden" />
+            <input asp-for="Title" class="w-full rounded-lg" placeholder="Başlık" />
+<textarea asp-for="Summary" rows="3" class="w-full rounded-lg" placeholder="Özet"></textarea>
+            <input asp-for="File" type="file" class="w-full rounded-lg" />
+            <input asp-for="Category" class="w-full rounded-lg" placeholder="Kategori" />
+            <input asp-for="Author" class="w-full rounded-lg" placeholder="Yazar" />
+            <input asp-for="PublishDate" type="date" class="w-full rounded-lg" />
+            <button type="submit" class="px-4 py-2 rounded-lg bg-primary text-white">Kaydet</button>
         </form>
-
     </section>
-
 </div>

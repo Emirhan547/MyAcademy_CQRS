@@ -9,22 +9,27 @@ using MyAcademyCQRS.Core.Domain.Entities;
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.OurStoryHandlers
 {
     public class CreateOurStoryCommandHandler(
-         IRepository<OurStory> _repository,
-         IUnitOfWork _unitOfWork,
-         IMapper _mapper,
-         IValidator<CreateOurStoryCommand> _validator)
+        IRepository<OurStory> repository,
+         IUnitOfWork unitOfWork,
+         IMapper mapper,
+         IValidator<CreateOurStoryCommand> validator,
+         IImageStorageService imageStorage)
          : IRequestHandler<CreateOurStoryCommand, Result>
     {
         public async Task<Result> Handle(CreateOurStoryCommand request, CancellationToken cancellationToken)
         {
-            var vr = await _validator.ValidateAsync(request, cancellationToken);
+            var vr = await validator.ValidateAsync(request, cancellationToken);
             if (!vr.IsValid)
                 return Result.Failure(vr.Errors.First().ErrorMessage);
 
-            var entity = _mapper.Map<OurStory>(request);
-            await _repository.CreateAsync(entity);
+            var fileName = $"ourstory/{Guid.NewGuid()}{Path.GetExtension(request.File.FileName)}";
+            await using var stream = request.File.OpenReadStream();
+            request.ImageUrl = await imageStorage.UploadAsync(stream, fileName, request.File.ContentType);
 
-            return await _unitOfWork.SaveChangesAsync()
+            var entity = mapper.Map<OurStory>(request);
+            await repository.CreateAsync(entity);
+
+            return await unitOfWork.SaveChangesAsync()
                 ? Result.SuccessResult("OurStory eklendi")
                 : Result.Failure("İşlem başarısız");
         }

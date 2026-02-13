@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyAcademyCQRS.Core.Application.Features.Commands.ContactInfoCommands;
 using MyAcademyCQRS.Core.Application.Features.Queries.ContactInfoQueries;
@@ -6,6 +7,7 @@ using MyAcademyCQRS.Core.Application.Features.Queries.ContactInfoQueries;
 namespace MyAcademyCQRS.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class ContactInfoController(IMediator mediator) : Controller
 {
     [HttpGet]
@@ -16,7 +18,7 @@ public class ContactInfoController(IMediator mediator) : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateContactInfoCommand command)
+    public async Task<IActionResult> Create([FromForm] CreateContactInfoCommand command)
     {
         var result = await mediator.Send(command);
         if (!result.Success) return View(command);
@@ -32,7 +34,7 @@ public class ContactInfoController(IMediator mediator) : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(UpdateContactInfoCommand command)
+    public async Task<IActionResult> Update([FromForm] UpdateContactInfoCommand command)
     {
         var result = await mediator.Send(command);
         if (!result.Success) return View(command);

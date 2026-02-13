@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyAcademyCQRS.Core.Application.Features.Commands.PromotionCommands;
 using MyAcademyCQRS.Core.Application.Features.Queries.PromotionQueries;
@@ -6,6 +7,7 @@ using MyAcademyCQRS.Core.Application.Features.Queries.PromotionQueries;
 namespace MyAcademyCQRS.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class PromotionController(IMediator mediator) : Controller
 {
     [HttpGet]

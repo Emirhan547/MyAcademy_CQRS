@@ -1,12 +1,15 @@
 ﻿
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using MyAcademyCQRS.Core.Application.Features.Commands.SliderCommands;
 using MyAcademyCQRS.Core.Application.Features.Queries.SliderQueries;
 
 namespace MyAcademyCQRS.Areas.Admin.Controllers;
+
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class SliderController(IMediator mediator) : Controller
 {
   
@@ -26,7 +29,7 @@ public class SliderController(IMediator mediator) : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateSliderCommand command)
+    public async Task<IActionResult> Create([FromForm] CreateSliderCommand command)
     {
         var result = await mediator.Send(command);
         if (!result.Success)
@@ -55,8 +58,8 @@ public async Task<IActionResult> Update(int id)
           
     [HttpPost]
 [ValidateAntiForgeryToken]
-public async Task<IActionResult> Update(UpdateSliderCommand command)
-{
+    public async Task<IActionResult> Update([FromForm] UpdateSliderCommand command)
+    {
         var result = await mediator.Send(command);
         if (!result.Success)
         {

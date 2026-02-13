@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MyAcademyCQRS.Core.Application.Features.Commands.GallerImageCommands;
+using MyAcademyCQRS.Core.Application.Features.Commands.GalleryImageCommands;
 
 namespace MyAcademyCQRS.Core.Application.Validators.GalleryImageValidators
 {

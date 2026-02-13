@@ -3,8 +3,9 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Queries.GalleryImageQueries;
-using MyAcademyCQRS.Core.Application.Features.Results.GallerImages;
-using MyAcademyCQRS.Infrastructure.Persistence.Context;
+using MyAcademyCQRS.Core.Application.Features.Results.GalleryImages;
+
+
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.GalleryImageHandlers
 {

@@ -7,21 +7,13 @@
     <section class="max-w-3xl bg-white dark:bg-[#251e18] rounded-lg shadow-soft border border-primary/10 p-6">
         <h1 class="text-2xl font-header font-bold text-gray-800 dark:text-white mb-6">Galeri Görsel Güncelle</h1>
 
-        <form method="post" class="space-y-4">
+        <form method="post" enctype="multipart/form-data" class="space-y-4">
             @Html.AntiForgeryToken()
             <input asp-for="Id" type="hidden" />
-            <div asp-validation-summary="ModelOnly" class="text-sm text-red-500"></div>
-
-            <div class="space-y-2">
-                <label asp-for="Title" class="text-sm font-medium text-gray-700 dark:text-gray-200">Başlık</label>
-                <input asp-for="Title" class="w-full rounded-lg border-gray-200 bg-neutral-warm dark:bg-white/5 dark:border-white/10 focus:border-primary focus:ring-primary" />
-                <span asp-validation-for="Title" class="text-sm text-red-500"></span>
-            </div>
-
-            <div class="pt-2 flex items-center gap-2">
-                <button type="submit" class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold">Güncelle</button>
-                <a asp-area="Admin" asp-controller="GalleryImage" asp-action="Index" class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-white/10 text-sm">Vazgeç</a>
-            </div>
+            <input asp-for="ImageUrl" type="hidden" />
+            <input asp-for="Title" class="w-full rounded-lg" />
+            <input type="file" name="File" class="w-full rounded-lg" />
+            <button type="submit" class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold">Güncelle</button>
         </form>
     </section>
 </div>

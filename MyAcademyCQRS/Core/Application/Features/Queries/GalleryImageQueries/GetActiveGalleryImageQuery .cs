@@ -1,5 +1,6 @@
 ﻿using MediatR;
-using MyAcademyCQRS.Core.Application.Features.Results.GallerImages;
+using MyAcademyCQRS.Core.Application.Features.Results.GalleryImages;
+
 
 namespace MyAcademyCQRS.Core.Application.Features.Queries.GalleryImageQueries
 {

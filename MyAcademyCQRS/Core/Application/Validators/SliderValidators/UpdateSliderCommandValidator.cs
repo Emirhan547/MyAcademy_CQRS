@@ -21,11 +21,11 @@ namespace MyAcademyCQRS.Core.Application.Validators.SliderValidators
                 .WithMessage("Slider açıklaması en fazla 500 karakter olabilir");
 
             RuleFor(x => x.BackgroundImageUrl)
-                .NotEmpty()
+                .NotEmpty().When(x => x.BackgroundImageFile is null)
                 .WithMessage("Arka plan görseli zorunludur");
 
             RuleFor(x => x.ProductImageUrl)
-                .NotEmpty()
+              .NotEmpty().When(x => x.ProductImageFile is null)
                 .WithMessage("Ürün görseli zorunludur");
 
             RuleFor(x => x.DisplayOrder)

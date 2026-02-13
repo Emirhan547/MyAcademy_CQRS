@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyAcademyCQRS.Core.Application.Features.Commands.CategoryCommands;
 using MyAcademyCQRS.Core.Application.Features.Queries.CategoryQueries;
@@ -6,6 +7,7 @@ using MyAcademyCQRS.Core.Application.Features.Queries.CategoryQueries;
 namespace MyAcademyCQRS.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class CategoryController(IMediator mediator) : Controller
 {
     [HttpGet]

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyAcademyCQRS.Core.Application.Features.Commands.OurStoryCommands;
 using MyAcademyCQRS.Core.Application.Features.Queries.OurStoryQueries;
@@ -6,6 +7,7 @@ using MyAcademyCQRS.Core.Application.Features.Queries.OurStoryQueries;
 namespace MyAcademyCQRS.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class OurStoryController(IMediator mediator) : Controller
 {
     [HttpGet]
@@ -20,7 +22,7 @@ public class OurStoryController(IMediator mediator) : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateOurStoryCommand command)
+    public async Task<IActionResult> Create([FromForm] CreateOurStoryCommand command)
     {
         var result = await mediator.Send(command);
         if (!result.Success)
@@ -45,7 +47,7 @@ public class OurStoryController(IMediator mediator) : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(UpdateOurStoryCommand command)
+    public async Task<IActionResult> Update([FromForm] UpdateOurStoryCommand command)
     {
         var result = await mediator.Send(command);
         if (!result.Success)

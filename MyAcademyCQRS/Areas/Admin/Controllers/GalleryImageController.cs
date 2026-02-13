@@ -1,12 +1,14 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyAcademyCQRS.Core.Application.Features.Commands.GallerImageCommands;
+using MyAcademyCQRS.Core.Application.Features.Commands.GalleryImageCommands;
 using MyAcademyCQRS.Core.Application.Features.Queries.GalleryCategoryQueries;
 using MyAcademyCQRS.Core.Application.Features.Queries.GalleryImageQueries;
 
 namespace MyAcademyCQRS.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class GalleryImageController(IMediator mediator) : Controller
 {
     [HttpGet]

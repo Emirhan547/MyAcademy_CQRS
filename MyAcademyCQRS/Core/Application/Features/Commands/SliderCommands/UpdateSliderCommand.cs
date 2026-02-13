@@ -10,6 +10,8 @@ namespace MyAcademyCQRS.Core.Application.Features.Commands.SliderCommands
         public string Description { get; set; }
         public string BackgroundImageUrl { get; set; }
         public string ProductImageUrl { get; set; }
+        public IFormFile? BackgroundImageFile { get; set; }
+        public IFormFile? ProductImageFile { get; set; }
         public int DisplayOrder { get; set; }
         public bool IsActive { get; set; }
     }

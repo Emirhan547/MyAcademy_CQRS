@@ -9,26 +9,28 @@ using MyAcademyCQRS.Core.Domain.Entities;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.SliderHandlers
 {
-    public class CreateSliderCommandHandler(IRepository<Slider> _repository, IUnitOfWork _unitOfWork, IMapper _mapper,IValidator<CreateSliderCommand>_validator) : IRequestHandler<CreateSliderCommand, Result>
+    public class CreateSliderCommandHandler(IRepository<Slider> repository, IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateSliderCommand> validator, IImageStorageService imageStorage) : IRequestHandler<CreateSliderCommand, Result>
     {
-        public async Task<Result> Handle(
-            CreateSliderCommand request,
-            CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreateSliderCommand request, CancellationToken cancellationToken)
         {
-         
-            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+
+            var validationResult = await validator.ValidateAsync(request, cancellationToken);
             if (!validationResult.IsValid)
             {
-                return Result.Failure(
-                    validationResult.Errors.First().ErrorMessage);
+                return Result.Failure(validationResult.Errors.First().ErrorMessage);
             }
 
-           
-            var slider = _mapper.Map<Slider>(request);
+            var bgFileName = $"sliders/background/{Guid.NewGuid()}{Path.GetExtension(request.BackgroundImageFile.FileName)}";
+            await using var bgStream = request.BackgroundImageFile.OpenReadStream();
+            request.BackgroundImageUrl = await imageStorage.UploadAsync(bgStream, bgFileName, request.BackgroundImageFile.ContentType);
 
-           
-            await _repository.CreateAsync(slider);
-            var saved = await _unitOfWork.SaveChangesAsync();
+            var productFileName = $"sliders/product/{Guid.NewGuid()}{Path.GetExtension(request.ProductImageFile.FileName)}";
+            await using var productStream = request.ProductImageFile.OpenReadStream();
+            request.ProductImageUrl = await imageStorage.UploadAsync(productStream, productFileName, request.ProductImageFile.ContentType);
+
+            var slider = mapper.Map<Slider>(request);
+            await repository.CreateAsync(slider);
+            var saved = await unitOfWork.SaveChangesAsync();
 
             return saved
                 ? Result.SuccessResult("Slider başarıyla eklendi")

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using MyAcademyCQRS.Core.Application.Features.Results.GallerImages;
-using MyAcademyCQRS.Core.Application.Features.Results.GalleryCategoryResults;
 using MyAcademyCQRS.Core.Application.Features.Results.GalleryImages;
+using MyAcademyCQRS.Core.Application.Features.Results.GalleryCategoryResults;
+
 using MyAcademyCQRS.Core.Domain.Entities;
 
 namespace MyAcademyCQRS.Core.Application.Mappings

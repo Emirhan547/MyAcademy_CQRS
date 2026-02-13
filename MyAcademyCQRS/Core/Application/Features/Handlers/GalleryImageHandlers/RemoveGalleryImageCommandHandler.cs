@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MyAcademyCQRS.Core.Application.Common.Results;
 using MyAcademyCQRS.Core.Application.Contracts;
-using MyAcademyCQRS.Core.Application.Features.Commands.GallerImageCommands;
+using MyAcademyCQRS.Core.Application.Features.Commands.GalleryImageCommands;
 using MyAcademyCQRS.Core.Domain.Entities;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.GalleryImageHandlers

@@ -8,6 +8,7 @@ namespace MyAcademyCQRS.Core.Application.Features.Commands.ProductCommands
         public int Id { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
+        public IFormFile? File { get; set; }
         public decimal Price { get; set; }
         public int Rating { get; set; }
         public int CategoryId { get; set; }

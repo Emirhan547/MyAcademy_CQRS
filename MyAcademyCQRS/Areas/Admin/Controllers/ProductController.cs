@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyAcademyCQRS.Core.Application.Features.Commands.ProductCommands;
 using MyAcademyCQRS.Core.Application.Features.Queries.CategoryQueries;
@@ -7,6 +8,7 @@ using MyAcademyCQRS.Core.Application.Features.Queries.ProductQueries;
 namespace MyAcademyCQRS.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class ProductController(IMediator mediator) : Controller
 {
     [HttpGet]
@@ -25,7 +27,7 @@ public class ProductController(IMediator mediator) : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateProductCommand command)
+    public async Task<IActionResult> Create([FromForm] CreateProductCommand command)
     {
         var result = await mediator.Send(command);
         if (!result.Success)
@@ -52,7 +54,7 @@ public class ProductController(IMediator mediator) : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(UpdateProductCommand command)
+    public async Task<IActionResult> Update([FromForm] UpdateProductCommand command)
     {
         var result = await mediator.Send(command);
         if (!result.Success)

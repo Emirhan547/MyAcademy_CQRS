@@ -15,8 +15,8 @@ namespace MyAcademyCQRS.Core.Application.Validators.OurStoryValidators
                 .NotEmpty()
                 .MaximumLength(2000);
 
-            RuleFor(x => x.ImageUrl)
-                .NotEmpty();
+            RuleFor(x => x.File)
+                 .NotNull();
         }
     }
 }

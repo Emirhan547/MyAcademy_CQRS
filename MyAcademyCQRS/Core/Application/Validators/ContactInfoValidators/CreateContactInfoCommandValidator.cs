@@ -7,7 +7,7 @@ namespace MyAcademyCQRS.Core.Application.Validators.ContactInfoValidators
     {
         public CreateContactInfoCommandValidator()
         {
-            RuleFor(x => x.BackgroundImageUrl).NotEmpty();
+            RuleFor(x => x.File).NotNull();
             RuleFor(x => x.Address).NotEmpty().MaximumLength(300);
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
             RuleFor(x => x.Phone).NotEmpty();
