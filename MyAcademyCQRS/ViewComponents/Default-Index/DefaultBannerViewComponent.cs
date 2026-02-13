@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using MyAcademyCQRS.Core.Application.Features.Queries.SliderQueries;
 
 namespace MyAcademyCQRS.ViewComponents.Default_Index
 {
-    public class DefaultBannerViewComponent:ViewComponent
+    public class DefaultBannerViewComponent(IMediator mediator) : ViewComponent
     {
-        public IViewComponentResult Invoke ()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View();
+            var data = await mediator.Send(new GetActiveSlidersQuery());
+            return View(data.OrderBy(x => x.DisplayOrder).ToList());
         }
     }
 }

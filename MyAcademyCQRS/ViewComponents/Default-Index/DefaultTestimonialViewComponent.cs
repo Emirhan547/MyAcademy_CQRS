@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using MyAcademyCQRS.Core.Application.Features.Queries.TestimonialQueries;
 
 namespace MyAcademyCQRS.ViewComponents.Default_Index
 {
-    public class DefaultTestimonialViewComponent:ViewComponent
+    public class DefaultTestimonialViewComponent(IMediator mediator) : ViewComponent
     {
-        public IViewComponentResult Invoke()
-        {
-            return View();
-        }
+        public async Task<IViewComponentResult> InvokeAsync()
+             => View(await mediator.Send(new GetActiveTestimonialsQuery()));
     }
 }

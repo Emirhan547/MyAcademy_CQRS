@@ -1,0 +1,54 @@
+﻿@model MyAcademyCQRS.Core.Application.Features.Results.NewsResults.GetNewsByIdQueryResult
+
+<div class="flex-1 overflow-y-auto p-8">
+
+    <section class="max-w-3xl bg-white dark:bg-[#251e18] rounded-lg shadow-soft border border-primary/10 p-6">
+
+        <h1 class="text-2xl font-header font-bold mb-6">
+            Haber - Güncelle
+        </h1>
+
+        <form method="post" class="space-y-4">
+
+            @Html.AntiForgeryToken()
+
+            <input asp-for="Id" type="hidden" />
+
+            <input asp-for="Title"
+                   class="w-full rounded-lg" />
+
+            <textarea asp-for="Summary"
+                      rows="3"
+                      class="w-full rounded-lg">
+            </textarea>
+
+            <input asp-for="ImageUrl"
+                   class="w-full rounded-lg" />
+
+            <input asp-for="Category"
+                   class="w-full rounded-lg" />
+
+            <input asp-for="Author"
+                   class="w-full rounded-lg" />
+
+            <input asp-for="PublishDate"
+                   type="date"
+                   class="w-full rounded-lg" />
+
+            <div>
+                <input asp-for="IsActive" />
+                <label asp-for="IsActive">
+                    Aktif
+                </label>
+            </div>
+
+            <button type="submit"
+                    class="px-4 py-2 rounded-lg bg-primary text-white">
+                Güncelle
+            </button>
+
+        </form>
+
+    </section>
+
+</div>

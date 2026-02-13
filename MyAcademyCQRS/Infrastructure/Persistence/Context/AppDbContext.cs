@@ -23,7 +23,8 @@ public class AppDbContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<ContactMessage> ContactMessages { get; set; }
-
+    public DbSet<News> News { get; set; }
+    public DbSet<ContactInfo> ContactInfos { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);

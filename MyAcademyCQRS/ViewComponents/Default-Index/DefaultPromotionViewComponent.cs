@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using MyAcademyCQRS.Core.Application.Features.Queries.PromotionQueries;
 
 namespace MyAcademyCQRS.ViewComponents.Default_Index
 {
-    public class DefaultPromotionViewComponent:ViewComponent
+    public class DefaultPromotionViewComponent(IMediator mediator) : ViewComponent
     {
-        public IViewComponentResult Invoke()
-        {
-            return View();
-        }
+        public async Task<IViewComponentResult> InvokeAsync()
+             => View(await mediator.Send(new GetActivePromotionsQuery()));
     }
 }
