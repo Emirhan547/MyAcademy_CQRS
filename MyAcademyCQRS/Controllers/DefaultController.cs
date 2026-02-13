@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using MyAcademyCQRS.Core.Application.Features.Queries.CategoryQueries;
+using MyAcademyCQRS.Core.Application.Features.Queries.ProductQueries;
+using MyAcademyCQRS.Models;
 
 namespace MyAcademyCQRS.Controllers
 {
@@ -8,5 +12,6 @@ namespace MyAcademyCQRS.Controllers
         {
             return View();
         }
+       
     }
 }
