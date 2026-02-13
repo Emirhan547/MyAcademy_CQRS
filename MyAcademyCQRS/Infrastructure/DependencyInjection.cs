@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MyAcademyCQRS.Core.Application;
 using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain;
+using MyAcademyCQRS.Core.Domain.Entities;
 using MyAcademyCQRS.Core.Domain.Enums;
 using MyAcademyCQRS.Core.Domain.Events.ContactMessageEvents;
 using MyAcademyCQRS.Core.Domain.Events.OrderEvents;
@@ -20,6 +22,22 @@ namespace MyAcademyCQRS.Infrastructure
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            });
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+            })
+               .AddEntityFrameworkStores<AppDbContext>()
+               .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Auth/Login";
+                options.AccessDeniedPath = "/Auth/AccessDenied";
             });
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();

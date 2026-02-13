@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MyAcademyCQRS.Core.Domain.Entities
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var users = ViewBag.Users as List<AppUser> ?? new();
+    var roles = ViewBag.Roles as List<IdentityRole> ?? new();
+}
+
+<div class="p-8 overflow-y-auto">
+    <h1 class="text-2xl font-bold mb-6">Rol Yönetimi</h1>
+
+    <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Yeni Rol Ekle</h2>
+            <form asp-action="CreateRole" method="post" class="space-y-3">
+                <input type="text" name="roleName" class="w-full rounded border-gray-300" placeholder="Örn: Editor" />
+                <button class="px-4 py-2 rounded bg-amber-600 text-white">Rol Ekle</button>
+            </form>
+        </div>
+
+        <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Kullanıcıya Rol Ata</h2>
+            <form asp-action="AssignRole" method="post" class="space-y-3">
+                <select name="userId" class="w-full rounded border-gray-300">
+                    @foreach (var user in users)
+                    {
+                        <option value="@user.Id">@user.FullName - @user.Email</option>
+                    }
+                </select>
+                <select name="roleName" class="w-full rounded border-gray-300">
+                    @foreach (var role in roles)
+                    {
+                        <option value="@role.Name">@role.Name</option>
+                    }
+                </select>
+                <button class="px-4 py-2 rounded bg-amber-600 text-white">Rol Ata</button>
+            </form>
+        </div>
+    </div>
+</div>

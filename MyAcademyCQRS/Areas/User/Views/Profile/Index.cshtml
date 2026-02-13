@@ -1,0 +1,47 @@
+﻿@using MyAcademyCQRS.Models.Auths
+@model ProfileViewModel
+
+<section class="shop-section sec-pad">
+    <div class="auto-container">
+        <h2>Hesabım</h2>
+
+        <form asp-action="Update" method="post" style="max-width:700px" class="mb-5">
+            <div class="form-group mb-3">
+                <label>Ad Soyad</label>
+                <input asp-for="FullName" class="form-control" />
+            </div>
+            <div class="form-group mb-3">
+                <label>Email</label>
+                <input asp-for="Email" class="form-control" readonly />
+            </div>
+            <div class="form-group mb-3">
+                <label>Telefon</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+            </div>
+            <button type="submit" class="theme-btn btn-one">Profili Güncelle</button>
+        </form>
+
+        <h3>Geçmiş Siparişlerim</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sipariş No</th>
+                    <th>Tutar</th>
+                    <th>Durum</th>
+                    <th>Tarih</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.Orders)
+                {
+                    <tr>
+                        <td>@order.OrderNumber</td>
+                        <td>@order.TotalPrice.ToString("C")</td>
+                        <td>@order.Status</td>
+                        <td>@order.CreatedDate.ToString("dd.MM.yyyy")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -1,4 +1,8 @@
-﻿<header class="main-header style-one">
+﻿@using MyAcademyCQRS.Core.Domain.Entities
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+<header class="main-header style-one">
 
     <!-- header-lower -->
     <div class="header-lower">
@@ -123,10 +127,30 @@
                         </div>
                     </div>
                 </li>
-                <li class="user-btn">
-                    <a href="index.html" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png);">
+                <li class="user-btn dropdown">
+                    <a href="#" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png);">
                         <i class="icon-Profile"></i>
                     </a>
+                    <ul>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li><a asp-area="User" asp-controller="Profile" asp-action="Index">Hesabım</a></li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a></li>
+                            }
+                            <li>
+                                <form asp-controller="Auth" asp-action="Logout" method="post">
+                                    <button type="submit" class="theme-btn btn-one" style="padding:8px 16px;">Çıkış Yap</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li><a asp-controller="Auth" asp-action="Login">Giriş Yap</a></li>
+                            <li><a asp-controller="Auth" asp-action="Register">Kayıt Ol</a></li>
+                        }
+                    </ul>
                 </li>
                 <li class="cart-btn">
                     <a asp-controller="Shop" asp-action="Index" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png);">
@@ -165,10 +189,30 @@
                         </div>
                     </div>
                 </li>
-                <li class="user-btn">
-                    <a href="index.html" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png);">
+                <li class="user-btn dropdown">
+                    <a href="#" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png);">
                         <i class="icon-Profile"></i>
                     </a>
+                    <ul>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li><a asp-area="User" asp-controller="Profile" asp-action="Index">Hesabım</a></li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a></li>
+                            }
+                            <li>
+                                <form asp-controller="Auth" asp-action="Logout" method="post">
+                                    <button type="submit" class="theme-btn btn-one" style="padding:8px 16px;">Çıkış Yap</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li><a asp-controller="Auth" asp-action="Login">Giriş Yap</a></li>
+                            <li><a asp-controller="Auth" asp-action="Register">Kayıt Ol</a></li>
+                        }
+                    </ul>
                 </li>
                 <li class="cart-btn">
                     <a asp-controller="Shop" asp-action="Index" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png);">
