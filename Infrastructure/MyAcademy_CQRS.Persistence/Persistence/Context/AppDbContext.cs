@@ -26,6 +26,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<ContactMessage> ContactMessages { get; set; }
     public DbSet<News> News { get; set; }
     public DbSet<ContactInfo> ContactInfos { get; set; }
+    public DbSet<ActivityLog> ActivityLogs { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);

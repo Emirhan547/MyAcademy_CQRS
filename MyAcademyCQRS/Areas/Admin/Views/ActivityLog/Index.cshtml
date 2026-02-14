@@ -1,0 +1,68 @@
+﻿@model MyAcademyCQRS.Areas.Admin.Models.ActivityLogListViewModel
+@using MyAcademyCQRS.Core.Domain.Enums
+@{
+    ViewData["Title"] = "Sistem Logları";
+}
+
+<div class="flex-1 overflow-y-auto p-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <h1 class="text-2xl font-header font-bold text-gray-800 dark:text-white">Sistem Logları</h1>
+
+            <form method="get" class="flex items-center gap-2">
+                <select name="category" class="rounded-lg border-gray-300 dark:bg-white/10 dark:text-white">
+                    <option value="">Tüm Kategoriler</option>
+                    @foreach (var category in Enum.GetValues<ActivityLogCategory>())
+                    {
+                        if (Model.SelectedCategory == category)
+                        {
+                            <option value="@category" selected>@category</option>
+                        }
+                        else
+                        {
+                            <option value="@category">@category</option>
+                        }
+                    }
+                </select>
+                <button type="submit" class="px-4 py-2 rounded-lg bg-primary text-white text-sm">Filtrele</button>
+            </form>
+        </div>
+
+        <div class="bg-white dark:bg-white/5 rounded-xl shadow-soft overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-white/10">
+                    <thead class="bg-gray-50 dark:bg-white/5">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide">Tarih</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide">Kategori</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide">Aksiyon</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide">Açıklama</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide">Kullanıcı</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/10">
+                        @if (!Model.Logs.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="px-4 py-8 text-center text-sm text-gray-500">Kayıt bulunamadı.</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var log in Model.Logs)
+                            {
+                                <tr>
+                                    <td class="px-4 py-3 text-sm">@log.CreatedDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                    <td class="px-4 py-3 text-sm">@log.Category</td>
+                                    <td class="px-4 py-3 text-sm font-medium">@log.Action</td>
+                                    <td class="px-4 py-3 text-sm">@log.Description</td>
+                                    <td class="px-4 py-3 text-sm">@(string.IsNullOrWhiteSpace(log.UserEmail) ? "-" : log.UserEmail)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

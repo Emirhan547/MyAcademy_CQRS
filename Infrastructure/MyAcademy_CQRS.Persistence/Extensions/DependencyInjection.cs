@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MyAcademy_CQRS.Application.Common.Storage;
 using MyAcademy_CQRS.Application.Contracts.Events;
 using MyAcademy_CQRS.Application.Contracts.Repositories;
+using MyAcademy_CQRS.Application.Contracts.Services;
 using MyAcademy_CQRS.Application.Contracts.UOW;
 using MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain;
 using MyAcademyCQRS.Core.Domain.Entities;
@@ -35,7 +36,7 @@ namespace MyAcademy_CQRS.Persistence.Extensions
             services.AddScoped<IGalleryCategoryReadRepository, GalleryCategoryReadRepository>();
             services.AddScoped<IImageStorageService, GoogleCloudStorageService>();
             services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
-
+            services.AddScoped<IActivityLogService, ActivityLogService>();
             services.AddScoped<IDomainEventHandler<OrderCreatedEvent>, OrderLogEventHandler>();
             services.AddScoped<IDomainEventHandler<OrderStatusChangedEvent>, OrderLogEventHandler>();
             services.AddScoped<IDomainEventHandler<OrderCreatedEvent>, OrderMailEventHandler>();
