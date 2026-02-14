@@ -14,5 +14,7 @@ namespace MyAcademyCQRS.Infrastructure.Persistence.Concrete
                     .ThenInclude(oi => oi.Product)
                 .FirstOrDefaultAsync(o => o.Id == orderId);
         }
+
+       
     }
 }

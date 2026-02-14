@@ -8,6 +8,7 @@ using MyAcademy_CQRS.Application.Contracts.Events;
 using MyAcademy_CQRS.Application.Contracts.Repositories;
 using MyAcademy_CQRS.Application.Contracts.Services;
 using MyAcademy_CQRS.Application.Contracts.UOW;
+using MyAcademy_CQRS.Persistence.Persistence.Concrete;
 using MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain;
 using MyAcademyCQRS.Core.Domain.Entities;
 using MyAcademyCQRS.Core.Domain.Enums;

@@ -14,6 +14,7 @@ namespace MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.Creatio
                 OrderNumber = Guid.NewGuid().ToString("N")[..8],
                 Status = OrderStatus.Pending,
                 TotalPrice = context.TotalPrice,
+                UserId = context.Command.UserId,
                 OrderItems = context.OrderItems
             };
 

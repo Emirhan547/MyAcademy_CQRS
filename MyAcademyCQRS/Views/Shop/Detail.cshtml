@@ -20,6 +20,16 @@
 </section>
 
 <section class="shop-details">
+    <div class="auto-container" style="margin-top:20px;">
+        @if (TempData["SuccessMessage"] is string success)
+        {
+            <div class="alert alert-success">@success</div>
+        }
+        @if (TempData["ErrorMessage"] is string error)
+        {
+            <div class="alert alert-danger">@error</div>
+        }
+    </div>
     <div class="product-details-content">
         <div class="auto-container">
             <div class="row align-items-center clearfix">
@@ -56,7 +66,14 @@
                                 <label><strong>Stock:</strong> Available</label>
                             </div>
                         </div>
-
+                        <form asp-controller="Cart" asp-action="Add" method="post" style="margin-top:15px;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="productId" value="@Model.Product.Id" />
+                            <div style="display:flex;gap:10px;align-items:center;">
+                                <input type="number" name="quantity" value="1" min="1" style="width:90px;" />
+                                <button type="submit" class="theme-btn-two">Sepete Ekle</button>
+                            </div>
+                        </form>
                         <div class="btn-box" style="margin-top:20px;">
                             <a asp-controller="Shop" asp-action="Index" asp-route-categoryId="@Model.Product.CategoryId" class="theme-btn-two">
                                 Similar products

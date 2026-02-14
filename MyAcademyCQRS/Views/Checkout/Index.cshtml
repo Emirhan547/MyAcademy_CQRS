@@ -1,0 +1,76 @@
+﻿@model MyAcademyCQRS.Models.CheckoutViewModel
+@using MyAcademyCQRS.Core.Domain.Enums
+@using MyAcademy_CQRS.Domain.Enums
+@{
+    ViewData["Title"] = "Ödeme";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/page-title.jpg"));">
+    <div class="auto-container">
+        <div class="content-box">
+            <div class="title"><h1>Ödeme</h1></div>
+        </div>
+    </div>
+</section>
+
+<section class="contact-section sec-pad">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-7 col-md-12 col-sm-12">
+                <h3>Teslimat ve Ödeme Bilgileri</h3>
+                <form method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <input asp-for="FullName" class="form-control" placeholder="Ad Soyad" />
+                    <input asp-for="Email" class="form-control" placeholder="E-posta" style="margin-top:10px;" />
+                    <input asp-for="Address" class="form-control" placeholder="Adres" style="margin-top:10px;" />
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-md-6"><input asp-for="City" class="form-control" placeholder="Şehir" /></div>
+                        <div class="col-md-6"><input asp-for="District" class="form-control" placeholder="İlçe" /></div>
+                    </div>
+
+                    <h4 style="margin-top:20px;">Ödeme Yöntemi</h4>
+                    <select asp-for="PaymentMethod" class="form-control">
+                        <option value="@((int)PaymentMethodType.CreditCard)">Kredi Kartı</option>
+                        <option value="@((int)PaymentMethodType.BankTransfer)">Banka Havalesi</option>
+                        <option value="@((int)PaymentMethodType.CashOnDelivery)">Kapıda Ödeme</option>
+                    </select>
+
+                    <div style="margin-top:15px;">
+                        <h4>Kart Bilgileri (Kredi Kartı için)</h4>
+                        <input asp-for="CardHolderName" class="form-control" placeholder="Kart Üzerindeki İsim" />
+                        <input asp-for="CardNumber" class="form-control" placeholder="Kart Numarası" style="margin-top:10px;" />
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-4"><input asp-for="ExpireMonth" class="form-control" placeholder="Ay" /></div>
+                            <div class="col-md-4"><input asp-for="ExpireYear" class="form-control" placeholder="Yıl" /></div>
+                            <div class="col-md-4"><input asp-for="Cvv" class="form-control" placeholder="CVV" /></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:15px;">
+                        <h4>Havale Bilgileri (Banka Havalesi için)</h4>
+                        <input asp-for="Iban" class="form-control" placeholder="IBAN" />
+                        <input asp-for="TransferReference" class="form-control" placeholder="Transfer Referansı" style="margin-top:10px;" />
+                    </div>
+
+                    <button type="submit" class="theme-btn-two" style="margin-top:20px;">Siparişi Tamamla</button>
+                </form>
+            </div>
+            <div class="col-lg-5 col-md-12 col-sm-12">
+                <h3>Sipariş Özeti</h3>
+                <ul class="list-group">
+                    @foreach (var item in Model.Cart.Items)
+                    {
+                        <li class="list-group-item" style="display:flex;justify-content:space-between;">
+                            <span>@item.ProductName x @item.Quantity</span>
+                            <strong>@item.LineTotal.ToString("C")</strong>
+                        </li>
+                    }
+                </ul>
+                <h4 style="margin-top:15px;">Toplam: @Model.Cart.TotalPrice.ToString("C")</h4>
+            </div>
+        </div>
+    </div>
+</section>

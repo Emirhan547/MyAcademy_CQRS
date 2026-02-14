@@ -6,6 +6,7 @@ namespace MyAcademyCQRS.Core.Application.Features.Commands.OrderCommands
 {
     public class CreateOrderCommand : IRequest<Result>
     {
+        public string? UserId { get; set; }
         public IList<CreateOrderItemCommand> Items { get; set; } = new List<CreateOrderItemCommand>();
     }
 
