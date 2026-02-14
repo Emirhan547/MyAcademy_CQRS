@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using MyAcademyCQRS.Core.Application;
-using MyAcademyCQRS.Core.Domain.Entities;
-using MyAcademyCQRS.Extensions;
-using MyAcademyCQRS.Infrastructure;
+
 
 using System.Reflection;
 
