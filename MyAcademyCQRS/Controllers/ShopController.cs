@@ -10,49 +10,24 @@ namespace MyAcademyCQRS.Controllers
     {
         public async Task<IActionResult> Index(int? categoryId)
         {
-            var categories = await mediator.Send(new GetActiveCategoriesQuery());
+            ViewBag.Categories = await mediator.Send(new GetActiveCategoriesQuery());
+            ViewBag.SelectedCategoryId = categoryId;
 
-            var model = new ShopIndexViewModel
+            var products = await mediator.Send(new GetShopProductsQuery
             {
-                Categories = categories,
-                SelectedCategoryId = categoryId
-            };
+                CategoryId = categoryId
+            });
 
-            if (categoryId.HasValue)
-            {
-                var productsByCategory = await mediator.Send(new GetProductsByCategoryQuery
-                {
-                    CategoryId = categoryId.Value
-                });
+            return View(products);
+        }
 
-                model.Products = productsByCategory
-                    .Select(x => new ShopProductItemViewModel
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        ImageUrl = x.ImageUrl,
-                        Price = x.Price,
-                        Rating = x.Rating
-                    })
-                    .ToList();
-            }
-            else
-            {
-                var activeProducts = await mediator.Send(new GetActiveProductsQuery());
+        public async Task<IActionResult> Detail(int id)
+        {
+            var result = await mediator.Send(new GetShopDetailQuery { Id = id });
 
-                model.Products = activeProducts
-                    .Select(x => new ShopProductItemViewModel
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        ImageUrl = x.ImageUrl,
-                        Price = x.Price,
-                        Rating = x.Rating
-                    })
-                    .ToList();
-            }
-
-            return View(model);
+            return result is null
+                   ? NotFound()
+                   : View(result);
         }
     }
 }

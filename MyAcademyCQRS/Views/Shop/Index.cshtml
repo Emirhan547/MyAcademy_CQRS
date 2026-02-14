@@ -1,7 +1,12 @@
-﻿@model MyAcademyCQRS.Models.ShopIndexViewModel
+﻿
+@model IList<MyAcademyCQRS.Core.Application.Features.Results.ProductResults.GetActiveProductsQueryResult>
+@using MyAcademyCQRS.Core.Application.Features.Results.CategoryResults
 @{
     ViewData["Title"] = "Shop";
     Layout = "~/Views/Shared/_UILayout.cshtml";
+
+    var categories = ViewBag.Categories as IList<GetActiveCategoriesQueryResult> ?? [];
+    int? selectedCategoryId = ViewBag.SelectedCategoryId is int value ? value : null;
 }
 
 <section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/page-title.jpg"));">
@@ -32,17 +37,19 @@
                                 <li>
                                     <a asp-controller="Shop"
                                        asp-action="Index"
-                                       class="@(Model.SelectedCategoryId is null ? "current" : string.Empty)">
+                                       class="@(selectedCategoryId is null ? "current" : string.Empty)">
                                         All Products
                                     </a>
                                 </li>
-                                @foreach (var category in Model.Categories)
+        
+                                @foreach (var category in categories)
                                 {
                                     <li>
                                         <a asp-controller="Shop"
                                            asp-action="Index"
                                            asp-route-categoryId="@category.Id"
-                                           class="@(Model.SelectedCategoryId == category.Id ? "current" : string.Empty)">
+          
+                                           class="@(selectedCategoryId == category.Id ? "current" : string.Empty)">
                                             @category.Name
                                         </a>
                                     </li>
@@ -57,22 +64,32 @@
                 <div class="our-shop">
                     <div class="items-sorting clearfix">
                         <div class="left-column pull-left">
-                            <h6>@Model.Products.Count product listed</h6>
+     
+                            <h6>@Model.Count product listed</h6>
                         </div>
                     </div>
 
                     <div class="row clearfix">
-                        @foreach (var item in Model.Products)
+     
+                        @foreach (var item in Model)
                         {
                             <div class="col-lg-4 col-md-6 col-sm-12 shop-block">
                                 <div class="shop-block-one">
                                     <div class="inner-box">
                                         <figure class="image-box">
-                                            <img src="@item.ImageUrl" alt="@item.Name">
+                                          
+                                            <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id">
+                                                <img src="@item.ImageUrl" alt="@item.Name">
+                                            </a>
                                         </figure>
                                         <div class="lower-content">
                                             <span class="price-box">$@item.Price</span>
-                                            <h3><a href="#">@item.Name</a></h3>
+                          
+                                            <h3>
+                                                <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id">
+                                                    @item.Name
+                                                </a>
+                                            </h3>
                                             <ul class="rating clearfix">
                                                 @for (var i = 0; i < Math.Min(item.Rating, 5); i++)
                                                 {
@@ -80,7 +97,8 @@
                                                 }
                                             </ul>
                                             <div class="cart-btn">
-                                                <a href="#" class="theme-btn-two">Add to cart</a>
+                                     
+                                                <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id" class="theme-btn-two">View details</a>
                                             </div>
                                         </div>
                                     </div>
