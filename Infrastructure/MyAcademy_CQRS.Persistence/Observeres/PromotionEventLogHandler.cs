@@ -1,4 +1,4 @@
-﻿using MyAcademyCQRS.Core.Application.Contracts;
+﻿using MyAcademy_CQRS.Application.Contracts.Events;
 using MyAcademyCQRS.Core.Domain.Events.PromotionEvents;
 
 namespace MyAcademyCQRS.Infrastructure.Observeres

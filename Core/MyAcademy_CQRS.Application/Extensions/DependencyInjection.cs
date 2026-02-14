@@ -2,7 +2,7 @@
 using MediatR;
 
 
-namespace MyAcademyCQRS.Core.Application
+namespace MyAcademy_CQRS.Application.Extensions
 {
     public static class DependencyInjection
     {

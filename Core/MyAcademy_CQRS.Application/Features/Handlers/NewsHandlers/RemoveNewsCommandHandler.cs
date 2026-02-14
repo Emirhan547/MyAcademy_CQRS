@@ -1,6 +1,7 @@
 ﻿using MediatR;
+using MyAcademy_CQRS.Application.Contracts.Repositories;
+using MyAcademy_CQRS.Application.Contracts.UOW;
 using MyAcademyCQRS.Core.Application.Common.Results;
-using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Commands.NewsCommands;
 using MyAcademyCQRS.Core.Domain.Entities;
 

@@ -1,6 +1,6 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
-using MyAcademyCQRS.Core.Application;
+using MyAcademy_CQRS.Application.Common.Storage;
 using System.Text.Json;
 
 namespace MyAcademyCQRS.Infrastructure.Storage

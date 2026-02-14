@@ -1,7 +1,5 @@
 ﻿namespace MyAcademyCQRS.Core.Application.Common.Results
 {
- 
-
     public sealed class DataResult<T> : BaseResult
     {
         public T? Data { get; private set; }

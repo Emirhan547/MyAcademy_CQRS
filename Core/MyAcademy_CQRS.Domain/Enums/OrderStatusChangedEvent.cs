@@ -1,4 +1,4 @@
-﻿using MyAcademyCQRS.Core.Application.Contracts;
+﻿
 
 namespace MyAcademyCQRS.Core.Domain.Enums
 {

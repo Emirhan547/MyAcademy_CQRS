@@ -1,4 +1,5 @@
-﻿using MyAcademyCQRS.Core.Application.Contracts;
+﻿using MyAcademy_CQRS.Application.Contracts.Repositories;
+using MyAcademy_CQRS.Application.Contracts.UOW;
 using MyAcademyCQRS.Core.Domain.Entities;
 using MyAcademyCQRS.Core.Domain.Enums;
 

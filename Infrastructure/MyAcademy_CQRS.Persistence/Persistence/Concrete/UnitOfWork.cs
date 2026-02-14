@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using MyAcademyCQRS.Core.Application.Contracts;
+using MyAcademy_CQRS.Application.Contracts.UOW;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.Infrastructure.Persistence.Concrete

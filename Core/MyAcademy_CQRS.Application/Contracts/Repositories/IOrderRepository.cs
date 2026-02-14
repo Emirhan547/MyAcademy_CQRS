@@ -1,6 +1,6 @@
 ﻿using MyAcademyCQRS.Core.Domain.Entities;
 
-namespace MyAcademyCQRS.Core.Application.Contracts
+namespace MyAcademy_CQRS.Application.Contracts.Repositories
 {
     public interface IOrderRepository
     {

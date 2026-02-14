@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
 using MediatR;
+using MyAcademy_CQRS.Application.Contracts.Events;
+using MyAcademy_CQRS.Application.Contracts.UOW;
 using MyAcademyCQRS.Core.Application.Common.Results;
-using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Commands.OrderCommands;
 using MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain;
 using MyAcademyCQRS.Core.Domain.Events.OrderEvents;

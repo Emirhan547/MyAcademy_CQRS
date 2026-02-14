@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyAcademyCQRS.Core.Application.Contracts;
+using MyAcademy_CQRS.Application.Contracts.Repositories;
 using MyAcademyCQRS.Core.Domain.Entities;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;
 

@@ -1,4 +1,4 @@
-﻿namespace MyAcademyCQRS.Core.Application
+﻿namespace MyAcademy_CQRS.Application.Extensions
 {
     public class ApplicationAssembly
     {

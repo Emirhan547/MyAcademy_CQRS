@@ -1,4 +1,4 @@
-﻿namespace MyAcademyCQRS.Core.Application
+﻿namespace MyAcademy_CQRS.Application.Common.Storage
 {
     public interface IImageStorageService
     {

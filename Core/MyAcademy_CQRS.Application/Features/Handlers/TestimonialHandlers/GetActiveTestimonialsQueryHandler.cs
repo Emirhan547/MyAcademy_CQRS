@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using MyAcademyCQRS.Core.Application.Contracts;
+using MyAcademy_CQRS.Application.Contracts.Repositories;
 using MyAcademyCQRS.Core.Application.Features.Queries.TestimonialQueries;
 using MyAcademyCQRS.Core.Application.Features.Results.TestimonialResults;
 using MyAcademyCQRS.Core.Domain.Entities;

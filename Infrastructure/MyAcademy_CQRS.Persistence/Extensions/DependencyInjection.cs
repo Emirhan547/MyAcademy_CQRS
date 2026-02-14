@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using MyAcademyCQRS.Core.Application;
-using MyAcademyCQRS.Core.Application.Contracts;
+﻿
+using MyAcademy_CQRS.Application.Common.Storage;
+using MyAcademy_CQRS.Application.Contracts.Events;
+using MyAcademy_CQRS.Application.Contracts.Repositories;
+using MyAcademy_CQRS.Application.Contracts.UOW;
 using MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain;
 using MyAcademyCQRS.Core.Domain.Entities;
 using MyAcademyCQRS.Core.Domain.Enums;
@@ -13,7 +14,7 @@ using MyAcademyCQRS.Infrastructure.Persistence.Concrete;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;
 using MyAcademyCQRS.Infrastructure.Storage;
 
-namespace MyAcademyCQRS.Infrastructure
+namespace MyAcademy_CQRS.Persistence.Extensions
 {
     public static class DependencyInjection
     {

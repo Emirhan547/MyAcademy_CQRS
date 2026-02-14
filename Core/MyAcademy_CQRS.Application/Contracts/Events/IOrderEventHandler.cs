@@ -1,7 +1,7 @@
 ﻿using MyAcademyCQRS.Core.Domain.Enums;
 using MyAcademyCQRS.Core.Domain.Events.OrderEvents;
 
-namespace MyAcademyCQRS.Core.Application.Contracts
+namespace MyAcademy_CQRS.Application.Contracts.Events
 {
     public interface IOrderEventHandler
     {

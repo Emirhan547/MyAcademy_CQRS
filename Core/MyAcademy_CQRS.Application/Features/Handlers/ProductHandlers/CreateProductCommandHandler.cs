@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
+using MyAcademy_CQRS.Application.Common.Storage;
+using MyAcademy_CQRS.Application.Contracts.Repositories;
+using MyAcademy_CQRS.Application.Contracts.UOW;
 using MyAcademyCQRS.Core.Application.Common.Results;
-using MyAcademyCQRS.Core.Application.Contracts;
 using MyAcademyCQRS.Core.Application.Features.Commands.ProductCommands;
 using MyAcademyCQRS.Core.Domain.Entities;
 

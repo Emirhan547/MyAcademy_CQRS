@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 
-namespace MyAcademyCQRS.Core.Application.Contracts
+namespace MyAcademy_CQRS.Application.Contracts.UOW
 {
     public interface IUnitOfWork
     {

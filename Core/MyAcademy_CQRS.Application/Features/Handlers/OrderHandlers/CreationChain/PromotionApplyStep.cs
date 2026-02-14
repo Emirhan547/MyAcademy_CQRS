@@ -1,4 +1,4 @@
-﻿using MyAcademyCQRS.Core.Application.Contracts;
+﻿using MyAcademy_CQRS.Application.Contracts.Repositories;
 using MyAcademyCQRS.Core.Domain.Entities;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain
