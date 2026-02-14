@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using MyAcademy_CQRS.Application.Contracts.Repositories;
 using MyAcademyCQRS.Core.Application.Features.Queries.GalleryCategoryQueries;
 using MyAcademyCQRS.Core.Application.Features.Results.GalleryCategoryResults;
-using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.GalleryCategoryHandlers
 {

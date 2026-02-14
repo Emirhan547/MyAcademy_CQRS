@@ -1,4 +1,6 @@
-﻿using MyAcademyCQRS.Core.Application.Contracts;
+﻿
+
+using MyAcademy_CQRS.Application.Contracts.Events;
 
 namespace MyAcademyCQRS.Core.Domain.Events.ContactMessageEvents
 {

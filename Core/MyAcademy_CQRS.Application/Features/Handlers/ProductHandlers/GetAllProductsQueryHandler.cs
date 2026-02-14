@@ -1,13 +1,10 @@
-﻿
-
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MyAcademy_CQRS.Application.Contracts.Repositories;
 using MyAcademyCQRS.Core.Application.Features.Queries.ProductQueries;
 using MyAcademyCQRS.Core.Application.Features.Results.ProductResults;
 using MyAcademyCQRS.Core.Domain.Entities;
-using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.ProductHandlers
 {

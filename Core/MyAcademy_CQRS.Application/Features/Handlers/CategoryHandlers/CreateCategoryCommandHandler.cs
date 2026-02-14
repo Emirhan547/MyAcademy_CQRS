@@ -6,7 +6,6 @@ using MyAcademy_CQRS.Application.Contracts.UOW;
 using MyAcademyCQRS.Core.Application.Common.Results;
 using MyAcademyCQRS.Core.Application.Features.Commands.CategoryCommands;
 using MyAcademyCQRS.Core.Domain.Entities;
-using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.CategoryHandlers
 {

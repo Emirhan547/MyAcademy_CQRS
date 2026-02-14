@@ -1,4 +1,5 @@
-﻿using MyAcademy_CQRS.Application.Contracts.Events;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MyAcademy_CQRS.Application.Contracts.Events;
 
 namespace MyAcademyCQRS.Infrastructure.Observeres
 {

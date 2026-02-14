@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection.Metadata;
 
 
 namespace MyAcademy_CQRS.Application.Extensions
@@ -12,6 +14,7 @@ namespace MyAcademy_CQRS.Application.Extensions
                 cfg.RegisterServicesFromAssembly(typeof(ApplicationAssembly).Assembly));
 
             services.AddValidatorsFromAssemblyContaining<ApplicationAssembly>();
+            services.AddAutoMapper(typeof(ApplicationAssembly).Assembly);
 
             return services;
         }

@@ -1,4 +1,5 @@
-﻿using MyAcademy_CQRS.Application.Contracts.Events;
+﻿using Microsoft.Extensions.Logging;
+using MyAcademy_CQRS.Application.Contracts.Events;
 using MyAcademyCQRS.Core.Domain.Events.PromotionEvents;
 
 namespace MyAcademyCQRS.Infrastructure.Observeres

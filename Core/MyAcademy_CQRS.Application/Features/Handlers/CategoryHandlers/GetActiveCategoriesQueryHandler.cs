@@ -4,7 +4,6 @@ using MyAcademy_CQRS.Application.Contracts.Repositories;
 using MyAcademyCQRS.Core.Application.Features.Queries.CategoryQueries;
 using MyAcademyCQRS.Core.Application.Features.Results.CategoryResults;
 using MyAcademyCQRS.Core.Domain.Entities;
-using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.CategoryHandlers2
 {

@@ -1,5 +1,6 @@
 ﻿
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using MyAcademyCQRS.Core.Application.Common.Results;
 
 namespace MyAcademyCQRS.Core.Application.Features.Commands.ProductCommands
