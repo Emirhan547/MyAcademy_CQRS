@@ -24,8 +24,9 @@ namespace MyAcademyCQRS.Infrastructure.Storage
             var credentialsJson = JsonSerializer.Serialize(serviceAccountDict);
 
             var credential = GoogleCredential
-                .FromJson(credentialsJson)
-                .CreateScoped("https://www.googleapis.com/auth/cloud-platform");
+     .FromJson(credentialsJson)
+     .CreateScoped("https://www.googleapis.com/auth/devstorage.full_control");
+
 
             _storageClient = StorageClient.Create(credential);
         }
