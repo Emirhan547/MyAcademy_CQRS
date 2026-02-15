@@ -3,7 +3,7 @@ using MyAcademy_CQRS.Application.Contracts.Sessions;
 
 using System.Text.Json;
 
-namespace MyAcademyCQRS.Infrastructure.Services;
+namespace MyAcademy_CQRS.Infrastructure.Services;
 
 public sealed class SessionCartService(IHttpContextAccessor httpContextAccessor) : ICartSessionService
 {

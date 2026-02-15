@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using MyAcademy_CQRS.Application.Contracts.Abstractions;
 
-namespace MyAcademyCQRS.Infrastructure.Persistence.Concrete;
+namespace MyAcademy_CQRS.Persistence.Persistence.Concrete;
 
 public sealed class EfCoreApplicationTransaction(IDbContextTransaction transaction) : IApplicationTransaction
 {

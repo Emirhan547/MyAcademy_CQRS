@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using MyAcademy_CQRS.Application.Extensions;
+using MyAcademy_CQRS.Persistence.Context;
 using MyAcademy_CQRS.Persistence.Extensions;
 using MyAcademyCQRS.Core.Domain.Entities;
-using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 
 var builder = WebApplication.CreateBuilder(args);

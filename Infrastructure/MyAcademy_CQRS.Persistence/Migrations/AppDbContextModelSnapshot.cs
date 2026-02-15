@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyAcademyCQRS.Infrastructure.Persistence.Context;
+using MyAcademy_CQRS.Persistence.Context;
+
 
 #nullable disable
 

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MyAcademy_CQRS.Persistence.Context;
 using MyAcademyCQRS.Areas.Admin.Models;
 using MyAcademyCQRS.Core.Domain.Enums;
-using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.Areas.Admin.Controllers;
 
