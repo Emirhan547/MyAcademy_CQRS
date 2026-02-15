@@ -1,31 +1,201 @@
-﻿@using MyAcademyCQRS.Models.Auths
+﻿
+@using MyAcademyCQRS.Models.Auths
 @model RegisterViewModel
 @{
-    Layout = "~/Views/Shared/_UILayout.cshtml";
+  
+    Layout = null;
 }
+<!DOCTYPE html>
+<html class="dark" lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bagery - Kayıt Ol</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Be+Vietnam+Pro:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#e1a089",
+                        "primary-hover": "#d68b70",
+                        "background-light": "#fdf9f7",
+                        "background-dark": "#121826",
+                    },
+                    fontFamily: {
+                        display: ["Be Vietnam Pro", "sans-serif"],
+                        serif: ["Playfair Display", "serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "1rem",
+                        xl: "1.5rem",
+                        full: "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-<section class="shop-section sec-pad">
-    <div class="auto-container" style="max-width:700px">
-        <h2>Kayıt Ol</h2>
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group mb-3">
-                <label>Ad Soyad</label>
-                <input asp-for="FullName" class="form-control" />
+
+        .light .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(225, 160, 137, 0.2);
+        }
+
+        .blob {
+            filter: blur(80px);
+            z-index: 0;
+        }
+
+        .btn-hover-effect:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(225, 160, 137, 0.3);
+        }
+
+        .validation-errors ul {
+            margin: 0;
+            padding-left: 1rem;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#362e2b] dark:text-white min-h-screen relative overflow-x-hidden flex flex-col">
+    <div class="blob absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/30 dark:bg-primary/20"></div>
+    <div class="blob absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#1e293b]/20 dark:bg-[#e1a089]/10"></div>
+    <div class="blob absolute top-[20%] right-[10%] w-[30%] h-[30%] rounded-full bg-primary/20 dark:bg-primary/5"></div>
+
+    <div class="layout-container flex h-full grow flex-col z-10">
+        <header class="flex items-center justify-between whitespace-nowrap px-6 lg:px-20 py-6">
+            <div class="flex items-center gap-3">
+                <div class="size-8 text-primary">
+                    <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" fill-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-black leading-tight tracking-tight font-display">Bagery</h2>
             </div>
-            <div class="form-group mb-3">
-                <label>Email</label>
-                <input asp-for="Email" class="form-control" />
+           
+            <div class="hidden md:flex flex-1 justify-end gap-10 items-center">
+                <nav class="flex items-center gap-8">
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Ürünler</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Hakkımızda</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">İletişim</a>
+                </nav>
+                <a asp-controller="Auth" asp-action="Login" class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-xl h-11 px-6 bg-primary text-white text-sm font-bold btn-hover-effect transition-all duration-300">
+                    Giriş Yap
+                </a>
             </div>
-            <div class="form-group mb-3">
-                <label>Şifre</label>
-                <input asp-for="Password" type="password" class="form-control" />
+          
+        </header>
+
+        <main class="flex-1 flex items-center justify-center p-6">
+            <div class="glass-card w-full max-w-[450px] rounded-xl p-8 lg:p-10 shadow-2xl">
+                <div class="text-center mb-8">
+                    <h1 class="font-serif text-4xl mb-3 dark:text-white text-[#251f1d]">Hesap Oluştur</h1>
+                    <p class="text-sm opacity-70 leading-relaxed max-w-[300px] mx-auto">Bagery fırsatları ve sipariş takibi için şimdi kayıt ol.</p>
+                </div>
+
+                <div asp-validation-summary="All" class="validation-errors mb-6 p-3 rounded bg-red-500/10 border border-red-500/20 text-red-500 text-xs flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">error</span>
+                </div>
+
+                <form method="post" asp-controller="Auth" asp-action="Register" class="space-y-5">
+                    <div class="space-y-1.5">
+                        <label asp-for="FullName" class="text-xs font-bold uppercase tracking-wider opacity-60 ml-1">Ad Soyad</label>
+                        <div class="relative flex items-center group">
+                            <span class="material-symbols-outlined absolute left-4 text-[20px] opacity-40 group-focus-within:text-primary group-focus-within:opacity-100 transition-all">person</span>
+                            <input asp-for="FullName" class="w-full h-14 pl-12 pr-4 rounded-xl border border-white/10 dark:bg-white/5 bg-white/50 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all placeholder:text-current/30 text-base" placeholder="Adınızı ve soyadınızı girin" />
+                        </div>
+                        <span asp-validation-for="FullName" class="text-[10px] text-red-400 mt-1 ml-1 font-medium"></span>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label asp-for="Email" class="text-xs font-bold uppercase tracking-wider opacity-60 ml-1">E-posta</label>
+                        <div class="relative flex items-center group">
+                            <span class="material-symbols-outlined absolute left-4 text-[20px] opacity-40 group-focus-within:text-primary group-focus-within:opacity-100 transition-all">mail</span>
+                            <input asp-for="Email" class="w-full h-14 pl-12 pr-4 rounded-xl border border-white/10 dark:bg-white/5 bg-white/50 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all placeholder:text-current/30 text-base" placeholder="example@mail.com" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-[10px] text-red-400 mt-1 ml-1 font-medium"></span>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label asp-for="Password" class="text-xs font-bold uppercase tracking-wider opacity-60 ml-1">Şifre</label>
+                        <div class="relative flex items-center group">
+                            <span class="material-symbols-outlined absolute left-4 text-[20px] opacity-40 group-focus-within:text-primary group-focus-within:opacity-100 transition-all">lock</span>
+                            <input asp-for="Password" id="registerPassword" class="w-full h-14 pl-12 pr-12 rounded-xl border border-white/10 dark:bg-white/5 bg-white/50 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all placeholder:text-current/30 text-base" placeholder="••••••••" type="password" />
+                            <button id="toggleRegisterPassword" class="absolute right-4 text-[20px] opacity-40 hover:opacity-100 transition-all focus:outline-none" type="button">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Password" class="text-[10px] text-red-400 mt-1 ml-1 font-medium"></span>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label asp-for="ConfirmPassword" class="text-xs font-bold uppercase tracking-wider opacity-60 ml-1">Şifre Tekrar</label>
+                        <div class="relative flex items-center group">
+                            <span class="material-symbols-outlined absolute left-4 text-[20px] opacity-40 group-focus-within:text-primary group-focus-within:opacity-100 transition-all">lock</span>
+                            <input asp-for="ConfirmPassword" id="confirmPassword" class="w-full h-14 pl-12 pr-12 rounded-xl border border-white/10 dark:bg-white/5 bg-white/50 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all placeholder:text-current/30 text-base" placeholder="••••••••" type="password" />
+                            <button id="toggleConfirmPassword" class="absolute right-4 text-[20px] opacity-40 hover:opacity-100 transition-all focus:outline-none" type="button">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                        </div>
+                        <span asp-validation-for="ConfirmPassword" class="text-[10px] text-red-400 mt-1 ml-1 font-medium"></span>
+                    </div>
+
+                    <div class="flex items-start gap-3 py-2">
+                        <div class="relative flex items-center">
+                            <input class="size-5 rounded border-white/20 bg-white/10 text-primary focus:ring-primary focus:ring-offset-0 transition-all cursor-pointer" id="terms" type="checkbox" />
+                        </div>
+                        <label class="text-xs leading-normal opacity-70 cursor-pointer hover:opacity-100 transition-opacity" for="terms">
+                            <a class="text-primary font-bold hover:underline" href="#">Kullanım koşullarını</a> ve <a class="text-primary font-bold hover:underline" href="#">gizlilik politikasını</a> kabul ediyorum.
+                        </label>
+                    </div>
+
+                    <button class="w-full h-14 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl btn-hover-effect transition-all duration-300 text-lg shadow-lg" type="submit">
+                        Kayıt Ol
+                    </button>
+
+                    <div class="text-center pt-4">
+                        <p class="text-sm opacity-60">
+                            Zaten hesabın var mı?
+                            <a asp-controller="Auth" asp-action="Login" class="text-primary font-bold ml-1 hover:underline transition-all">Giriş Yap</a>
+                        </p>
+                    </div>
+                </form>
             </div>
-            <div class="form-group mb-3">
-                <label>Şifre Tekrar</label>
-                <input asp-for="ConfirmPassword" type="password" class="form-control" />
-            </div>
-            <button type="submit" class="theme-btn btn-one">Kayıt Ol</button>
-        </form>
+           
+        </main>
+
+        <footer class="p-8 text-center opacity-30 text-xs">
+            © 2024 Bagery. Tüm hakları saklıdır.
+        </footer>
     </div>
-</section>
+
+
+    <div class="fixed inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05] z-50 bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" data-alt="Paper texture pattern overlay"></div>
+
+    <script>
+        function togglePassword(buttonId, inputId) {
+            document.getElementById(buttonId)?.addEventListener('click', function () {
+                const input = document.getElementById(inputId);
+                if (!input) return;
+                input.type = input.type === 'password' ? 'text' : 'password';
+                this.querySelector('span').textContent = input.type === 'password' ? 'visibility' : 'visibility_off';
+            });
+        }
+
+        togglePassword('toggleRegisterPassword', 'registerPassword');
+        togglePassword('toggleConfirmPassword', 'confirmPassword');
+    </script>
+</body>
+</html>

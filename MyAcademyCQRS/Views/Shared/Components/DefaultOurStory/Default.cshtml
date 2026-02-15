@@ -1,31 +1,31 @@
 ﻿@model MyAcademyCQRS.Core.Application.Features.Results.OurStoryResults.GetActiveOurStoryQueryResult
 
-<section class="ourstory-section sec-pad"
-         style="background-image: url(/BageryPack/Bagery/assets/images/background/mission-1.jpg);">
-
+<section class="ourstory-section sec-pad" style="background-image: url(/BageryPack/Bagery/assets/images/background/mission-1.jpg);">
     <div class="auto-container">
-
         <div class="sec-title centred">
-            <p>Our Story</p>
-            <h2>@Model?.Title</h2>
+            <p>Hikayemiz</p>
+            <h2>@(Model?.Title ?? "Geleneksel & Modern Hizmet 1970'ten Beri")</h2>
         </div>
-
         <div class="row align-items-center clearfix">
-
+            <!-- Sol Kolon (Hakkımızda) -->
             <div class="col-lg-6 col-md-6 col-sm-12 content-column">
-                <div class="content-box">
-                    <p>@Model?.Content</p>
+                <div id="content_block_1">
+                    <div class="content-box">
+                        <h3>Bagery Hakkında</h3>
+                        <p>@(Model?.Content ?? "Excepteur sint occaecat cupidat non proident sunt in culpa qui officia deserunt mollit anim est laborum. magni dolores eos ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non aliquam quaerat voluptatem.")</p>
+                        <figure class="signature"><img src="/BageryPack/Bagery/assets/images/icons/signature-1.png" alt=""></figure>
+                    </div>
                 </div>
             </div>
-
+            <!-- Orta/Sağ Kolon (Görsel) - 6'lık kolon yaptık -->
             <div class="col-lg-6 col-md-6 col-sm-12 image-column">
-                <figure class="image-box wow slideInUp animated animated">
+                <figure class="image-box wow slideInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                     <img src="@ImageUrlResolver.Resolve(Model?.ImageUrl)" alt="">
                 </figure>
             </div>
-
         </div>
-
+        <div class="more-btn centred">
+            <a href="@Url.Action("Index", "Contact")" class="theme-btn-one">Bize Ulaşın</a>
+        </div>
     </div>
-
 </section>

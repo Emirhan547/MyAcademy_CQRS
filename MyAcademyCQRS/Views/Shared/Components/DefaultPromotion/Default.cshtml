@@ -1,54 +1,69 @@
 ﻿@model IList<MyAcademyCQRS.Core.Application.Features.Results.PromotionResults.GetActivePromotionsQueryResult>
 
-<section class="promotion-section sec-pad"
-         style="background-image: url(~/BageryPack/Bagery/assets/images/background/promotion-1.jpg);">
-
+<section class="promotion-section sec-pad" style="background-image: url(/BageryPack/Bagery/assets/images/background/promotion-1.jpg);">
     <div class="auto-container">
-
         <div class="sec-title centred">
-            <p>Promotion</p>
-            <h2>
-                Check all Flavours <br />
-                Summer Promo
-            </h2>
+            <p>Kampanyalar</p> <!-- Türkçeleştirildi -->
+            <h2>Tüm Lezzetleri Keşfet<br />Yaz Fırsatları</h2> <!-- Türkçeleştirildi -->
         </div>
 
-        @foreach (var item in Model.Take(2))
-        {
-            <div class="inner-box mb-50 wow slideInRight animated animated">
-
-                <div class="row clearfix">
-
-                    <div class="col-lg-6 col-md-12 col-sm-12 content-column">
-
-                        <div class="content-box ml-10">
-
-                            <div class="price-box"
-                                 style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-4.png);">
-                                <span>$@item.DiscountPrice</span>
-                                <p>Only</p>
+        @{
+            var promotions = Model.Take(2).ToList();
+            if (promotions.Any())
+            {
+                <!-- İlk Promo (Resimler solda, yazı sağda) - Orijinaldeki ilk inner-box -->
+                <div class="inner-box mb-50 wow slideInRight animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                    <div class="row clearfix">
+                        <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                            <!-- Orijinaldeki çift resim yapısı -->
+                            <div class="image-box clearfix mr-10">
+                                <figure class="image pull-left mr-10"><img src="~/BageryPack/Bagery/assets/images/resource/promotion-1.jpg" alt=""></figure>
+                                <figure class="image pull-left"><img src="~/BageryPack/Bagery/assets/images/resource/promotion-2.jpg" alt=""></figure>
                             </div>
-
-                            <h3>@item.Title</h3>
-
-                            <p>@item.Description</p>
-
-                            <div class="btn-box">
-                                <a href="#"
-                                   class="theme-btn-two">
-                                    Let’s Order Now
-                                </a>
-                            </div>
-
                         </div>
-
+                        <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                            <div class="content-box ml-10">
+                                <div class="price-box" style="background-image: url(/BageryPack/Bagery/assets/images/icons/icon-bg-4.png);">
+                                    <span>$@promotions[0].DiscountPrice</span>
+                                    <p>Sadece</p>
+                                </div>
+                                <h3>@promotions[0].Title</h3>
+                                <p>@promotions[0].Description</p>
+                                <div class="btn-box">
+                                    <a href="#" class="theme-btn-two">Hemen Sipariş Ver</a> <!-- Türkçeleştirildi -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
 
-            </div>
+                <!-- İkinci Promo (Yazı solda, resim sağda) - Orijinaldeki ikinci inner-box -->
+                if (promotions.Count > 1)
+                {
+                    <div class="inner-box wow slideInLeft animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        <div class="row clearfix">
+                            <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                                <div class="content-box mr-10">
+                                    <div class="price-box" style="background-image: url(/BageryPack/Bagery/assets/images/icons/icon-bg-4.png);">
+                                        <span>$@promotions[1].DiscountPrice</span>
+                                        <p>Sadece</p>
+                                    </div>
+                                    <h3>@promotions[1].Title</h3>
+                                    <p>@promotions[1].Description</p>
+                                    <div class="btn-box">
+                                        <a href="#" class="theme-btn-two">Hemen Sipariş Ver</a> <!-- Türkçeleştirildi -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                                <div class="image-box ml-10">
+                                    <figure class="image"><img src="~/BageryPack/Bagery/assets/images/resource/promotion-3.jpg" alt=""></figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
         }
-
     </div>
-
 </section>

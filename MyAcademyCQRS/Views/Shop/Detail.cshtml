@@ -1,11 +1,12 @@
 ﻿@using MyAcademyCQRS.Services
-@inject ImageUrlResolver ImageUrlResolver
+
 @model MyAcademyCQRS.Core.Application.Features.Results.ProductResults.GetShopDetailQueryResult
 @{
     ViewData["Title"] = Model.Product.Name;
     Layout = "~/Views/Shared/_UILayout.cshtml";
 }
 
+<!-- Page Title -->
 <section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/page-title.jpg"));">
     <div class="auto-container">
         <div class="content-box">
@@ -13,16 +14,17 @@
                 <h1>@Model.Product.Name</h1>
             </div>
             <ul class="bread-crumb clearfix">
-                <li><a asp-controller="Default" asp-action="Index">Home</a></li>
-                <li><a asp-controller="Shop" asp-action="Index">Shop</a></li>
+                <li><a asp-controller="Default" asp-action="Index">Ana Sayfa</a></li>
+                <li><a asp-controller="Shop" asp-action="Index">Mağaza</a></li>
                 <li>@Model.Product.Name</li>
             </ul>
         </div>
     </div>
 </section>
-
+<!-- Page Title End -->
+<!-- Shop Details -->
 <section class="shop-details">
-    <div class="auto-container" style="margin-top:20px;">
+    <div class="auto-container">
         @if (TempData["SuccessMessage"] is string success)
         {
             <div class="alert alert-success">@success</div>
@@ -32,56 +34,78 @@
             <div class="alert alert-danger">@error</div>
         }
     </div>
+
     <div class="product-details-content">
         <div class="auto-container">
-            <div class="row align-items-center clearfix">
+            <div class="row clearfix">
+                <!-- Ürün Görseli -->
                 <div class="col-lg-6 col-md-12 col-sm-12 image-column">
-                    <figure class="image-box">
-                        <img src="@ImageUrlResolver.Resolve(Model.Product.ImageUrl)" alt="@Model.Product.Name">
-                    </figure>
+                    <div class="product-details-image">
+                        <figure class="image-box">
+                            <img src="@ImageUrlResolver.Resolve(Model.Product.ImageUrl)" alt="@Model.Product.Name">
+                        </figure>
+                    </div>
                 </div>
+
+                <!-- Ürün Detayları -->
                 <div class="col-lg-6 col-md-12 col-sm-12 content-column">
-                    <div class="content-box">
+                    <div class="product-details-content">
                         <h2>@Model.Product.Name</h2>
-                        <ul class="rating-box clearfix">
-                            @for (var i = 0; i < Math.Min(Model.Product.Rating, 5); i++)
-                            {
-                                <li><i class="icon-Star"></i></li>
-                            }
-                        </ul>
-                        <h3>$@Model.Product.Price</h3>
 
-                        <p>
-                            Usta fırın ekibimizin günlük olarak hazırladığı bu ürün,
-                            taze malzeme ve dengeli lezzet yaklaşımıyla hazırlanır.
-                            Kahve yanında, kahvaltıda veya gün içi tatlı kaçamaklarında ideal bir seçimdir.
-                        </p>
-
-                        <div class="custom-controls-stacked">
-                            <div class="checkbox">
-                                <label><strong>Category:</strong> @Model.CategoryName</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><strong>Product Code:</strong> PRD-@Model.Product.Id.ToString("0000")</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><strong>Stock:</strong> Available</label>
-                            </div>
+                        <!-- Rating -->
+                        <div class="rating-box clearfix">
+                            <ul class="rating clearfix">
+                                @for (var i = 0; i < 5; i++)
+                                {
+                                    if (i < Math.Min(Model.Product.Rating, 5))
+                                    {
+                                        <li><i class="icon-Star"></i></li>
+                                    }
+                                    else
+                                    {
+                                        <li><i class="icon-Star" style="opacity: 0.3;"></i></li>
+                                    }
+                                }
+                            </ul>
+                            <span>(@Model.Product.Rating.ToString("0.0") yorum)</span>
                         </div>
-                        <form asp-controller="Cart" asp-action="Add" method="post" style="margin-top:15px;">
+
+                        <!-- Fiyat -->
+                        <h3 class="product-price">$@Model.Product.Price.ToString("0.00")</h3>
+
+                        <!-- Ürün Açıklaması -->
+                        <div class="text">
+                            <p>Usta fırın ekibimizin günlük olarak hazırladığı bu ürün, taze malzeme ve dengeli lezzet yaklaşımıyla hazırlanır. Kahve yanında, kahvaltıda veya gün içi tatlı kaçamaklarında ideal bir seçimdir.</p>
+                        </div>
+
+                        <!-- Ürün Bilgileri -->
+                        <ul class="other-info clearfix">
+                            <li><span>Kategori:</span> @Model.CategoryName</li>
+                            <li><span>Ürün Kodu:</span> PRD-@Model.Product.Id.ToString("0000")</li>
+                            <li><span>Stok Durumu:</span> <span class="in-stock">Stokta</span></li>
+                        </ul>
+
+                        <!-- Sepete Ekle Formu -->
+                        <form asp-controller="Cart" asp-action="Add" method="post" class="add-to-cart-form">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="productId" value="@Model.Product.Id" />
-                            <div style="display:flex;gap:10px;align-items:center;">
-                                <input type="number" name="quantity" value="1" min="1" style="width:90px;" />
-                                <button type="submit" class="theme-btn-two">Sepete Ekle</button>
+                            <div class="quantity-box clearfix">
+                                <div class="item-quantity">
+                                    <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+                                </div>
+                                <div class="btn-box">
+                                    <button type="submit" class="theme-btn-two">Sepete Ekle</button>
+                                </div>
                             </div>
                         </form>
-                        <div class="btn-box" style="margin-top:20px;">
-                            <a asp-controller="Shop" asp-action="Index" asp-route-categoryId="@Model.Product.CategoryId" class="theme-btn-two">
-                                Similar products
+
+                        <!-- Butonlar -->
+                        <div class="btn-box">
+                            <a asp-controller="Shop" asp-action="Index" asp-route-categoryId="@Model.Product.CategoryId" class="theme-btn-one">
+                                <i class="icon-List"></i> Benzer Ürünler
                             </a>
-                            <a asp-controller="Shop" asp-action="Index" class="theme-btn-two" style="margin-left:10px;">
-                                Back to shop
+                            <a asp-controller="Shop" asp-action="Index" class="theme-btn-two" style="margin-left: 10px;">
+                                <i class="icon-Back"></i> Mağazaya Dön
                             </a>
                         </div>
                     </div>
@@ -90,16 +114,17 @@
         </div>
     </div>
 
+    <!-- İlgili Ürünler -->
     @if (Model.RelatedProducts.Any())
     {
-        <div class="related-product">
+        <div class="related-product sec-pad">
             <div class="auto-container">
                 <div class="sec-title centred">
-                    <p>You may also like</p>
-                    <h2>Related Products</h2>
+                    <p>İlginizi Çekebilir</p>
+                    <h2>Benzer Ürünler</h2>
                 </div>
                 <div class="row clearfix">
-                    @foreach (var item in Model.RelatedProducts)
+                    @foreach (var item in Model.RelatedProducts.Take(4))
                     {
                         <div class="col-lg-3 col-md-6 col-sm-12 shop-block">
                             <div class="shop-block-one">
@@ -110,16 +135,26 @@
                                         </a>
                                     </figure>
                                     <div class="lower-content">
-                                        <span class="price-box">$@item.Price</span>
+                                        <span class="price-box">$@item.Price.ToString("0.00")</span>
                                         <h3>
                                             <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id">@item.Name</a>
                                         </h3>
                                         <ul class="rating clearfix">
-                                            @for (var i = 0; i < Math.Min(item.Rating, 5); i++)
+                                            @for (var i = 0; i < 5; i++)
                                             {
-                                                <li><i class="icon-Star"></i></li>
+                                                if (i < Math.Min(item.Rating, 5))
+                                                {
+                                                    <li><i class="icon-Star"></i></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><i class="icon-Star" style="opacity: 0.3;"></i></li>
+                                                }
                                             }
                                         </ul>
+                                        <div class="cart-btn">
+                                            <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id" class="theme-btn-two">İncele</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -130,3 +165,4 @@
         </div>
     }
 </section>
+<!-- Shop Details End -->

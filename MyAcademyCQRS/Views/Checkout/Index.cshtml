@@ -1,76 +1,488 @@
 ﻿@model MyAcademyCQRS.Models.CheckoutViewModel
 @using MyAcademyCQRS.Core.Domain.Enums
+@using MyAcademyCQRS.Services
 @using MyAcademy_CQRS.Domain.Enums
+
 @{
     ViewData["Title"] = "Ödeme";
     Layout = "~/Views/Shared/_UILayout.cshtml";
 }
 
+<!-- Page Title -->
 <section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/page-title.jpg"));">
     <div class="auto-container">
         <div class="content-box">
-            <div class="title"><h1>Ödeme</h1></div>
+            <div class="title">
+                <h1>Ödeme</h1>
+            </div>
+            <ul class="bread-crumb clearfix">
+                <li><a asp-controller="Default" asp-action="Index">Ana Sayfa</a></li>
+                <li><a asp-controller="Shop" asp-action="Index">Mağaza</a></li>
+                <li><a asp-controller="Cart" asp-action="Index">Sepet</a></li>
+                <li>Ödeme</li>
+            </ul>
         </div>
     </div>
 </section>
-
-<section class="contact-section sec-pad">
+<!-- End Page Title -->
+<!-- Checkout Section -->
+<section class="checkout-section sec-pad">
     <div class="auto-container">
+        @if (TempData["ErrorMessage"] is string error)
+        {
+            <div class="alert alert-danger">@error</div>
+        }
+
         <div class="row clearfix">
-            <div class="col-lg-7 col-md-12 col-sm-12">
-                <h3>Teslimat ve Ödeme Bilgileri</h3>
-                <form method="post">
-                    @Html.AntiForgeryToken()
-                    <div asp-validation-summary="All" class="text-danger"></div>
+            <!-- Fatura Bilgileri -->
+            <div class="col-lg-7 col-md-12 col-sm-12 billing-column">
+                <div class="billing-info">
+                    <h3>Teslimat ve Fatura Bilgileri</h3>
 
-                    <input asp-for="FullName" class="form-control" placeholder="Ad Soyad" />
-                    <input asp-for="Email" class="form-control" placeholder="E-posta" style="margin-top:10px;" />
-                    <input asp-for="Address" class="form-control" placeholder="Adres" style="margin-top:10px;" />
-                    <div class="row" style="margin-top:10px;">
-                        <div class="col-md-6"><input asp-for="City" class="form-control" placeholder="Şehir" /></div>
-                        <div class="col-md-6"><input asp-for="District" class="form-control" placeholder="İlçe" /></div>
-                    </div>
+                    <form method="post" class="billing-form">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="text-danger"></div>
 
-                    <h4 style="margin-top:20px;">Ödeme Yöntemi</h4>
-                    <select asp-for="PaymentMethod" class="form-control">
-                        <option value="@((int)PaymentMethodType.CreditCard)">Kredi Kartı</option>
-                        <option value="@((int)PaymentMethodType.BankTransfer)">Banka Havalesi</option>
-                        <option value="@((int)PaymentMethodType.CashOnDelivery)">Kapıda Ödeme</option>
-                    </select>
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                <label>Ad Soyad <span class="required">*</span></label>
+                                <input asp-for="FullName" class="form-control" placeholder="Adınız ve Soyadınız">
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
 
-                    <div style="margin-top:15px;">
-                        <h4>Kart Bilgileri (Kredi Kartı için)</h4>
-                        <input asp-for="CardHolderName" class="form-control" placeholder="Kart Üzerindeki İsim" />
-                        <input asp-for="CardNumber" class="form-control" placeholder="Kart Numarası" style="margin-top:10px;" />
-                        <div class="row" style="margin-top:10px;">
-                            <div class="col-md-4"><input asp-for="ExpireMonth" class="form-control" placeholder="Ay" /></div>
-                            <div class="col-md-4"><input asp-for="ExpireYear" class="form-control" placeholder="Yıl" /></div>
-                            <div class="col-md-4"><input asp-for="Cvv" class="form-control" placeholder="CVV" /></div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                <label>E-posta Adresi <span class="required">*</span></label>
+                                <input asp-for="Email" class="form-control" placeholder="E-posta adresiniz">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                <label>Adres <span class="required">*</span></label>
+                                <textarea asp-for="Address" class="form-control" placeholder="Açık adresiniz" rows="3"></textarea>
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                <label>Şehir <span class="required">*</span></label>
+                                <input asp-for="City" class="form-control" placeholder="Şehir">
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                <label>İlçe <span class="required">*</span></label>
+                                <input asp-for="District" class="form-control" placeholder="İlçe">
+                                <span asp-validation-for="District" class="text-danger"></span>
+                            </div>
+
+                          
                         </div>
-                    </div>
 
-                    <div style="margin-top:15px;">
-                        <h4>Havale Bilgileri (Banka Havalesi için)</h4>
-                        <input asp-for="Iban" class="form-control" placeholder="IBAN" />
-                        <input asp-for="TransferReference" class="form-control" placeholder="Transfer Referansı" style="margin-top:10px;" />
-                    </div>
+                        <!-- Ödeme Yöntemi -->
+                        <div class="payment-info">
+                            <h3>Ödeme Yöntemi</h3>
 
-                    <button type="submit" class="theme-btn-two" style="margin-top:20px;">Siparişi Tamamla</button>
-                </form>
+                            <div class="payment-methods">
+                                <!-- Kredi Kartı -->
+                                <div class="payment-method">
+                                    <div class="method-option">
+                                        <input type="radio" asp-for="PaymentMethod" value="@((int)PaymentMethodType.CreditCard)" id="payment-credit" checked>
+                                        <label for="payment-credit">Kredi Kartı / Banka Kartı</label>
+                                    </div>
+                                    <div class="method-details" id="credit-card-details">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                                <label>Kart Üzerindeki İsim</label>
+                                                <input asp-for="CardHolderName" class="form-control" placeholder="Kart Üzerindeki İsim">
+                                            </div>
+
+                                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                                <label>Kart Numarası</label>
+                                                <input asp-for="CardNumber" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-4 col-sm-12 form-group">
+                                                <label>Ay</label>
+                                                <select asp-for="ExpireMonth" class="form-control">
+                                                    <option value="">Ay</option>
+                                                    @for (int i = 1; i <= 12; i++)
+                                                    {
+                                                        <option value="@i">@i.ToString("D2")</option>
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-4 col-sm-12 form-group">
+                                                <label>Yıl</label>
+                                                <select asp-for="ExpireYear" class="form-control">
+                                                    <option value="">Yıl</option>
+                                                    @for (int i = DateTime.Now.Year; i <= DateTime.Now.Year + 10; i++)
+                                                    {
+                                                        <option value="@i">@i</option>
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-4 col-sm-12 form-group">
+                                                <label>CVV</label>
+                                                <input asp-for="Cvv" class="form-control" placeholder="CVV" maxlength="3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Banka Havalesi -->
+                                <div class="payment-method">
+                                    <div class="method-option">
+                                        <input type="radio" asp-for="PaymentMethod" value="@((int)PaymentMethodType.BankTransfer)" id="payment-bank">
+                                        <label for="payment-bank">Banka Havalesi / EFT</label>
+                                    </div>
+                                    <div class="method-details" id="bank-transfer-details" style="display: none;">
+                                        <div class="bank-info">
+                                            <p><strong>Banka:</strong> XYZ Bank</p>
+                                            <p><strong>IBAN:</strong> TR12 3456 7890 1234 5678 9012 34</p>
+                                            <p><strong>Alıcı Adı:</strong> Bagery Gıda San. Tic. Ltd. Şti.</p>
+                                            <p class="note">* Havale yaparken açıklama kısmına sipariş numaranızı yazmayı unutmayın.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Kapıda Ödeme -->
+                                <div class="payment-method">
+                                    <div class="method-option">
+                                        <input type="radio" asp-for="PaymentMethod" value="@((int)PaymentMethodType.CashOnDelivery)" id="payment-cod">
+                                        <label for="payment-cod">Kapıda Ödeme (Nakit / Kredi Kartı)</label>
+                                    </div>
+                                    <div class="method-details" id="cod-details" style="display: none;">
+                                        <p class="note">* Kapıda ödeme seçeneğinde, siparişiniz teslim edilirken ödemeyi nakit veya kredi kartı ile yapabilirsiniz.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group message-btn">
+                            <button type="submit" class="theme-btn-one">Siparişi Tamamla</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="col-lg-5 col-md-12 col-sm-12">
-                <h3>Sipariş Özeti</h3>
-                <ul class="list-group">
-                    @foreach (var item in Model.Cart.Items)
-                    {
-                        <li class="list-group-item" style="display:flex;justify-content:space-between;">
-                            <span>@item.ProductName x @item.Quantity</span>
-                            <strong>@item.LineTotal.ToString("C")</strong>
+
+            <!-- Sipariş Özeti -->
+            <div class="col-lg-5 col-md-12 col-sm-12 order-column">
+                <div class="order-info">
+                    <h3>Sipariş Özeti</h3>
+
+                    <ul class="order-list">
+                        @foreach (var item in Model.Cart.Items)
+                        {
+                            <li class="clearfix">
+                                <div class="item-info">
+                                    <span class="item-name">@item.ProductName</span>
+                                    <span class="item-quantity">x @item.Quantity</span>
+                                </div>
+                                <div class="item-price">$@item.LineTotal.ToString("0.00")</div>
+                            </li>
+                        }
+                    </ul>
+
+                    <ul class="order-total">
+                        <li class="clearfix">
+                            <span class="left-text">Ara Toplam</span>
+                            <span class="right-text">$@Model.Cart.TotalPrice.ToString("0.00")</span>
                         </li>
-                    }
-                </ul>
-                <h4 style="margin-top:15px;">Toplam: @Model.Cart.TotalPrice.ToString("C")</h4>
+                        <li class="clearfix">
+                            <span class="left-text">Kargo</span>
+                            <span class="right-text">Ücretsiz</span>
+                        </li>
+                        <li class="clearfix total">
+                            <span class="left-text">Genel Toplam</span>
+                            <span class="right-text">$@Model.Cart.TotalPrice.ToString("0.00")</span>
+                        </li>
+                    </ul>
+
+                    <div class="payment-note">
+                        <p>Kişisel verileriniz, bu web sitesindeki deneyiminizi desteklemek, hesabınıza erişimi yönetmek ve diğer amaçlar için kullanılacaktır.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
+<!-- End Checkout Section -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function() {
+            // Ödeme yöntemi değiştiğinde detayları göster/gizle
+            $('input[name="PaymentMethod"]').change(function() {
+                var value = $(this).val();
+
+                // Tüm detayları gizle
+                $('.method-details').slideUp();
+
+                // Seçilen yöntemin detaylarını göster
+                if (value == '@((int)PaymentMethodType.CreditCard)') {
+                    $('#credit-card-details').slideDown();
+                } else if (value == '@((int)PaymentMethodType.BankTransfer)') {
+                    $('#bank-transfer-details').slideDown();
+                } else if (value == '@((int)PaymentMethodType.CashOnDelivery)') {
+                    $('#cod-details').slideDown();
+                }
+            });
+
+            // Sayfa yüklendiğinde seçili olan yöntemin detaylarını göster
+            var selectedPayment = $('input[name="PaymentMethod"]:checked').val();
+            if (selectedPayment == '@((int)PaymentMethodType.CreditCard)') {
+                $('#credit-card-details').show();
+            } else if (selectedPayment == '@((int)PaymentMethodType.BankTransfer)') {
+                $('#bank-transfer-details').show();
+            } else if (selectedPayment == '@((int)PaymentMethodType.CashOnDelivery)') {
+                $('#cod-details').show();
+            }
+        });
+    </script>
+}
+
+<style>
+    /* Checkout sayfası için özel stiller */
+    .billing-info,
+    .order-info {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+
+        .billing-info h3,
+        .order-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c2c2c;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            position: relative;
+        }
+
+            .billing-info h3:after,
+            .order-info h3:after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: -2px;
+                width: 60px;
+                height: 2px;
+                background: #c7a17a;
+            }
+
+    .billing-form .form-group {
+        margin-bottom: 20px;
+    }
+
+        .billing-form .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c2c2c;
+            margin-bottom: 8px;
+        }
+
+            .billing-form .form-group label .required {
+                color: #ff4d4d;
+            }
+
+        .billing-form .form-group .form-control {
+            height: 50px;
+            border: 1px solid #e5e5e5;
+            border-radius: 5px;
+            padding: 0 15px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+            .billing-form .form-group .form-control:focus {
+                border-color: #c7a17a;
+                outline: none;
+                box-shadow: 0 0 5px rgba(199, 161, 122, 0.3);
+            }
+
+        .billing-form .form-group textarea.form-control {
+            height: 100px;
+            padding: 15px;
+            resize: none;
+        }
+
+    .payment-info {
+        margin-top: 30px;
+    }
+
+    .payment-methods {
+        border: 1px solid #e5e5e5;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+
+    .payment-method {
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+        .payment-method:last-child {
+            border-bottom: none;
+        }
+
+    .method-option {
+        padding: 15px 20px;
+        background: #f9f9f9;
+    }
+
+        .method-option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .method-option label {
+            font-weight: 600;
+            color: #2c2c2c;
+            cursor: pointer;
+        }
+
+    .method-details {
+        padding: 20px;
+        background: #fff;
+        border-top: 1px solid #e5e5e5;
+    }
+
+    .bank-info {
+        background: #f8f4f0;
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+        .bank-info p {
+            margin-bottom: 8px;
+            color: #2c2c2c;
+        }
+
+        .bank-info .note {
+            color: #c7a17a;
+            font-style: italic;
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+
+    .order-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+        .order-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+            .order-list li:last-child {
+                border-bottom: none;
+            }
+
+        .order-list .item-info {
+            float: left;
+        }
+
+        .order-list .item-name {
+            font-weight: 600;
+            color: #2c2c2c;
+        }
+
+        .order-list .item-quantity {
+            color: #999;
+            font-size: 13px;
+            margin-left: 5px;
+        }
+
+        .order-list .item-price {
+            float: right;
+            font-weight: 700;
+            color: #c7a17a;
+        }
+
+    .order-total {
+        list-style: none;
+        padding: 20px 0;
+        margin: 20px 0;
+        border-top: 2px solid #f0f0f0;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+        .order-total li {
+            margin-bottom: 10px;
+        }
+
+            .order-total li:last-child {
+                margin-bottom: 0;
+            }
+
+        .order-total .left-text {
+            float: left;
+            font-weight: 500;
+            color: #2c2c2c;
+        }
+
+        .order-total .right-text {
+            float: right;
+            font-weight: 600;
+            color: #2c2c2c;
+        }
+
+        .order-total li.total {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+            .order-total li.total .left-text {
+                font-size: 18px;
+                font-weight: 700;
+            }
+
+            .order-total li.total .right-text {
+                font-size: 22px;
+                font-weight: 700;
+                color: #c7a17a;
+            }
+
+    .payment-note {
+        background: #f8f4f0;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+
+        .payment-note p {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+    .message-btn {
+        margin-top: 30px;
+    }
+
+        .message-btn button {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+    /* Responsive */
+    @@media (max-width: 991px) {
+        .billing-column {
+            margin-bottom: 30px;
+        }
+    }
+</style>

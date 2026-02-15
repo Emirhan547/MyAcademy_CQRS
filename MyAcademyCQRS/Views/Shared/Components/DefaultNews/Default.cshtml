@@ -1,17 +1,18 @@
 ﻿@model IList<MyAcademyCQRS.Core.Application.Features.Results.NewsResults.GetActiveNewsQueryResult>
-<section class="news-section sec-pad" style="background-image: url(~/BageryPack/Bagery/assets/images/background/news-bg-1.jpg);">
+<section class="news-section sec-pad" style="background-image: url(/BageryPack/Bagery/assets/images/background/news-bg-1.jpg);">
     <div class="auto-container">
         <div class="sec-title centred">
-            <p>STAY TUNED</p>
-            <h2>Learn More From <br />Bagery News</h2>
+            <p>TAKİPTE KALIN</p> <!-- Türkçeleştirildi -->
+            <h2>Bagery Haberleri'nden<br />Daha Fazla Öğrenin</h2> <!-- Türkçeleştirildi -->
         </div>
         <div class="row clearfix">
-         
-            @{ var i = 0; }
+            @{
+                var i = 0;
+            }
             @foreach (var item in Model)
             {
                 <div class="col-lg-4 col-md-6 col-sm-12 news-block">
-                    <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="@(i * 200)ms">
+                    <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="@(i * 200)ms" data-wow-duration="1500ms">
                         <div class="inner-box">
                             <figure class="image-box">
                                 <span class="category">@item.Category</span>
@@ -19,18 +20,17 @@
                             </figure>
                             <div class="lower-content">
                                 <ul class="post-info clearfix">
-                                    <li>on @item.PublishDate.ToString("dd MMM, yyyy")</li>
+                                    <li>@item.PublishDate.ToString("dd MMM, yyyy")</li>
                                     <li>/</li>
-                                    <li><a href="#">by @item.Author</a></li>
+                                    <li><a href="#">@item.Author</a></li>
                                 </ul>
                                 <h3><a href="#">@item.Title</a></h3>
                                 <p>@item.Summary</p>
-                                <div class="btn-box"><a href="#" class="theme-btn-two">Read More</a></div>
+                                <div class="btn-box"><a href="#" class="theme-btn-two">Devamını Oku</a></div> <!-- Türkçeleştirildi -->
                             </div>
                         </div>
                     </div>
                 </div>
-           
                 i++;
             }
         </div>

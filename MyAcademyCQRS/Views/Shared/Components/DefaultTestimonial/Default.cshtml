@@ -1,50 +1,33 @@
 ﻿@model IList<MyAcademyCQRS.Core.Application.Features.Results.TestimonialResults.GetActiveTestimonialsQueryResult>
 
-<section class="testimonial-section sec-pad"
-         style="background-image: url(~/BageryPack/Bagery/assets/images/background/testimonial-1.jpg);">
-
-    <figure class="image-layer">
+<section class="testimonial-section sec-pad" style="background-image: url(/BageryPack/Bagery/assets/images/background/testimonial-1.jpg);">
+    <!-- Orijinaldeki animasyonlu görsel eklendi -->
+    <figure class="image-layer wow slideInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
         <img src="~/BageryPack/Bagery/assets/images/resource/testimonial-1.png" alt="">
     </figure>
-
     <div class="auto-container">
-
         <div class="inner-box">
-
             <div class="sec-title">
-                <p>Testimonials</p>
-                <h2>What Clients Say About Bagery.</h2>
+                <p>Müşteri Yorumları</p> <!-- Türkçeleştirildi -->
+                <h2>Müşterilerimiz Bagery İçin Ne Diyor?</h2> <!-- Türkçeleştirildi -->
             </div>
-
             <div class="single-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
-
                 @foreach (var item in Model)
                 {
                     <div class="testimonial-block-one">
-
-                        <div class="icon-box"
-                             style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-5.png);">
+                        <div class="icon-box" style="background-image: url(/BageryPack/Bagery/assets/images/icons/icon-bg-5.png);">
                             <i class="icon-Quote"></i>
                         </div>
-
                         <div class="text">
                             <p>@item.Comment</p>
                         </div>
-
                         <div class="author-info">
                             <h4>@item.FullName</h4>
-                            <span class="designation">
-                                @item.Role
-                            </span>
+                            <span class="designation">@item.Role</span>
                         </div>
-
                     </div>
                 }
-
             </div>
-
         </div>
-
     </div>
-
 </section>

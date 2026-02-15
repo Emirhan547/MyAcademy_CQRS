@@ -2,110 +2,67 @@
 
 <section class="contact-section sec-pad"
          style="background-image: url(@(string.IsNullOrWhiteSpace(Model?.BackgroundImageUrl) ? "~/BageryPack/Bagery/assets/images/background/contact-1.jpg" : ImageUrlResolver.Resolve(Model.BackgroundImageUrl)));">
-
     <div class="auto-container">
-
         <div class="sec-title centred">
             <p>Bize Ulaşın</p>
             <h2>İletişime Geçin</h2>
         </div>
-
         <div class="row clearfix">
-
             <div class="col-lg-4 col-md-6 col-sm-12 info-column">
                 <div class="contact-info-inner">
-
                     <div class="single-box">
                         <h3>Çalışma Saatleri</h3>
                         <ul class="list clearfix">
-                            <li>@Model?.OpeningHours</li>
-                            <li>@Model?.HolidayHours</li>
+                            <li>@(Model?.OpeningHours ?? "Hafta içi: 09.30–18.00")</li>
+                            <li>@(Model?.HolidayHours ?? "Pazar ve Resmi Tatiller: Kapalı")</li>
                         </ul>
                     </div>
-
                     <div class="single-box">
                         <h3>İletişim Bilgileri</h3>
                         <ul class="list clearfix">
-                            <li>@Model?.Address</li>
-                            <li>
-                                <a href="mailto:@Model?.Email">
-                                    @Model?.Email
-                                </a>
-                            </li>
-                            <li>
-                                <a href="tel:@Model?.Phone">
-                                    @Model?.Phone
-                                </a>
-                            </li>
+                            <li>@(Model?.Address ?? "77408 Satterfield Motorway Suite 469 New Antonetta, BC K3L6P6")</li>
+                            <li><a href="mailto:@(Model?.Email ?? "example@info.com")">@(Model?.Email ?? "example@info.com")</a></li>
+                            <li><a href="tel:@(Model?.Phone ?? "6174959400326")">@(Model?.Phone ?? "(617) 495-9400-326")</a></li>
                         </ul>
                     </div>
-
+                    <div class="single-box">
+                        <h3>Sosyal Medya</h3>
+                        <ul class="social-links clearfix">
+                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
+                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
             <div class="col-lg-8 col-md-6 col-sm-12 form-column">
                 <div class="form-inner">
-
-                    <h3>Bize Yazın</h3>
-
-                    <form method="post"
-                          action="#"
-                          id="contact-form"
-                          class="default-form">
-
+                    <h3>Bize Mesaj Gönderin</h3>
+                    <form method="post" action="#" id="contact-form" class="default-form">
                         <div class="row clearfix">
-
                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="text"
-                                       name="username"
-                                       placeholder="Your Name *"
-                                       required="">
+                                <input type="text" name="username" placeholder="Adınız *" required="">
                             </div>
-
                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="email"
-                                       name="email"
-                                       placeholder="Your Email *"
-                                       required="">
+                                <input type="email" name="email" placeholder="E-posta Adresiniz *" required="">
                             </div>
-
                             <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                <input type="text"
-                                       name="phone"
-                                       required=""
-                                       placeholder="Your Phone">
+                                <input type="text" name="phone" required="" placeholder="Telefon Numaranız">
                             </div>
-
                             <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                <input type="text"
-                                       name="subject"
-                                       required=""
-                                       placeholder="Subject">
+                                <input type="text" name="subject" required="" placeholder="Konu">
                             </div>
-
                             <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                <textarea name="message"
-                                          placeholder="Your Message ...">
-                                </textarea>
+                                <textarea name="message" placeholder="Mesajınız..."></textarea>
                             </div>
-
                             <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
-                                <button class="theme-btn-one"
-                                        type="submit"
-                                        name="submit-form">
-                                    Submit Now
-                                </button>
+                                <button class="theme-btn-one" type="submit" name="submit-form">Mesajı Gönder</button>
                             </div>
-
                         </div>
-
                     </form>
-
                 </div>
             </div>
-
         </div>
-
     </div>
-
 </section>

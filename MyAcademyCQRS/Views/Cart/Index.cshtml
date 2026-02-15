@@ -1,19 +1,31 @@
-﻿@using MyAcademy_CQRS.Application.Features.Results.CartResults
+﻿
+@using MyAcademyCQRS.Services
+@using MyAcademy_CQRS.Application.Features.Results.CartResults
 @model GetCartQueryResult
+
 @{
     ViewData["Title"] = "Sepetim";
     Layout = "~/Views/Shared/_UILayout.cshtml";
 }
 
+<!-- Page Title -->
 <section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/page-title.jpg"));">
     <div class="auto-container">
         <div class="content-box">
-            <div class="title"><h1>Sepetim</h1></div>
+            <div class="title">
+                <h1>Sepetim</h1>
+            </div>
+            <ul class="bread-crumb clearfix">
+                <li><a asp-controller="Default" asp-action="Index">Ana Sayfa</a></li>
+                <li><a asp-controller="Shop" asp-action="Index">Mağaza</a></li>
+                <li>Sepetim</li>
+            </ul>
         </div>
     </div>
 </section>
-
-<section class="shop-section sec-pad">
+<!-- End Page Title -->
+<!-- Cart Section -->
+<section class="cart-section sec-pad">
     <div class="auto-container">
         @if (TempData["SuccessMessage"] is string success)
         {
@@ -26,62 +38,313 @@
 
         @if (!Model.Items.Any())
         {
-            <p>Sepetinizde ürün bulunmuyor.</p>
-            <a asp-controller="Shop" asp-action="Index" class="theme-btn-two">Alışverişe Başla</a>
+            <div class="empty-cart text-center">
+                <div class="empty-cart-icon">
+                    <i class="icon-Bag" style="font-size: 80px; color: #ddd; margin-bottom: 20px;"></i>
+                </div>
+                <h3>Sepetiniz boş</h3>
+                <p>Sepetinizde henüz ürün bulunmuyor. Alışverişe başlamak için mağazamızı ziyaret edin.</p>
+                <div class="btn-box" style="margin-top: 30px;">
+                    <a asp-controller="Shop" asp-action="Index" class="theme-btn-two">Alışverişe Başla</a>
+                </div>
+            </div>
         }
         else
         {
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Ürün</th>
-                        <th>Fiyat</th>
-                        <th>Adet</th>
-                        <th>Ara Toplam</th>
-                        <th>İşlem</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Items)
-                    {
-                        <tr>
-                            <td>
-                                <img src="@ImageUrlResolver.Resolve(item.ProductImageUrl)" alt="@item.ProductName" style="width:55px;height:55px;object-fit:cover;margin-right:8px;" />
-                                @item.ProductName
-                            </td>
-                            <td>@item.UnitPrice.ToString("C")</td>
-                            <td>
-                                <form asp-action="UpdateQuantity" method="post" class="d-flex" style="gap:8px;align-items:center;">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="productId" value="@item.ProductId" />
-                                    <input type="number" name="quantity" value="@item.Quantity" min="1" style="width:80px;" />
-                                    <button type="submit" class="btn btn-sm btn-primary">Güncelle</button>
-                                </form>
-                            </td>
-                            <td>@item.LineTotal.ToString("C")</td>
-                            <td>
-                                <form asp-action="Remove" method="post">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="productId" value="@item.ProductId" />
-                                    <button type="submit" class="btn btn-sm btn-danger">Sil</button>
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">
-                <form asp-action="Clear" method="post">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-warning">Sepeti Temizle</button>
-                </form>
-
-                <div>
-                    <h4>Toplam: @Model.TotalPrice.ToString("C")</h4>
-                    <a asp-controller="Checkout" asp-action="Index" class="theme-btn-two">Ödemeye Geç</a>
+            <div class="cart-table">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="product-thumb">Ürün Resmi</th>
+                                <th class="product-name">Ürün Adı</th>
+                                <th class="product-price">Fiyat</th>
+                                <th class="product-quantity">Adet</th>
+                                <th class="product-subtotal">Ara Toplam</th>
+                                <th class="product-remove">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td class="product-thumb">
+                                        <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.ProductId">
+                                            <img src="@ImageUrlResolver.Resolve(item.ProductImageUrl)" alt="@item.ProductName">
+                                        </a>
+                                    </td>
+                                    <td class="product-name">
+                                        <h4>
+                                            <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.ProductId">
+                                                @item.ProductName
+                                            </a>
+                                        </h4>
+                                    </td>
+                                    <td class="product-price">
+                                        <span class="price">$@item.UnitPrice.ToString("0.00")</span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <form asp-action="UpdateQuantity" method="post" class="quantity-form">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="productId" value="@item.ProductId" />
+                                            <div class="quantity-box clearfix">
+                                                <div class="item-quantity">
+                                                    <input type="number" name="quantity" value="@item.Quantity" min="1" class="quantity-input">
+                                                </div>
+                                                <button type="submit" class="update-btn">
+                                                    <i class="fas fa-sync-alt"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td class="product-subtotal">
+                                        <span class="price">$@item.LineTotal.ToString("0.00")</span>
+                                    </td>
+                                    <td class="product-remove">
+                                        <form asp-action="Remove" method="post" class="remove-form">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="productId" value="@item.ProductId" />
+                                            <button type="submit" class="remove-btn" title="Ürünü Kaldır">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+
+            <div class="cart-footer clearfix">
+                <div class="pull-left">
+                    <form asp-action="Clear" method="post" class="clear-cart-form">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="theme-btn-one" style="border: none; cursor: pointer;">
+                            <i class="fas fa-trash-alt"></i> Sepeti Temizle
+                        </button>
+                    </form>
+                </div>
+
+                <div class="pull-right">
+                    <div class="cart-total">
+                        <h3>Toplam: <span>$@Model.TotalPrice.ToString("0.00")</span></h3>
+                        <a asp-controller="Checkout" asp-action="Index" class="theme-btn-two">
+                            Ödemeye Geç <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Devam Eden Alışveriş Butonu -->
+            <div class="continue-shopping text-center" style="margin-top: 40px;">
+                <a asp-controller="Shop" asp-action="Index" class="theme-btn-one">
+                    <i class="fas fa-arrow-left"></i> Alışverişe Devam Et
+                </a>
             </div>
         }
     </div>
 </section>
+<!-- End Cart Section -->
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Quantity input değiştiğinde otomatik güncelleme (opsiyonel)
+            $('.quantity-input').change(function() {
+                $(this).closest('.quantity-form').submit();
+            });
+
+            // Remove butonu için onay
+            $('.remove-btn').click(function(e) {
+                if (!confirm('Bu ürünü sepetinizden kaldırmak istediğinize emin misiniz?')) {
+                    e.preventDefault();
+                }
+            });
+
+            // Sepeti temizle butonu için onay
+            $('.clear-cart-form').submit(function(e) {
+                if (!confirm('Sepetinizdeki tüm ürünleri temizlemek istediğinize emin misiniz?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}
+
+<style>
+    /* Cart sayfası için özel stiller (opsiyonel - tema stilleri yetersiz kalırsa) */
+    .cart-table {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+    }
+
+        .cart-table table {
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+            .cart-table table thead {
+                background: #f8f4f0;
+            }
+
+                .cart-table table thead tr th {
+                    padding: 15px 20px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #2c2c2c;
+                    border: none;
+                    text-align: center;
+                }
+
+            .cart-table table tbody tr td {
+                padding: 20px;
+                border-bottom: 1px solid #e5e5e5;
+                vertical-align: middle;
+                text-align: center;
+            }
+
+        .cart-table .product-thumb {
+            width: 100px;
+        }
+
+            .cart-table .product-thumb img {
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 5px;
+            }
+
+        .cart-table .product-name h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+            .cart-table .product-name h4 a {
+                color: #2c2c2c;
+                transition: all 0.3s ease;
+            }
+
+                .cart-table .product-name h4 a:hover {
+                    color: #c7a17a;
+                }
+
+        .cart-table .price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #c7a17a;
+        }
+
+        .cart-table .quantity-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .cart-table .item-quantity {
+            width: 80px;
+        }
+
+            .cart-table .item-quantity .quantity-input {
+                width: 100%;
+                height: 45px;
+                border: 1px solid #e5e5e5;
+                border-radius: 5px;
+                padding: 0 10px;
+                text-align: center;
+                font-weight: 500;
+            }
+
+        .cart-table .update-btn {
+            width: 45px;
+            height: 45px;
+            background: #c7a17a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .cart-table .update-btn:hover {
+                background: #b58e64;
+            }
+
+        .cart-table .remove-btn {
+            width: 40px;
+            height: 40px;
+            background: #ff4d4d;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .cart-table .remove-btn:hover {
+                background: #e60000;
+            }
+
+    .cart-footer {
+        background: #f8f4f0;
+        padding: 30px;
+        border-radius: 10px;
+        margin-top: 30px;
+    }
+
+    .cart-total h3 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2c2c2c;
+        margin-bottom: 15px;
+    }
+
+        .cart-total h3 span {
+            color: #c7a17a;
+        }
+
+    .cart-total .theme-btn-two {
+        display: inline-block;
+        padding: 12px 30px;
+    }
+
+    .empty-cart {
+        background: #fff;
+        padding: 60px 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+
+        .empty-cart h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c2c2c;
+            margin-bottom: 15px;
+        }
+
+        .empty-cart p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+    /* Responsive */
+    media (max-width: 991px) {
+        .cart-table .table-responsive
+
+    {
+        overflow-x: auto;
+    }
+
+    .cart-table table {
+        min-width: 800px;
+    }
+
+    }
+</style>

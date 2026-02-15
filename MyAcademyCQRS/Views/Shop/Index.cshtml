@@ -1,28 +1,91 @@
-﻿
-@model IList<MyAcademyCQRS.Core.Application.Features.Results.ProductResults.GetActiveProductsQueryResult>
+﻿@model IList<MyAcademyCQRS.Core.Application.Features.Results.ProductResults.GetActiveProductsQueryResult>
 @using MyAcademyCQRS.Core.Application.Features.Results.CategoryResults
+@using MyAcademyCQRS.Core.Application.Features.Results.ProductResults
+@using MyAcademyCQRS.Services
+
 @{
-    ViewData["Title"] = "Shop";
+    ViewData["Title"] = "Mağaza";
     Layout = "~/Views/Shared/_UILayout.cshtml";
 
-    var categories = ViewBag.Categories as IList<GetActiveCategoriesQueryResult> ?? [];
+    var categories = ViewBag.Categories as IList<GetActiveCategoriesQueryResult> ?? new List<GetActiveCategoriesQueryResult>();
+    var featuredProducts = ViewBag.FeaturedProducts as IList<GetActiveProductsQueryResult> ?? new List<GetActiveProductsQueryResult>();
     int? selectedCategoryId = ViewBag.SelectedCategoryId is int value ? value : null;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int totalItems = ViewBag.TotalItems ?? Model.Count;
+    int pageSize = ViewBag.PageSize ?? 9;
+    int startItem = ((currentPage - 1) * pageSize) + 1;
+    int endItem = Math.Min(currentPage * pageSize, totalItems);
+    
+    // URL parametreleri
+    var routeValues = new Dictionary<string, object>
+    {
+        ["categoryId"] = selectedCategoryId,
+        ["searchTerm"] = ViewBag.SearchTerm,
+        ["minPrice"] = ViewBag.MinPrice,
+        ["maxPrice"] = ViewBag.MaxPrice
+    };
+    
+    var defaultUrl = Url.Action("Index", new { 
+        categoryId = selectedCategoryId, 
+        searchTerm = ViewBag.SearchTerm,
+        minPrice = ViewBag.MinPrice,
+        maxPrice = ViewBag.MaxPrice,
+        sortBy = "default"
+    });
+    
+    var priceAscUrl = Url.Action("Index", new { 
+        categoryId = selectedCategoryId, 
+        searchTerm = ViewBag.SearchTerm,
+        minPrice = ViewBag.MinPrice,
+        maxPrice = ViewBag.MaxPrice,
+        sortBy = "priceAsc"
+    });
+    
+    var priceDescUrl = Url.Action("Index", new { 
+        categoryId = selectedCategoryId, 
+        searchTerm = ViewBag.SearchTerm,
+        minPrice = ViewBag.MinPrice,
+        maxPrice = ViewBag.MaxPrice,
+        sortBy = "priceDesc"
+    });
+    
+    var nameAscUrl = Url.Action("Index", new { 
+        categoryId = selectedCategoryId, 
+        searchTerm = ViewBag.SearchTerm,
+        minPrice = ViewBag.MinPrice,
+        maxPrice = ViewBag.MaxPrice,
+        sortBy = "nameAsc"
+    });
+    
+    var nameDescUrl = Url.Action("Index", new { 
+        categoryId = selectedCategoryId, 
+        searchTerm = ViewBag.SearchTerm,
+        minPrice = ViewBag.MinPrice,
+        maxPrice = ViewBag.MaxPrice,
+        sortBy = "nameDesc"
+    });
+    
+    var currentSortBy = ViewBag.SortBy as string ?? "default";
 }
 
+<!-- Page Title -->
 <section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/page-title.jpg"));">
     <div class="auto-container">
         <div class="content-box">
             <div class="title">
-                <h1>Shop</h1>
+                <h1>Mağaza Sayfası</h1>
             </div>
             <ul class="bread-crumb clearfix">
-                <li><a asp-controller="Default" asp-action="Index">Home</a></li>
-                <li>Shop</li>
+                <li><a asp-controller="Default" asp-action="Index">Ana Sayfa</a></li>
+                <li>Mağaza</li>
             </ul>
         </div>
     </div>
 </section>
+<!-- End Page Title -->
 
+<!-- shop-page-section -->
 <section class="shop-page-section shop-page-1">
     <div class="auto-container">
         @if (TempData["SuccessMessage"] is string success)
@@ -34,13 +97,27 @@
             <div class="alert alert-danger">@error</div>
         }
     </div>
+    
     <div class="auto-container">
         <div class="row clearfix">
+            <!-- Sidebar -->
             <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
                 <div class="shop-sidebar default-sidebar">
+                    
+                    <!-- Arama Widget'ı -->
+                    <div class="sidebar-widget sidebar-search">
+                        <form asp-controller="Shop" asp-action="Index" method="get" class="search-form">
+                            <div class="form-group">
+                                <input type="search" name="searchTerm" placeholder="Ürün ara..." value="@ViewBag.SearchTerm" required="">
+                                <button type="submit"><i class="icon-Search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Kategori Widget'ı -->
                     <div class="sidebar-widget sidebar-categories">
                         <div class="widget-title">
-                            <h3>Shop by Categories</h3>
+                            <h3>Kategoriler</h3>
                         </div>
                         <div class="widget-content">
                             <ul class="categories-list clearfix">
@@ -48,17 +125,15 @@
                                     <a asp-controller="Shop"
                                        asp-action="Index"
                                        class="@(selectedCategoryId is null ? "current" : string.Empty)">
-                                        All Products
+                                        Tüm Ürünler
                                     </a>
                                 </li>
-        
                                 @foreach (var category in categories)
                                 {
                                     <li>
                                         <a asp-controller="Shop"
                                            asp-action="Index"
                                            asp-route-categoryId="@category.Id"
-          
                                            class="@(selectedCategoryId == category.Id ? "current" : string.Empty)">
                                             @category.Name
                                         </a>
@@ -67,63 +142,241 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-lg-9 col-md-12 col-sm-12 content-side">
-                <div class="our-shop">
-                    <div class="items-sorting clearfix">
-                        <div class="left-column pull-left">
-     
-                            <h6>@Model.Count product listed</h6>
+                    
+                    <!-- Fiyat Filtresi Widget'ı -->
+                    <div class="sidebar-widget price-filter">
+                        <div class="widget-title">
+                            <h3>Fiyata Göre Filtrele</h3>
+                        </div>
+                        <div class="range-slider clearfix">
+                            <form asp-controller="Shop" asp-action="Index" method="get" id="price-filter-form">
+                                <input type="hidden" name="categoryId" value="@selectedCategoryId" />
+                                <div class="row clearfix" style="padding: 0 15px;">
+                                    <div class="col-md-6" style="padding-right: 5px;">
+                                        <input type="number" name="minPrice" class="form-control" placeholder="Min ₺" value="@ViewBag.MinPrice" min="0" style="height: 45px; border: 1px solid #e5e5e5; border-radius: 5px; padding: 0 10px; width: 100%;">
+                                    </div>
+                                    <div class="col-md-6" style="padding-left: 5px;">
+                                        <input type="number" name="maxPrice" class="form-control" placeholder="Max ₺" value="@ViewBag.MaxPrice" min="0" style="height: 45px; border: 1px solid #e5e5e5; border-radius: 5px; padding: 0 10px; width: 100%;">
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="margin-top: 15px;">
+                                    <div class="pull-left">
+                                        <button type="submit" class="filter-btn theme-btn-two" style="border: none; cursor: pointer;">Filtrele</button>
+                                    </div>
+                                    <div class="pull-right">
+                                        <p style="margin-top: 8px;">Fiyat Aralığı:</p>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-                    <div class="row clearfix">
-     
-                        @foreach (var item in Model)
-                        {
-                            <div class="col-lg-4 col-md-6 col-sm-12 shop-block">
-                                <div class="shop-block-one">
-                                    <div class="inner-box">
+                    
+                    <!-- Öne Çıkan Ürünler Widget'ı -->
+                    @if (featuredProducts.Any())
+                    {
+                        <div class="sidebar-widget post-widget">
+                            <div class="widget-title">
+                                <h3>Öne Çıkan Ürünler</h3>
+                            </div>
+                            <div class="post-inner">
+                                @foreach (var product in featuredProducts.Take(3))
+                                {
+                                    <div class="post">
                                         <figure class="image-box">
-                                          
-                                            <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id">
-                                                <img src="@ImageUrlResolver.Resolve(item.ImageUrl)" alt="@item.Name">
+                                            <a asp-controller="Shop" asp-action="Detail" asp-route-id="@product.Id">
+                                                <img src="@ImageUrlResolver.Resolve(product.ImageUrl)" alt="@product.Name">
                                             </a>
                                         </figure>
-                                        <div class="lower-content">
-                                            <span class="price-box">$@item.Price</span>
-                          
-                                            <h3>
+                                        <h5>
+                                            <a asp-controller="Shop" asp-action="Detail" asp-route-id="@product.Id">
+                                                @product.Name
+                                            </a>
+                                        </h5>
+                                        <p>$@product.Price.ToString("0.00")</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <!-- Ürün Listesi -->
+            <div class="col-lg-9 col-md-12 col-sm-12 content-side">
+                <div class="our-shop">
+                    
+                    <!-- Sıralama ve Sonuç Bilgisi -->
+                    <div class="item-shorting clearfix">
+                        <div class="left-column pull-left clearfix">
+                            <div class="text">
+                                <p>
+                                    @if (Model.Any())
+                                    {
+                                        <text>Gösterilen @startItem – @endItem / @totalItems Sonuç</text>
+                                    }
+                                    else
+                                    {
+                                        <text>Ürün bulunamadı</text>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <div class="right-column pull-right clearfix">
+                            <div class="short-box clearfix">
+                                <p>Sırala</p>
+                                <div class="select-box">
+                                    <select class="wide" onchange="window.location.href=this.value;">
+                                        <option value="@defaultUrl" data-display="Varsayılan" selected="@(currentSortBy == "default")">Varsayılan</option>
+                                        <option value="@priceAscUrl" selected="@(currentSortBy == "priceAsc")">Fiyat: Düşükten Yükseğe</option>
+                                        <option value="@priceDescUrl" selected="@(currentSortBy == "priceDesc")">Fiyat: Yüksekten Düşüğe</option>
+                                        <option value="@nameAscUrl" selected="@(currentSortBy == "nameAsc")">İsim: A'dan Z'ye</option>
+                                        <option value="@nameDescUrl" selected="@(currentSortBy == "nameDesc")">İsim: Z'den A'ya</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="menu-box">
+                                <a href="javascript:void(0);" class="grid-view active"><i class="icon-Menu"></i></a>
+                                <a href="javascript:void(0);" class="list-view"><i class="icon-List-View"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ürün Grid -->
+                    @if (!Model.Any())
+                    {
+                        <div class="alert alert-info text-center" style="margin-top: 30px; padding: 30px;">
+                            <h4>Ürün bulunamadı</h4>
+                            <p>Arama kriterlerinize uygun ürün bulunamadı.</p>
+                            <a asp-controller="Shop" asp-action="Index" class="theme-btn-two" style="margin-top: 15px;">Tüm Ürünleri Gör</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row clearfix" id="product-grid">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-lg-4 col-md-6 col-sm-12 shop-block">
+                                    <div class="shop-block-one">
+                                        <div class="inner-box">
+                                            <figure class="image-box">
                                                 <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id">
-                                                    @item.Name
+                                                    <img src="@ImageUrlResolver.Resolve(item.ImageUrl)" alt="@item.Name">
                                                 </a>
-                                            </h3>
-                                            <ul class="rating clearfix">
-                                                @for (var i = 0; i < Math.Min(item.Rating, 5); i++)
-                                                {
-                                                    <li><i class="icon-Star"></i></li>
-                                                }
-                                            </ul>
-                                            <div class="cart-btn">
-                                     
-                                                <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id" class="theme-btn-two">View details</a>
-                                                <form asp-controller="Cart" asp-action="Add" method="post" style="margin-top:8px;">
-                                                    @Html.AntiForgeryToken()
-                                                    <input type="hidden" name="productId" value="@item.Id" />
-                                                    <input type="hidden" name="quantity" value="1" />
-                                                    <button type="submit" class="theme-btn-two">Sepete Ekle</button>
-                                                </form>
+                                            </figure>
+                                            <div class="lower-content">
+                                                <span class="price-box">$@item.Price.ToString("0.00")</span>
+                                                <h3>
+                                                    <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id">
+                                                        @item.Name
+                                                    </a>
+                                                </h3>
+                                                <ul class="rating clearfix">
+                                                    @for (var i = 0; i < 5; i++)
+                                                    {
+                                                        if (i < Math.Min(item.Rating, 5))
+                                                        {
+                                                            <li><i class="icon-Star" style="color: #ffc107;"></i></li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li><i class="icon-Star" style="color: #e0e0e0;"></i></li>
+                                                        }
+                                                    }
+                                                </ul>
+                                                <div class="cart-btn">
+                                                    <form asp-controller="Cart" asp-action="Add" method="post" style="display: inline-block;">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="productId" value="@item.Id" />
+                                                        <input type="hidden" name="quantity" value="1" />
+                                                        <button type="submit" class="theme-btn-two" style="border: none; cursor: pointer;">
+                                                            Sepete Ekle
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            }
+                        </div>
+                        
+                        <!-- Sayfalama (Pagination) -->
+                        @if (totalPages > 1)
+                        {
+                            <div class="pagination-wrapper centred">
+                                <ul class="pagination">
+                                    @if (currentPage > 1)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index", new { 
+                                                page = currentPage - 1, 
+                                                categoryId = selectedCategoryId,
+                                                sortBy = currentSortBy,
+                                                searchTerm = ViewBag.SearchTerm,
+                                                minPrice = ViewBag.MinPrice,
+                                                maxPrice = ViewBag.MaxPrice
+                                            })">Prev</a>
+                                        </li>
+                                    }
+                                    
+                                    @for (int i = 1; i <= totalPages; i++)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index", new { 
+                                                page = i, 
+                                                categoryId = selectedCategoryId,
+                                                sortBy = currentSortBy,
+                                                searchTerm = ViewBag.SearchTerm,
+                                                minPrice = ViewBag.MinPrice,
+                                                maxPrice = ViewBag.MaxPrice
+                                            })" class="@(i == currentPage ? "active" : "")">@i</a>
+                                        </li>
+                                    }
+                                    
+                                    @if (currentPage < totalPages)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index", new { 
+                                                page = currentPage + 1, 
+                                                categoryId = selectedCategoryId,
+                                                sortBy = currentSortBy,
+                                                searchTerm = ViewBag.SearchTerm,
+                                                minPrice = ViewBag.MinPrice,
+                                                maxPrice = ViewBag.MaxPrice
+                                            })">Next</a>
+                                        </li>
+                                    }
+                                </ul>
                             </div>
                         }
-                    </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </section>
+<!-- shop-page-section end -->
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Grid/List view toggle
+            $('.grid-view').click(function() {
+                $(this).addClass('active');
+                $('.list-view').removeClass('active');
+                $('#product-grid').removeClass('list-view-mode').addClass('grid-view-mode');
+            });
+            
+            $('.list-view').click(function() {
+                $(this).addClass('active');
+                $('.grid-view').removeClass('active');
+                $('#product-grid').removeClass('grid-view-mode').addClass('list-view-mode');
+            });
+            
+            // Nice Select başlat
+            if ($('.wide').length) {
+                $('.wide').niceSelect();
+            }
+        });
+    </script>
+}
