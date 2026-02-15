@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\MyAcademy_CQRS.Application\MyAcademy_CQRS.Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\MyAcademy_CQRS.Infrastructure\MyAcademy_CQRS.Infrastructure.csproj" />
     <ProjectReference Include="..\Infrastructure\MyAcademy_CQRS.Persistence\MyAcademy_CQRS.Persistence.csproj" />
   </ItemGroup>
 

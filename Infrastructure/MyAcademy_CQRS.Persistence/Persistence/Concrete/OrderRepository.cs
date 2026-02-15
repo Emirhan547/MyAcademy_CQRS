@@ -15,6 +15,13 @@ namespace MyAcademyCQRS.Infrastructure.Persistence.Concrete
                 .FirstOrDefaultAsync(o => o.Id == orderId);
         }
 
-       
+        public async Task<IList<Order>> GetOrdersByUserIdWithItemsAsync(string userId)
+        {
+            return await _appDbContext.Orders
+                .Include(o => o.OrderItems)
+                .Where(o => o.UserId == userId)
+                .OrderByDescending(o => o.CreatedDate)
+                .ToListAsync();
+        }
     }
 }

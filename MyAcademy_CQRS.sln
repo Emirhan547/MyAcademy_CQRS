@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAcademy_CQRS.Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAcademy_CQRS.Persistence", "Infrastructure\MyAcademy_CQRS.Persistence\MyAcademy_CQRS.Persistence.csproj", "{DA49B360-1955-46E6-B111-CEA73B9065B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAcademy_CQRS.Infrastructure", "Infrastructure\MyAcademy_CQRS.Infrastructure\MyAcademy_CQRS.Infrastructure.csproj", "{EB1EA0EE-6895-417D-9DDE-B376648616C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DA49B360-1955-46E6-B111-CEA73B9065B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA49B360-1955-46E6-B111-CEA73B9065B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA49B360-1955-46E6-B111-CEA73B9065B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB1EA0EE-6895-417D-9DDE-B376648616C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB1EA0EE-6895-417D-9DDE-B376648616C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB1EA0EE-6895-417D-9DDE-B376648616C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB1EA0EE-6895-417D-9DDE-B376648616C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 		{DC54B36D-1A6B-4D83-92E6-E3358A8B45AC} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{41BBB6A9-6004-4CEA-9586-690FF2E79B68} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{DA49B360-1955-46E6-B111-CEA73B9065B9} = {B6278161-5BF5-4C72-8F61-B9F4C568D480}
+		{EB1EA0EE-6895-417D-9DDE-B376648616C4} = {B6278161-5BF5-4C72-8F61-B9F4C568D480}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F72CAD22-FCB2-46FA-ABCF-D51F02C579EA}

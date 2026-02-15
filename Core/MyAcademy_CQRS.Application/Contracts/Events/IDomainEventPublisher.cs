@@ -1,4 +1,6 @@
-﻿namespace MyAcademy_CQRS.Application.Contracts.Events
+﻿using MyAcademyCQRS.Core.Domain.Events;
+
+namespace MyAcademy_CQRS.Application.Contracts.Events
 {
     public interface IDomainEventPublisher
     {

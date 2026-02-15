@@ -1,20 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using MyAcademy_CQRS.Application.Contracts.Abstractions;
 using MyAcademy_CQRS.Application.Contracts.UOW;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;
 
 namespace MyAcademyCQRS.Infrastructure.Persistence.Concrete
 {
-    public class UnitOfWork(AppDbContext _appDbContext):IUnitOfWork
+    public class UnitOfWork(AppDbContext appDbContext) : IUnitOfWork
     {
-        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        public async Task<IApplicationTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
         {
-            return await _appDbContext.Database.BeginTransactionAsync();
+            var transaction = await appDbContext.Database.BeginTransactionAsync(cancellationToken);
+            return new EfCoreApplicationTransaction(transaction);
         }
 
         public async Task<bool> SaveChangesAsync()
         {
-            return await _appDbContext.SaveChangesAsync() > 0;
+            return await appDbContext.SaveChangesAsync() > 0;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 
-using MyAcademy_CQRS.Application.Contracts.Events;
+using MyAcademyCQRS.Core.Domain.Events;
 
 namespace MyAcademyCQRS.Core.Domain.Enums
 {

@@ -1,7 +1,8 @@
-﻿@using MyAcademyCQRS.Core.Domain.Entities
+﻿@using MediatR
 @using Microsoft.AspNetCore.Identity
-@using MediatR
 @using MyAcademyCQRS.Core.Application.Features.Queries.CartQueries
+@using MyAcademy_CQRS.Infrastructure.Identities
+
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 @inject IMediator Mediator

@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MyAcademy_CQRS.Application.Contracts.Abstractions
+{
+    public interface IApplicationTransaction : IAsyncDisposable
+    {
+        Task CommitAsync(CancellationToken cancellationToken = default);
+        Task RollbackAsync(CancellationToken cancellationToken = default);
+    }
+}

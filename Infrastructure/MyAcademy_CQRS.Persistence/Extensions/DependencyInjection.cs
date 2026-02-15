@@ -5,9 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyAcademy_CQRS.Application.Common.Storage;
 using MyAcademy_CQRS.Application.Contracts.Events;
+using MyAcademy_CQRS.Application.Contracts.Identities;
 using MyAcademy_CQRS.Application.Contracts.Repositories;
 using MyAcademy_CQRS.Application.Contracts.Services;
+using MyAcademy_CQRS.Application.Contracts.Sessions;
 using MyAcademy_CQRS.Application.Contracts.UOW;
+using MyAcademy_CQRS.Infrastructure.Services;
 using MyAcademy_CQRS.Persistence.Persistence.Concrete;
 using MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain;
 using MyAcademyCQRS.Core.Domain.Entities;
@@ -18,6 +21,7 @@ using MyAcademyCQRS.Core.Domain.Events.PromotionEvents;
 using MyAcademyCQRS.Infrastructure.Observeres;
 using MyAcademyCQRS.Infrastructure.Persistence.Concrete;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;
+using MyAcademyCQRS.Infrastructure.Services;
 using MyAcademyCQRS.Infrastructure.Storage;
 
 namespace MyAcademy_CQRS.Persistence.Extensions
@@ -42,7 +46,8 @@ namespace MyAcademy_CQRS.Persistence.Extensions
             services.AddScoped<IDomainEventHandler<OrderStatusChangedEvent>, OrderLogEventHandler>();
             services.AddScoped<IDomainEventHandler<OrderCreatedEvent>, OrderMailEventHandler>();
             services.AddScoped<IDomainEventHandler<OrderStatusChangedEvent>, OrderMailEventHandler>();
-
+            services.AddScoped<ICartSessionService, SessionCartService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IDomainEventHandler<PromotionCreatedEvent>, PromotionEventLogHandler>();
             services.AddScoped<IDomainEventHandler<PromotionUpdatedEvent>, PromotionEventLogHandler>();
             services.AddScoped<IDomainEventHandler<ContactMessageReceivedEvent>, ContactMessageEventLogHandler>();

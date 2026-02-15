@@ -1,6 +1,6 @@
-﻿namespace MyAcademy_CQRS.Application.Contracts.Events
+﻿namespace MyAcademyCQRS.Core.Domain.Events;
+
+public interface IDomainEvent
 {
-    public interface IDomainEvent
-    {
-    }
+    
 }

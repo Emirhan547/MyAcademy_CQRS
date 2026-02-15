@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MyAcademy_CQRS.Infrastructure.Identities;
 using MyAcademyCQRS.Core.Domain.Entities;
 using MyAcademyCQRS.Infrastructure.Persistence.Context;
 using MyAcademyCQRS.Models.Auths;

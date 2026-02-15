@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\MyAcademy_CQRS.Application\MyAcademy_CQRS.Application.csproj" />
+    <ProjectReference Include="..\MyAcademy_CQRS.Infrastructure\MyAcademy_CQRS.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

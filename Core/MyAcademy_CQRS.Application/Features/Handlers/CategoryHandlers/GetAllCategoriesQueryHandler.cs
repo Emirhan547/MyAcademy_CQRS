@@ -1,5 +1,4 @@
 ﻿
-
 using AutoMapper;
 using MediatR;
 using MyAcademy_CQRS.Application.Contracts.Repositories;
