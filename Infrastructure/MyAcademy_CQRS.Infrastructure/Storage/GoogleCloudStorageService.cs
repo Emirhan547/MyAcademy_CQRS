@@ -1,4 +1,5 @@
 ﻿
+using Google;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
 using Microsoft.Extensions.Configuration;
@@ -34,22 +35,36 @@ namespace MyAcademy_CQRS.Infrastructure.Storage
         }
 
         public async Task<string> UploadAsync(
-            Stream fileStream,
-            string fileName,
-            string contentType)
+       Stream fileStream,
+       string fileName,
+       string contentType)
         {
+            var objectName = $"Bageryimages/{fileName}";
+
             await _storageClient.UploadObjectAsync(
                 bucket: _bucketName,
-                objectName: fileName,
+                objectName: objectName,
                 contentType: contentType,
                 source: fileStream);
 
-            return $"https://storage.googleapis.com/{_bucketName}/{fileName}";
+            return objectName; // prefixli dön
         }
+
 
         public async Task DeleteAsync(string fileName)
         {
-            await _storageClient.DeleteObjectAsync(_bucketName, fileName);
+            try
+            {
+                await _storageClient.DeleteObjectAsync(_bucketName, fileName);
+            }
+            catch (GoogleApiException ex)
+                when (ex.HttpStatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                // Object zaten yok → tamamen ignore et
+                return;
+            }
         }
+
+
     }
 }

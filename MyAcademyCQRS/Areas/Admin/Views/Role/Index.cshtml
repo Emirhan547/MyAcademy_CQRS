@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using MyAcademy_CQRS.Infrastructure.Identities
+
+@using MyAcademy_CQRS.Persistence.Identities
 @{
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
     var users = ViewBag.Users as List<AppUser> ?? new();

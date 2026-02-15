@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using MyAcademy_CQRS.Application.Contracts.Repositories;
 using MyAcademyCQRS.Core.Application.Features.Queries.GalleryCategoryQueries;
 using MyAcademyCQRS.Core.Application.Features.Results.GalleryCategoryResults;

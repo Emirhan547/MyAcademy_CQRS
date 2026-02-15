@@ -1,8 +1,8 @@
-﻿@using MediatR
+﻿@using MyAcademyCQRS.Core.Domain.Entities
 @using Microsoft.AspNetCore.Identity
+@using MediatR
 @using MyAcademyCQRS.Core.Application.Features.Queries.CartQueries
-@using MyAcademy_CQRS.Infrastructure.Identities
-
+@using MyAcademy_CQRS.Persistence.Identities
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 @inject IMediator Mediator
@@ -118,6 +118,8 @@
                     </div>
                 </nav>
             </div>
+
+            <!-- SAĞ ÜST MENÜ - DÜZENLENMİŞ HALİ (SADECE İKONLAR) -->
             <ul class="menu-right-content clearfix">
                 <li class="search-box-outer">
                     <div class="dropdown">
@@ -135,35 +137,36 @@
                     </div>
                 </li>
                 <li class="user-btn dropdown">
-                    <a href="#" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png);">
+                    <a href="#" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png); display: block;">
                         <i class="icon-Profile"></i>
                     </a>
-                    <ul>
+                    <ul class="dropdown-menu" style="position: absolute; right: 0; left: auto; min-width: 150px; background: white; border: 1px solid #ddd; padding: 8px 0; z-index: 1000;">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li><a asp-area="User" asp-controller="Profile" asp-action="Index">Hesabım</a></li>
-                            <li><a asp-area="User" asp-controller="Order" asp-action="Index">Siparişlerim</a></li>
+                            <li><a class="dropdown-item" asp-area="User" asp-controller="Profile" asp-action="Index" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Hesabım</a></li>
+                            <li><a class="dropdown-item" asp-area="User" asp-controller="Order" asp-action="Index" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Siparişlerim</a></li>
                             @if (User.IsInRole("Admin"))
                             {
-                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a></li>
+                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Admin Panel</a></li>
                             }
+                            <li><hr style="margin: 8px 0; border: 0; border-top: 1px solid #eee;"></li>
                             <li>
                                 <form asp-controller="Auth" asp-action="Logout" method="post">
-                                    <button type="submit" class="theme-btn btn-one" style="padding:8px 16px;">Çıkış Yap</button>
+                                    <button type="submit" style="background: none; border: none; width: 100%; text-align: left; padding: 8px 15px; cursor: pointer; color: #333;">Çıkış Yap</button>
                                 </form>
                             </li>
                         }
                         else
                         {
-                            <li><a asp-controller="Auth" asp-action="Login">Giriş Yap</a></li>
-                            <li><a asp-controller="Auth" asp-action="Register">Kayıt Ol</a></li>
+                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="Login" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Giriş Yap</a></li>
+                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="Register" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Kayıt Ol</a></li>
                         }
                     </ul>
                 </li>
                 <li class="cart-btn">
-                    <a asp-controller="Cart" asp-action="Index" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png);">
+                    <a asp-controller="Cart" asp-action="Index" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png); display: block; position: relative;">
                         <i class="icon-Bag"></i>
-                        <span>@cartItemCount</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 11px; display: flex; align-items: center; justify-content: center;">@cartItemCount</span>
                     </a>
                 </li>
             </ul>
@@ -181,6 +184,8 @@
                     <!--Keep This Empty / Menu will come through Javascript-->
                 </nav>
             </div>
+
+            <!-- STICKY HEADER SAĞ ÜST MENÜ - DÜZENLENMİŞ HALİ -->
             <ul class="menu-right-content clearfix">
                 <li class="search-box-outer">
                     <div class="dropdown">
@@ -198,35 +203,36 @@
                     </div>
                 </li>
                 <li class="user-btn dropdown">
-                    <a href="#" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png);">
+                    <a href="#" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png); display: block;">
                         <i class="icon-Profile"></i>
                     </a>
-                    <ul>
+                    <ul class="dropdown-menu" style="position: absolute; right: 0; left: auto; min-width: 150px; background: white; border: 1px solid #ddd; padding: 8px 0; z-index: 1000;">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li><a asp-area="User" asp-controller="Profile" asp-action="Index">Hesabım</a></li>
-                            <li><a asp-area="User" asp-controller="Order" asp-action="Index">Siparişlerim</a></li>
+                            <li><a class="dropdown-item" asp-area="User" asp-controller="Profile" asp-action="Index" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Hesabım</a></li>
+                            <li><a class="dropdown-item" asp-area="User" asp-controller="Order" asp-action="Index" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Siparişlerim</a></li>
                             @if (User.IsInRole("Admin"))
                             {
-                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a></li>
+                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Admin Panel</a></li>
                             }
+                            <li><hr style="margin: 8px 0; border: 0; border-top: 1px solid #eee;"></li>
                             <li>
                                 <form asp-controller="Auth" asp-action="Logout" method="post">
-                                    <button type="submit" class="theme-btn btn-one" style="padding:8px 16px;">Çıkış Yap</button>
+                                    <button type="submit" style="background: none; border: none; width: 100%; text-align: left; padding: 8px 15px; cursor: pointer; color: #333;">Çıkış Yap</button>
                                 </form>
                             </li>
                         }
                         else
                         {
-                            <li><a asp-controller="Auth" asp-action="Login">Giriş Yap</a></li>
-                            <li><a asp-controller="Auth" asp-action="Register">Kayıt Ol</a></li>
+                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="Login" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Giriş Yap</a></li>
+                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="Register" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Kayıt Ol</a></li>
                         }
                     </ul>
                 </li>
                 <li class="cart-btn">
-                    <a asp-controller="Cart" asp-action="Index" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png);">
+                    <a asp-controller="Cart" asp-action="Index" style="background-image: url(~/BageryPack/Bagery/assets/images/icons/icon-bg-1.png); display: block; position: relative;">
                         <i class="icon-Bag"></i>
-                        <span>@cartItemCount</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 11px; display: flex; align-items: center; justify-content: center;">@cartItemCount</span>
                     </a>
                 </li>
             </ul>

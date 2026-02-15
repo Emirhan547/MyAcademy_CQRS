@@ -11,7 +11,7 @@ using MyAcademyCQRS.Core.Domain.Enums;
 using MyAcademyCQRS.Core.Domain.Events.ContactMessageEvents;
 using MyAcademyCQRS.Core.Domain.Events.OrderEvents;
 using MyAcademyCQRS.Core.Domain.Events.PromotionEvents;
-using MyAcademyCQRS.Infrastructure.Services;
+
 
 namespace MyAcademy_CQRS.Infrastructure.Extensions;
 

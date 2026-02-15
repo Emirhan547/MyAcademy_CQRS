@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using MyAcademy_CQRS.Application.Extensions;
+using MyAcademy_CQRS.Infrastructure.Extensions;
 using MyAcademy_CQRS.Persistence.Context;
 using MyAcademy_CQRS.Persistence.Extensions;
 using MyAcademyCQRS.Core.Domain.Entities;
+using Microsoft.Extensions.Configuration;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,17 +16,8 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
-{
-    options.Password.RequireDigit = false;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireUppercase = false;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequiredLength = 6;
-})
-              .AddEntityFrameworkStores<AppDbContext>()
-              .AddDefaultTokenProviders();
+builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddInfrastructureServices();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
