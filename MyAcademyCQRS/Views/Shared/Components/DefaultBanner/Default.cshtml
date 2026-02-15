@@ -4,8 +4,8 @@
        @foreach (var item in Model)
         {
             <div class="slide-item">
-                <div class="image-layer" style="background-image:url(@item.BackgroundImageUrl)"></div>
-                <div class="auto-container"><div class="content-inner"><div class="content-box"><h1>@item.Title</h1><p>@item.Description</p><div class="btn-box"><a href="#" class="banner-btn">Şimdi Keşfet</a></div></div><figure class="image-box style-one"><img src="@item.ProductImageUrl" alt=""></figure></div></div>
+                <div class="image-layer" style="background-image:url(@ImageUrlResolver.Resolve(item.BackgroundImageUrl))"></div>
+                <div class="auto-container"><div class="content-inner"><div class="content-box"><h1>@item.Title</h1><p>@item.Description</p><div class="btn-box"><a href="#" class="banner-btn">Şimdi Keşfet</a></div></div><figure class="image-box style-one"><img src="@ImageUrlResolver.Resolve(item.ProductImageUrl)" alt=""></figure></div></div>
             </div>
         }
     </div>

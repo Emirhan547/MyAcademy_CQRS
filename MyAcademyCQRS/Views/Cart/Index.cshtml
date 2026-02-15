@@ -46,7 +46,7 @@
                     {
                         <tr>
                             <td>
-                                <img src="@item.ProductImageUrl" alt="@item.ProductName" style="width:55px;height:55px;object-fit:cover;margin-right:8px;" />
+                                <img src="@ImageUrlResolver.Resolve(item.ProductImageUrl)" alt="@item.ProductName" style="width:55px;height:55px;object-fit:cover;margin-right:8px;" />
                                 @item.ProductName
                             </td>
                             <td>@item.UnitPrice.ToString("C")</td>

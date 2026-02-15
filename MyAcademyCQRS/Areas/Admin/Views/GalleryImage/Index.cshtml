@@ -23,7 +23,7 @@
                 @foreach (var image in category.Images)
                 {
                     <article class="border border-primary/10 rounded-lg overflow-hidden bg-white/50 dark:bg-white/5">
-                        <img src="@image.ImageUrl" alt="@image.Title" class="w-full h-44 object-cover" />
+                        <img src="@ImageUrlResolver.Resolve(image.ImageUrl)" alt="@image.Title" class="w-full h-44 object-cover" />
                         <div class="p-4 space-y-3">
                             <h3 class="font-semibold text-gray-800 dark:text-white">@image.Title</h3>
                             <div class="flex items-center gap-2">

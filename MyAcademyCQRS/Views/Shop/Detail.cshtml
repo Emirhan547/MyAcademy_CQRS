@@ -1,4 +1,6 @@
-﻿@model MyAcademyCQRS.Core.Application.Features.Results.ProductResults.GetShopDetailQueryResult
+﻿@using MyAcademyCQRS.Services
+@inject ImageUrlResolver ImageUrlResolver
+@model MyAcademyCQRS.Core.Application.Features.Results.ProductResults.GetShopDetailQueryResult
 @{
     ViewData["Title"] = Model.Product.Name;
     Layout = "~/Views/Shared/_UILayout.cshtml";
@@ -35,7 +37,7 @@
             <div class="row align-items-center clearfix">
                 <div class="col-lg-6 col-md-12 col-sm-12 image-column">
                     <figure class="image-box">
-                        <img src="@Model.Product.ImageUrl" alt="@Model.Product.Name">
+                        <img src="@ImageUrlResolver.Resolve(Model.Product.ImageUrl)" alt="@Model.Product.Name">
                     </figure>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-12 content-column">
@@ -104,7 +106,7 @@
                                 <div class="inner-box">
                                     <figure class="image-box">
                                         <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id">
-                                            <img src="@item.ImageUrl" alt="@item.Name">
+                                            <img src="@ImageUrlResolver.Resolve(item.ImageUrl)" alt="@item.Name">
                                         </a>
                                     </figure>
                                     <div class="lower-content">

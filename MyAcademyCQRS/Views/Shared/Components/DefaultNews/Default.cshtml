@@ -15,7 +15,7 @@
                         <div class="inner-box">
                             <figure class="image-box">
                                 <span class="category">@item.Category</span>
-                                <a href="#"><img src="@item.ImageUrl" alt=""></a>
+                                <a href="#"><img src="@ImageUrlResolver.Resolve(item.ImageUrl)" alt=""></a>
                             </figure>
                             <div class="lower-content">
                                 <ul class="post-info clearfix">

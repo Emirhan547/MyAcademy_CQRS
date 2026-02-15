@@ -5,6 +5,7 @@ using MyAcademy_CQRS.Persistence.Context;
 using MyAcademy_CQRS.Persistence.Extensions;
 using MyAcademyCQRS.Core.Domain.Entities;
 using Microsoft.Extensions.Configuration;
+using MyAcademyCQRS.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructureServices();
-
+builder.Services.AddScoped<IImageUrlResolver, ImageUrlResolver>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Auth/Login";
