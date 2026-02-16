@@ -1,30 +1,218 @@
-﻿@using MyAcademyCQRS.Areas.User.Models
+﻿
+@using MyAcademyCQRS.Areas.User.Models
+@using MyAcademyCQRS.Core.Domain.Enums
 @model OrderListViewModel
 
-<section class="shop-section sec-pad">
-    <div class="auto-container">
-        <h2>Siparişlerim</h2>
 
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Sipariş No</th>
-                    <th>Tutar</th>
-                    <th>Durum</th>
-                    <th>Tarih</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var order in Model.Orders)
-                {
-                    <tr>
-                        <td>@order.OrderNumber</td>
-                        <td>@order.TotalPrice.ToString("C")</td>
-                        <td>@order.Status</td>
-                        <td>@order.CreatedDate.ToString("dd.MM.yyyy")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</section>
+    @{
+        var totalOrderCount = Model.Orders.Count;
+        var totalSpent = Model.Orders.Sum(x => x.TotalPrice);
+
+    }
+
+    <section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/page-title.jpg"));">
+        <div class="auto-container">
+            <div class="content-box">
+                <div class="title">
+                    <h1>Siparişlerim</h1>
+                </div>
+                <ul class="bread-crumb clearfix">
+                    <li><a asp-controller="Default" asp-action="Index" asp-area="">Ana Sayfa</a></li>
+                    <li>Kullanıcı Alanı</li>
+                    <li>Siparişlerim</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="shop-section sec-pad user-panel-section">
+        <div class="auto-container">
+           
+            <div class="row clearfix">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="user-nav-card">
+                        <h4>Hesap Menüsü</h4>
+                        <ul class="user-nav-list clearfix">
+                            <li><a asp-controller="Profile" asp-action="Index" asp-area="User">Profil Bilgilerim</a></li>
+                            <li><a asp-controller="Order" asp-action="Index" asp-area="User" class="active">Sipariş Geçmişim</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12 col-sm-12">
+                    <div class="user-content-card">
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <span>Toplam Sipariş</span>
+                                <h3>@totalOrderCount</h3>
+                            </div>
+                           
+                           
+                            <div class="summary-item">
+                                <span>Toplam Harcama</span>
+                                <h3>@totalSpent.ToString("C")</h3>
+                            </div>
+                        </div>
+
+                        @if (Model.Orders.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table user-order-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sipariş No</th>
+                                            <th>Tutar</th>
+                                            <th>Durum</th>
+                                            <th>Tarih</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var order in Model.Orders.OrderByDescending(x => x.CreatedDate))
+                                        {
+                                            var statusClass = order.Status switch
+                                            {
+                                                
+                                                OrderStatus.Cancelled => "status-cancelled",
+                                                _ => "status-progress"
+                                            };
+
+                                            <tr>
+                                                <td>#@order.OrderNumber</td>
+                                                <td>@order.TotalPrice.ToString("C")</td>
+                                                <td><span class="status-pill @statusClass">@order.Status</span></td>
+                                                <td>@order.CreatedDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="empty-state-box">
+                                <h5>Henüz bir siparişiniz bulunmuyor.</h5>
+                                <p>Lezzetli ürünlerimizi keşfetmek için mağaza sayfasına göz atabilirsiniz.</p>
+                                <a asp-controller="Shop" asp-action="Index" asp-area="" class="theme-btn btn-one">Mağazaya Git</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<style>
+    .user-panel-section .user-nav-card,
+    .user-panel-section .user-content-card {
+        background: #fff;
+        border: 1px solid #f0ede8;
+        border-radius: 16px;
+        padding: 32px;
+        box-shadow: 0 14px 35px rgba(16, 24, 40, 0.08);
+    }
+
+        .user-panel-section .user-nav-card h4 {
+            margin-bottom: 20px;
+        }
+
+    .user-nav-list li {
+        margin-bottom: 14px;
+    }
+
+    .user-nav-list a {
+        display: block;
+        border: 1px solid #f3eee6;
+        border-radius: 10px;
+        padding: 12px 16px;
+        color: #2f2f2f;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .user-nav-list a.active,
+        .user-nav-list a:hover {
+            background: #f17732;
+            border-color: #f17732;
+            color: #fff;
+        }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-bottom: 30px;
+    }
+
+    .summary-item {
+        border: 1px dashed #f3ddd0;
+        border-radius: 12px;
+        padding: 18px;
+        background: #fffaf6;
+    }
+
+        .summary-item span {
+            color: #6d6d6d;
+            font-size: 14px;
+        }
+
+        .summary-item h3 {
+            margin: 6px 0 0;
+            color: #f17732;
+        }
+
+    .user-order-table thead th {
+        background: #1d1d1d;
+        color: #fff;
+        font-weight: 600;
+        border: none;
+    }
+
+    .user-order-table tbody tr td {
+        vertical-align: middle;
+        border-color: #f0ece6;
+    }
+
+    .status-pill {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .status-completed {
+        background: #e8f9ef;
+        color: #0f8d46;
+    }
+
+    .status-cancelled {
+        background: #ffe8e8;
+        color: #d53939;
+    }
+
+    .status-progress {
+        background: #fff4e6;
+        color: #d47b00;
+    }
+
+    .empty-state-box {
+        text-align: center;
+        padding: 30px;
+        border: 1px dashed #f2ddcb;
+        border-radius: 12px;
+        background: #fffaf6;
+    }
+
+    @@media (max-width: 991px) {
+        .user-panel-section .user-nav-card,
+        .user-panel-section .user-content-card {
+            padding: 24px;
+        }
+    }
+
+    @@media (max-width: 575px) {
+        .summary-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

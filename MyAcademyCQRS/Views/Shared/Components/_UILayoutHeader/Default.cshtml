@@ -119,7 +119,7 @@
                 </nav>
             </div>
 
-            <!-- SAĞ ÜST MENÜ - DÜZENLENMİŞ HALİ -->
+            <!-- SAĞ ÜST MENÜ -->
             <ul class="menu-right-content clearfix">
                 <li class="search-box-outer">
                     <div class="dropdown">
@@ -174,6 +174,68 @@
         </div>
     </div>
 
-    <!--sticky Header - Aynı düzenlemeler buraya da yapılmalı (kısalık için eklemedim) -->
-    <div class="sticky-header"> ... </div>
+    <!--sticky Header -->
+    <div class="sticky-header">
+        <div class="outer-box">
+            <div class="logo-box">
+                <figure class="logo"><a href="/"><img src="~/BageryPack/Bagery/assets/images/small-logo.png" alt=""></a></figure>
+            </div>
+            <div class="menu-area">
+                <nav class="main-menu clearfix">
+                    <!-- Menu will come through Javascript -->
+                </nav>
+            </div>
+            <ul class="menu-right-content clearfix">
+                <li class="search-box-outer">
+                    <div class="dropdown">
+                        <button class="search-box-btn" style="background-image: url(/BageryPack/Bagery/assets/images/icons/icon-bg-1.png);" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-Search"></i></button>
+                        <div class="dropdown-menu search-panel" aria-labelledby="dropdownMenu4">
+                            <div class="form-container">
+                                <form method="post" action="#">
+                                    <div class="form-group">
+                                        <input type="search" name="search-field" value="" placeholder="Ara..." required="">
+                                        <button type="submit" class="search-btn"><span class="fas fa-search"></span></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="user-btn dropdown">
+                    <a href="#" class="dropdown-toggle" style="background-image: url(/BageryPack/Bagery/assets/images/icons/icon-bg-1.png); display: block;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="icon-Profile"></i>
+                    </a>
+                    <ul class="dropdown-menu" style="position: absolute; right: 0; left: auto; min-width: 180px; background: white; border: 1px solid #eee; padding: 8px 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li><a class="dropdown-item" asp-area="User" asp-controller="Profile" asp-action="Index" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Hesabım</a></li>
+                            <li><a class="dropdown-item" asp-area="User" asp-controller="Order" asp-action="Index" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Siparişlerim</a></li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Admin Paneli</a></li>
+                            }
+                            <li><hr style="margin: 8px 0; border: 0; border-top: 1px solid #eee;"></li>
+                            <li>
+                                <form asp-controller="Auth" asp-action="Logout" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" style="background: none; border: none; width: 100%; text-align: left; padding: 8px 15px; cursor: pointer; color: #333;">Çıkış Yap</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="Login" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Giriş Yap</a></li>
+                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="Register" style="display: block; padding: 8px 15px; text-decoration: none; color: #333;">Kayıt Ol</a></li>
+                        }
+                    </ul>
+                </li>
+                <li class="cart-btn">
+                    <a asp-controller="Cart" asp-action="Index" style="background-image: url(/BageryPack/Bagery/assets/images/icons/icon-bg-1.png); display: block; position: relative;">
+                        <i class="icon-Bag"></i>
+                        <span style="position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 11px; display: flex; align-items: center; justify-content: center;">@cartItemCount</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </header>

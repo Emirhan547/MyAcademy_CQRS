@@ -16,21 +16,7 @@ public class ContactMessageController(IMediator mediator) : Controller
         return View(model);
     }
 
-    public IActionResult Create() => View();
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateContactMessageCommand command)
-    {
-        var result = await mediator.Send(command);
-        if (!result.Success)
-        {
-            ModelState.AddModelError(string.Empty, result.Message);
-            return View(command);
-        }
-
-        return RedirectToAction(nameof(Index));
-    }
+   
 
     public async Task<IActionResult> Update(int id)
     {
