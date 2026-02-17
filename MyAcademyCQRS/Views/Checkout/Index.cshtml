@@ -1,11 +1,15 @@
-﻿@model MyAcademyCQRS.Models.CheckoutViewModel
+﻿@model MyAcademy_CQRS.Application.Features.Commands.CartCommands.CompleteCheckoutCommand
 @using MyAcademyCQRS.Core.Domain.Enums
 @using MyAcademyCQRS.Services
 @using MyAcademy_CQRS.Domain.Enums
+@using MyAcademy_CQRS.Application.Features.Results.CartResults
 
 @{
     ViewData["Title"] = "Ödeme";
     Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+@{
+    var cart = ViewBag.Cart as GetCartQueryResult ?? new GetCartQueryResult();
 }
 
 <!-- Page Title -->
@@ -172,7 +176,7 @@
                     <h3>Sipariş Özeti</h3>
 
                     <ul class="order-list">
-                        @foreach (var item in Model.Cart.Items)
+                        @foreach (var item in cart.Items)
                         {
                             <li class="clearfix">
                                 <div class="item-info">
@@ -187,7 +191,7 @@
                     <ul class="order-total">
                         <li class="clearfix">
                             <span class="left-text">Ara Toplam</span>
-                            <span class="right-text">$@Model.Cart.TotalPrice.ToString("0.00")</span>
+                            <span class="right-text">$@cart.TotalPrice.ToString("0.00")</span>
                         </li>
                         <li class="clearfix">
                             <span class="left-text">Kargo</span>
@@ -195,7 +199,7 @@
                         </li>
                         <li class="clearfix total">
                             <span class="left-text">Genel Toplam</span>
-                            <span class="right-text">$@Model.Cart.TotalPrice.ToString("0.00")</span>
+                            <span class="right-text">$@cart.TotalPrice.ToString("0.00")</span>
                         </li>
                     </ul>
 

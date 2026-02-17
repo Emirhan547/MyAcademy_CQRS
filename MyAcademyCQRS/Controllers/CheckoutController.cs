@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyAcademy_CQRS.Application.Features.Commands.CartCommands;
 using MyAcademy_CQRS.Domain.Enums;
 using MyAcademyCQRS.Core.Application.Features.Queries.CartQueries;
-using MyAcademyCQRS.Models;
+
 
 namespace MyAcademyCQRS.Controllers
 {
@@ -21,46 +21,32 @@ namespace MyAcademyCQRS.Controllers
                 return RedirectToAction("Index", "Cart");
             }
 
-            return View(new CheckoutViewModel
+            ViewBag.Cart = cartResult.Data;
+            return View(new CompleteCheckoutCommand
             {
-                Cart = cartResult.Data,
+             
                 PaymentMethod = PaymentMethodType.CreditCard
             });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(CheckoutViewModel model)
+        public async Task<IActionResult> Index(CompleteCheckoutCommand command)
         {
             var cartResult = await mediator.Send(new GetCartQuery());
-            model.Cart = cartResult.Data ?? new();
+            ViewBag.Cart = cartResult.Data ?? new();
 
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(command);
             }
 
-            var result = await mediator.Send(new CompleteCheckoutCommand
-            {
-                FullName = model.FullName,
-                Email = model.Email,
-                Address = model.Address,
-                City = model.City,
-                District = model.District,
-                PaymentMethod = model.PaymentMethod,
-                CardHolderName = model.CardHolderName,
-                CardNumber = model.CardNumber,
-                ExpireMonth = model.ExpireMonth,
-                ExpireYear = model.ExpireYear,
-                Cvv = model.Cvv,
-                Iban = model.Iban,
-                TransferReference = model.TransferReference
-            });
+            var result = await mediator.Send(command);
 
             if (!result.Success)
             {
                 ModelState.AddModelError(string.Empty, result.Message);
-                return View(model);
+                return View(command);
             }
 
             TempData["SuccessMessage"] = result.Message;

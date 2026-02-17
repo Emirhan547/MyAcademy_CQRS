@@ -1,12 +1,9 @@
-﻿
-@using MyAcademyCQRS.Areas.User.Models
-@using MyAcademyCQRS.Core.Domain.Enums
-@model OrderListViewModel
-
+﻿@using MyAcademyCQRS.Core.Domain.Enums
+@model IList<MyAcademyCQRS.Core.Domain.Entities.Order>
 
     @{
-        var totalOrderCount = Model.Orders.Count;
-        var totalSpent = Model.Orders.Sum(x => x.TotalPrice);
+    var totalOrderCount = Model.Count;
+    var totalSpent = Model.Sum(x => x.TotalPrice);
 
     }
 
@@ -53,7 +50,7 @@
                             </div>
                         </div>
 
-                        @if (Model.Orders.Any())
+                    @if (Model.Any())
                         {
                             <div class="table-responsive">
                                 <table class="table user-order-table">
@@ -66,7 +63,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var order in Model.Orders.OrderByDescending(x => x.CreatedDate))
+                                    @foreach (var order in Model.OrderByDescending(x => x.CreatedDate))
                                         {
                                             var statusClass = order.Status switch
                                             {

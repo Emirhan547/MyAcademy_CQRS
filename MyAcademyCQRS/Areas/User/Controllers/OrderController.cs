@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyAcademy_CQRS.Application.Contracts.Services;
-using MyAcademyCQRS.Areas.User.Models;
+
 using MyAcademyCQRS.Core.Application.Features.Queries.OrderQueries;
 using MyAcademyCQRS.Core.Domain.Enums;
 
@@ -28,11 +28,8 @@ public class OrderController(IMediator mediator, IActivityLogService activityLog
             "Siparişlerim görüntülendi",
             $"Kullanıcı sipariş listesi sayfasını açtı. Sipariş sayısı: {orders.Count}",
              ipAddress: HttpContext.Connection.RemoteIpAddress?.ToString());
-        var model = new OrderListViewModel
-        {
-            Orders = orders
-        };
+       
 
-        return View(model);
+        return View(orders);
     }
 }
