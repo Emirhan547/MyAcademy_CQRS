@@ -1,0 +1,139 @@
+﻿@model MyAcademyCQRS.Areas.Admin.Models.AdminOrderListViewModel
+@{
+    ViewData["Title"] = "Siparişler";
+}
+
+<div class="flex-1 overflow-y-auto p-6 lg:p-8">
+    <div class="max-w-7xl mx-auto space-y-6">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+            <div>
+                <h1 class="text-2xl font-header font-bold text-gray-900 dark:text-white">Kullanıcı Siparişleri</h1>
+                <p class="text-sm text-gray-500">Admin tarafında kullanıcıların verdiği tüm siparişleri buradan takip edebilirsiniz.</p>
+            </div>
+            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="px-4 py-2 rounded-lg bg-primary text-white text-sm hover:opacity-90">Dashboard'a Dön</a>
+        </div>
+
+        @if (TempData["OrderSuccess"] is string successMessage)
+        {
+            <div class="rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 px-4 py-3 text-sm">@successMessage</div>
+        }
+        @if (TempData["OrderError"] is string errorMessage)
+        {
+            <div class="rounded-xl border border-rose-200 bg-rose-50 text-rose-700 px-4 py-3 text-sm">@errorMessage</div>
+        }
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="rounded-2xl bg-white dark:bg-[#251e18] border border-primary/20 p-5 shadow-soft">
+                <p class="text-xs uppercase tracking-wider text-gray-500">Filtrelenen Sipariş Sayısı</p>
+                <p class="mt-2 text-3xl font-display font-bold text-gray-900 dark:text-white">@Model.TotalOrderCount</p>
+            </div>
+            <div class="rounded-2xl bg-white dark:bg-[#251e18] border border-primary/20 p-5 shadow-soft">
+                <p class="text-xs uppercase tracking-wider text-gray-500">Filtrelenen Toplam Ciro</p>
+                <p class="mt-2 text-3xl font-display font-bold text-gray-900 dark:text-white">@Model.TotalRevenue.ToString("C2")</p>
+            </div>
+        </div>
+
+        <form method="get" class="rounded-2xl bg-white dark:bg-[#251e18] border border-primary/20 p-4 shadow-soft grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+            <div>
+                <label class="text-xs text-gray-500">Sipariş no veya müşteri ara</label>
+                <input type="text" name="searchTerm" value="@Model.SearchTerm" class="mt-1 w-full rounded-lg border-gray-200 dark:bg-white/5" placeholder="ORD, Ahmet..." />
+            </div>
+            <div>
+                <label class="text-xs text-gray-500">Durum</label>
+                <select name="status" class="mt-1 w-full rounded-lg border-gray-200 dark:bg-white/5">
+                    <option value="">Tümü</option>
+                    @if (Model.Status == "Pending")
+                    {
+                        <option value="Pending" selected>Bekleyen</option>
+                    }
+                    else
+                    {
+                        <option value="Pending">Bekleyen</option>
+                    }
+                    @if (Model.Status == "Approved")
+                    {
+                        <option value="Approved" selected>Onaylanan</option>
+                    }
+                    else
+                    {
+                        <option value="Approved">Onaylanan</option>
+                    }
+                    @if (Model.Status == "Cancelled")
+                    {
+                        <option value="Cancelled" selected>İptal</option>
+                    }
+                    else
+                    {
+                        <option value="Cancelled">İptal</option>
+                    }
+                </select>
+            </div>
+            <button type="submit" class="h-10 rounded-lg bg-primary text-white text-sm font-medium">Filtrele</button>
+        </form>
+
+        <div class="rounded-2xl overflow-hidden bg-white dark:bg-[#251e18] border border-primary/20 shadow-soft">
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm">
+                    <thead class="bg-neutral-warm/80 dark:bg-white/5 text-gray-500 uppercase text-xs tracking-wider">
+                        <tr>
+                            <th class="px-6 py-3 text-left">Sipariş No</th>
+                            <th class="px-6 py-3 text-left">Müşteri</th>
+                            <th class="px-6 py-3 text-left">E-posta</th>
+                            <th class="px-6 py-3 text-left">Tarih</th>
+                            <th class="px-6 py-3 text-left">Tutar</th>
+                            <th class="px-6 py-3 text-left">Durum</th>
+                            <th class="px-6 py-3 text-left">İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/10 text-gray-700 dark:text-gray-200">
+                        @if (Model.Orders.Any())
+                        {
+                            foreach (var order in Model.Orders)
+                            {
+                                var badgeClass = order.Status switch
+                                {
+                                    "Approved" => "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300",
+                                    "Cancelled" => "bg-rose-100 text-rose-700 dark:bg-rose-500/10 dark:text-rose-300",
+                                    _ => "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300"
+                                };
+
+                                <tr>
+                                    <td class="px-6 py-4 font-semibold">#@order.OrderNumber</td>
+                                    <td class="px-6 py-4">@order.CustomerName</td>
+                                    <td class="px-6 py-4">@order.CustomerEmail</td>
+                                    <td class="px-6 py-4">@order.CreatedDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                    <td class="px-6 py-4 font-semibold">@order.TotalPrice.ToString("C2")</td>
+                                    <td class="px-6 py-4"><span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold @badgeClass">@order.Status</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <form asp-area="Admin" asp-controller="Order" asp-action="Approve" method="post">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="orderId" value="@order.Id" />
+                                                <input type="hidden" name="searchTerm" value="@Model.SearchTerm" />
+                                                <input type="hidden" name="status" value="@Model.Status" />
+                                                <button type="submit" class="px-3 py-1.5 rounded-md text-xs font-semibold bg-emerald-100 text-emerald-700 hover:bg-emerald-200 disabled:opacity-50" @(order.Status == "Approved" ? "disabled" : null)>Onayla</button>
+                                            </form>
+                                            <form asp-area="Admin" asp-controller="Order" asp-action="Cancel" method="post" onsubmit="return confirm('Siparişi iptal etmek istediğinize emin misiniz?');">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="orderId" value="@order.Id" />
+                                                <input type="hidden" name="searchTerm" value="@Model.SearchTerm" />
+                                                <input type="hidden" name="status" value="@Model.Status" />
+                                                <button type="submit" class="px-3 py-1.5 rounded-md text-xs font-semibold bg-rose-100 text-rose-700 hover:bg-rose-200 disabled:opacity-50" @(order.Status == "Cancelled" ? "disabled" : null)>İptal Et</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="px-6 py-10 text-center text-gray-500">Filtreye uygun sipariş bulunamadı.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

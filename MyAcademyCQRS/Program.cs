@@ -1,18 +1,21 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using MyAcademy_CQRS.Application.Extensions;
 using MyAcademy_CQRS.Infrastructure.Extensions;
 using MyAcademy_CQRS.Persistence.Context;
 using MyAcademy_CQRS.Persistence.Extensions;
 using MyAcademyCQRS.Core.Domain.Entities;
-using Microsoft.Extensions.Configuration;
 using MyAcademyCQRS.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();

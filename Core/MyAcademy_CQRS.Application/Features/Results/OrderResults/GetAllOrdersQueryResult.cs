@@ -10,5 +10,6 @@ namespace MyAcademyCQRS.Core.Application.Features.Results.OrderResults
         public OrderStatus Status { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string? UserId { get; set; }
     }
 }

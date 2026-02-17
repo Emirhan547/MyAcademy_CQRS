@@ -18,6 +18,7 @@ public class AuthController(UserManager<AppUser> userManager, SignInManager<AppU
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
         if (!ModelState.IsValid)
@@ -37,14 +38,16 @@ public class AuthController(UserManager<AppUser> userManager, SignInManager<AppU
         {
             ModelState.AddModelError(string.Empty, "Email veya şifre hatalı.");
             return View(model);
-            await activityLogService.LogAsync(
+        }
+
+        await activityLogService.LogAsync(
             ActivityLogCategory.Auth,
             "Sisteme giriş",
             "Kullanıcı başarılı giriş yaptı.",
             user.Email,
             user.Id,
             HttpContext.Connection.RemoteIpAddress?.ToString());
-        }
+        
 
         if (await userManager.IsInRoleAsync(user, "Admin"))
         {
@@ -61,6 +64,7 @@ public class AuthController(UserManager<AppUser> userManager, SignInManager<AppU
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
         if (!ModelState.IsValid)
@@ -105,6 +109,7 @@ public class AuthController(UserManager<AppUser> userManager, SignInManager<AppU
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
         var user = await userManager.GetUserAsync(User);
