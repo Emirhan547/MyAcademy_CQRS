@@ -36,29 +36,30 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-8 col-md-6 col-sm-12 form-column">
                 <div class="form-inner">
                     <h3>Bize Mesaj Gönderin</h3>
-                    <form method="post" asp-controller="Contact" asp-action="SendMessage" id="contact-form" class="default-form">
+                    <form method="post" asp-controller="Contact" asp-action="SendMessage" class="default-form">
                         @Html.AntiForgeryToken()
                         <div class="row clearfix">
-                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="text" name="FullName" placeholder="Adınız *" required="">
+                            <div class="col-lg-6 form-group">
+                                <input type="text" name="FullName" placeholder="Adınız *" required>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="email" name="Email" placeholder="E-posta Adresiniz *" required="">
+                            <div class="col-lg-6 form-group">
+                                <input type="email" name="Email" placeholder="E-posta Adresiniz *" required>
                             </div>
-                            <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                <input type="text" name="Phone" required="" placeholder="Telefon Numaranız">
+                            <div class="col-lg-6 form-group">
+                                <input type="text" name="Phone" placeholder="Telefon Numaranız">
                             </div>
-                            <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                <input type="text" name="Subject" required="" placeholder="Konu">
+                            <div class="col-lg-6 form-group">
+                                <input type="text" name="Subject" placeholder="Konu">
                             </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <div class="col-lg-12 form-group">
                                 <textarea name="Message" placeholder="Mesajınız..."></textarea>
                             </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
-                                <button class="theme-btn-one" type="submit" name="submit-form">Mesajı Gönder</button>
+                            <div class="col-lg-12 form-group message-btn">
+                                <button class="theme-btn-one" type="submit">Mesajı Gönder</button>
                             </div>
                         </div>
                     </form>
@@ -76,41 +77,110 @@
 @if (!string.IsNullOrWhiteSpace(contactStatus))
 {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        /* SweetAlert izolasyonu */
+        .swal2-popup,
+        .swal2-popup *,
+        .swal2-popup *::before,
+        .swal2-popup *::after {
+            border: none !important;
+            box-shadow: none !important;
+            background-image: none !important;
+        }
+
+        .swal2-html-container {
+            margin: 15px 0 0 0 !important;
+        }
+
+        /* Tema oklarını tamamen kapat */
+        .swal2-popup button::before,
+        .swal2-popup button::after {
+            content: none !important;
+            display: none !important;
+        }
+
+        /* Modern görünüm */
+        .swal2-popup {
+            border-radius: 20px !important;
+            padding: 35px 30px !important;
+        }
+
+        .swal2-title {
+            font-size: 26px !important;
+            font-weight: 700 !important;
+        }
+
+        .swal2-confirm,
+        .swal2-cancel {
+            border-radius: 10px !important;
+            padding: 10px 22px !important;
+            font-weight: 600 !important;
+        }
+    </style>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+
             const status = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(contactStatus));
             const customMessage = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(contactMessage));
 
+            if (!status) return;
+
             if (status === 'login_required') {
+
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Lütfen giriş yapınız',
-                    text: customMessage || 'Mesaj gönderebilmek için giriş yapmanız gerekiyor.',
+                    title: 'Giriş Yapmanız Gerekiyor',
+                    html: `
+                        <div style="font-size:16px; line-height:1.6;">
+                            ${customMessage || 'Mesaj gönderebilmek için kullanıcı hesabınızla giriş yapmalısınız.'}
+                        </div>
+                    `,
                     showCancelButton: true,
                     confirmButtonText: 'Giriş Yap',
-                    cancelButtonText: 'İptal'
-                }).then((result) => {
+                    cancelButtonText: 'Vazgeç',
+                    confirmButtonColor: '#ff7a18',
+                    cancelButtonColor: '#6c757d',
+                    backdrop: 'rgba(0,0,0,0.6)',
+                    heightAuto: false
+                }).then(result => {
                     if (result.isConfirmed) {
                         window.location.href = '/Auth/Login';
                     }
                 });
+
                 return;
             }
 
             if (status === 'success') {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Başarılı',
-                    text: customMessage || 'Mesajınız başarıyla gönderildi.'
+                    title: 'Mesajınız Gönderildi',
+                    html: `
+                        <div style="font-size:16px; line-height:1.6;">
+                            ${customMessage || 'Mesajınız başarıyla tarafımıza ulaştı.'}
+                        </div>
+                    `,
+                    confirmButtonColor: '#28a745',
+                    heightAuto: false
                 });
                 return;
             }
 
             Swal.fire({
                 icon: 'error',
-                title: 'İşlem başarısız',
-                text: customMessage || 'Mesaj gönderilirken bir hata oluştu.'
+                title: 'Bir Hata Oluştu',
+                html: `
+                    <div style="font-size:16px; line-height:1.6;">
+                        ${customMessage || 'Mesaj gönderilirken beklenmeyen bir hata oluştu.'}
+                    </div>
+                `,
+                confirmButtonColor: '#ff7a18',
+                heightAuto: false
             });
+
         });
     </script>
 }
+
