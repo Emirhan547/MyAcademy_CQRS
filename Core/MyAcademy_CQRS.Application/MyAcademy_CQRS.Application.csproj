@@ -20,4 +20,8 @@
     <ProjectReference Include="..\MyAcademy_CQRS.Domain\MyAcademy_CQRS.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Handlers\OrderHandlers\CreationChain\" />
+  </ItemGroup>
+
 </Project>

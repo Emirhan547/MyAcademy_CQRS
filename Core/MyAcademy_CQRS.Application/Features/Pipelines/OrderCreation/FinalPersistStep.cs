@@ -3,7 +3,7 @@ using MyAcademy_CQRS.Application.Contracts.UOW;
 using MyAcademyCQRS.Core.Domain.Entities;
 using MyAcademyCQRS.Core.Domain.Enums;
 
-namespace MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain
+namespace MyAcademy_CQRS.Application.Features.Pipelines.OrderCreation
 {
     public class FinalPersistStep(IRepository<Order> orderRepository, IUnitOfWork unitOfWork) : OrderCreationStepBase
     {

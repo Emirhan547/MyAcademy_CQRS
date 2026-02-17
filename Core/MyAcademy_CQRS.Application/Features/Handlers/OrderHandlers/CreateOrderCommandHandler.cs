@@ -2,9 +2,11 @@
 using MediatR;
 using MyAcademy_CQRS.Application.Contracts.Events;
 using MyAcademy_CQRS.Application.Contracts.UOW;
+using MyAcademy_CQRS.Application.Features.Pipelines.OrderCreation;
 using MyAcademyCQRS.Core.Application.Common.Results;
 using MyAcademyCQRS.Core.Application.Features.Commands.OrderCommands;
-using MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain;
+
+
 using MyAcademyCQRS.Core.Domain.Events.OrderEvents;
 
 namespace MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers
@@ -44,11 +46,13 @@ namespace MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers
                 // 3️⃣ Order oluştur
                 if (!chainResult)
                 {
-                    await tx.CommitAsync(cancellationToken);
+              
+                    await tx.RollbackAsync(cancellationToken);
                     return Result.Failure(context.FailureReason ?? "Sipariş pipeline başarısız oldu.");
                 }
 
-                await tx.CommitAsync();
+              
+                await tx.CommitAsync(cancellationToken);
 
                 await domainEventPublisher.PublishAsync(new OrderCreatedEvent(context.Order!.Id), cancellationToken);
 

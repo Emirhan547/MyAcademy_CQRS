@@ -2,11 +2,12 @@
 using MyAcademy_CQRS.Application.Common.Storage;
 using MyAcademy_CQRS.Application.Contracts.Events;
 using MyAcademy_CQRS.Application.Contracts.Identities;
+using MyAcademy_CQRS.Application.Contracts.Services;
 using MyAcademy_CQRS.Application.Contracts.Sessions;
+using MyAcademy_CQRS.Application.Features.Pipelines.OrderCreation;
 using MyAcademy_CQRS.Infrastructure.Eventing;
 using MyAcademy_CQRS.Infrastructure.Services;
 using MyAcademy_CQRS.Infrastructure.Storage;
-using MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain;
 using MyAcademyCQRS.Core.Domain.Enums;
 using MyAcademyCQRS.Core.Domain.Events.ContactMessageEvents;
 using MyAcademyCQRS.Core.Domain.Events.OrderEvents;
@@ -32,6 +33,7 @@ public static class DependencyInjection
         services.AddScoped<IDomainEventHandler<PromotionUpdatedEvent>, PromotionEventLogHandler>();
         services.AddScoped<IDomainEventHandler<ContactMessageReceivedEvent>, ContactMessageEventLogHandler>();
         services.AddScoped<IDomainEventHandler<ContactMessageUpdatedEvent>, ContactMessageEventLogHandler>();
+        services.AddScoped<ICustomerLookupService, CustomerLookupService>();
 
         services.AddScoped<StockControlStep>();
         services.AddScoped<PriceValidationStep>();

@@ -1,7 +1,7 @@
 ﻿using MyAcademyCQRS.Core.Application.Features.Commands.OrderCommands;
 using MyAcademyCQRS.Core.Domain.Entities;
 
-namespace MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain
+namespace MyAcademy_CQRS.Application.Features.Pipelines.OrderCreation
 {
     public class OrderCreationContext
     {

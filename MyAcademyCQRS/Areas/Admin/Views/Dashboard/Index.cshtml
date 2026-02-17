@@ -1,5 +1,5 @@
-﻿
-@model MyAcademyCQRS.Areas.Admin.Models.AdminDashboardViewModel
+﻿@using MyAcademy_CQRS.Application.Features.Results.DashboardResults
+@model GetAdminDashboardQueryResult
 @{
     ViewData["Title"] = "Dashboard";
     var maxRevenue = Model.WeeklyRevenue.Any() ? Model.WeeklyRevenue.Max(x => x.Revenue) : 0;

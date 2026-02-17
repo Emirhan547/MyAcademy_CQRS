@@ -1,7 +1,7 @@
 ﻿using MyAcademy_CQRS.Application.Contracts.Repositories;
 using MyAcademyCQRS.Core.Domain.Entities;
 
-namespace MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain
+namespace MyAcademy_CQRS.Application.Features.Pipelines.OrderCreation
 {
     public class PromotionApplyStep(IRepository<Promotion> promotionRepository) : OrderCreationStepBase
     {

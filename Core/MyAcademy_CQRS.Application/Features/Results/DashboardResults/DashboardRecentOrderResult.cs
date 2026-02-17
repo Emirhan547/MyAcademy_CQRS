@@ -1,6 +1,12 @@
-﻿namespace MyAcademyCQRS.Areas.Admin.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MyAcademy_CQRS.Application.Features.Results.DashboardResults
 {
-    public class DashboardRecentOrderItem
+    public class DashboardRecentOrderResult
     {
         public int Id { get; set; }
         public string OrderNumber { get; set; } = string.Empty;

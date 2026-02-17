@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\MyAcademy_CQRS.Application\MyAcademy_CQRS.Application.csproj" />
+    <ProjectReference Include="..\MyAcademy_CQRS.Persistence\MyAcademy_CQRS.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace MyAcademyCQRS.Core.Application.Features.Handlers.OrderHandlers.CreationChain
+﻿namespace MyAcademy_CQRS.Application.Features.Pipelines.OrderCreation
 {
     public abstract class OrderCreationStepBase : IOrderCreationStep
     {
