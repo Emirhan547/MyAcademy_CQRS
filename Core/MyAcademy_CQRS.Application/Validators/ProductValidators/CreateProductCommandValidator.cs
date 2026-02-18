@@ -11,7 +11,9 @@ namespace MyAcademyCQRS.Core.Application.Validators.ProductValidators
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Ürün adı zorunludur")
                 .MaximumLength(150).WithMessage("Ürün adı en fazla 150 karakter olabilir");
-
+            RuleFor(x => x.Description)
+                .NotEmpty().WithMessage("Ürün açıklaması zorunludur")
+                .MaximumLength(1000).WithMessage("Ürün açıklaması en fazla 1000 karakter olabilir");
             RuleFor(x => x.File)
                 .NotNull().WithMessage("Ürün görseli zorunludur");
 

@@ -1,6 +1,7 @@
 ﻿@model IList<MyAcademyCQRS.Core.Application.Features.Results.ProductResults.GetAllProductsQueryResult>
 @{
     ViewData["Title"] = "Ürünler";
+    int count = 0;
 }
 
 <div class="flex-1 overflow-y-auto p-8">
@@ -19,6 +20,7 @@
                         <th class="px-4 py-3">#</th>
                         <th class="px-4 py-3">Ürün</th>
                         <th class="px-4 py-3">Kategori</th>
+                        <th class="px-4 py-3">Ürün Açıklaması</th>
                         <th class="px-4 py-3">Fiyat</th>
                         <th class="px-4 py-3">Puan</th>
                         <th class="px-4 py-3">Durum</th>
@@ -28,10 +30,12 @@
                 <tbody class="divide-y divide-gray-100 dark:divide-white/10">
                     @foreach (var item in Model)
                     {
+                        count++;
                         <tr>
-                            <td class="px-4 py-3 font-medium text-gray-800 dark:text-white">@item.Id</td>
+                            <td class="px-4 py-3 font-medium text-gray-800 dark:text-white">@count</td>
                             <td class="px-4 py-3">@item.Name</td>
                             <td class="px-4 py-3">@item.CategoryName</td>
+                            <td class="px-4 py-3 max-w-xs truncate" title="@item.Description">@item.Description</td>
                             <td class="px-4 py-3">@item.Price.ToString("N2") ₺</td>
                             <td class="px-4 py-3">@item.Rating</td>
                             <td class="px-4 py-3"><span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold @(item.IsActive ? "bg-green-100 text-green-700" : "bg-rose-100 text-rose-700")">@(item.IsActive ? "Aktif" : "Pasif")</span></td>

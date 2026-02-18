@@ -11,7 +11,9 @@ namespace MyAcademy_CQRS.Persistence.Configurations
             builder.Property(x => x.Name)
                  .IsRequired()
                  .HasMaxLength(150);
-
+            builder.Property(x => x.Description)
+                 .IsRequired()
+                 .HasMaxLength(1000);
             builder.Property(x => x.Price)
                    .HasPrecision(10, 2);
 

@@ -70,7 +70,7 @@
 }
 
 <!-- Page Title -->
-<section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/page-title.jpg"));">
+<section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/menu-1.jpg"));">
     <div class="auto-container">
         <div class="content-box">
             <div class="title">
@@ -252,7 +252,8 @@
                     }
                     else
                     {
-                        <div class="row clearfix" id="product-grid">
+                        <div class="row" id="product-grid">
+
                             @foreach (var item in Model)
                             {
                                 <div class="col-lg-4 col-md-6 col-sm-12 shop-block">
@@ -355,7 +356,59 @@
         </div>
     </div>
 </section>
-<!-- shop-page-section end -->
+
+<style>
+
+
+#product-grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#product-grid > div {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.shop-block-one {
+    width: 100%;
+    display: flex;
+}
+
+.shop-block-one .inner-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Görsel sabit */
+.shop-block-one .image-box {
+    height: 220px;
+    overflow: hidden;
+}
+
+.shop-block-one .image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* İçerik */
+.shop-block-one .lower-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Başlık 2 satır sabit */
+.shop-block-one h3 {
+    min-height: 48px;
+}
+
+</style>
+
+
 
 @section Scripts {
     <script>

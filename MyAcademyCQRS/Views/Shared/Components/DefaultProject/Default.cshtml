@@ -2,25 +2,30 @@
 @model IList<MyAcademyCQRS.Core.Application.Features.Results.GalleryImages.GetActiveGalleryImageQueryResult>
 
 <section class="project-section"
-         style="background-image: url(~/BageryPack/Bagery/assets/images/background/gallery-1.jpg);">
+         style="background-image: url(~/BageryPack/Bagery/assets/images/background/gallery-1.jpg); padding:80px 0;">
 
     <div class="auto-container">
-
         <div class="row clearfix">
 
+            <!-- SOL BAŞLIK -->
             <div class="col-lg-4 col-md-12 col-sm-12 content-column">
                 <div class="content-box">
                     <div class="sec-title">
-                        <p>Photo Gallery</p>
-                        <h2>Let’s See Our Gallery</h2>
+                        <p>Foto Galeri</p>
+                        <h2>Galerimize Göz Atın</h2>
+                        <p class="gallery-desc">
+                            Fırından yeni çıkan lezzetlerimizi, atölye anlarımızı ve özel gün siparişlerimizi yakından keşfedin.
+                        </p>
                     </div>
+
                 </div>
             </div>
 
+            <!-- SAĞ GALERİ -->
             <div class="col-lg-8 col-md-12 col-sm-12 porject-column">
-
                 <div class="project-tab">
 
+                    <!-- KATEGORİLER -->
                     <div class="tab-btn-box clearfix">
                         <ul class="project-tab-btns project-btn tab-btns clearfix post-filter pull-right">
 
@@ -35,9 +40,18 @@
                         </ul>
                     </div>
 
+                    <!-- TAB CONTENT -->
                     <div class="tabs-content-inner">
-
                         <div class="p-tabs-content">
+
+                            @{
+                                // TÜM KATEGORİLERDEKİ GÖRSELLERİ TEK HAVUZDA TOPLA (duplicate engelli)
+                                var allImages = Model
+                                .SelectMany(c => c.Images)
+                                .GroupBy(x => x.ImageUrl)
+                                .Select(g => g.First())
+                                .ToList();
+                            }
 
                             @for (var i = 0; i < Model.Count; i++)
                             {
@@ -46,54 +60,158 @@
 
                                     <div class="project-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
 
-                                        @foreach (var image in Model[i].Images)
+                                        @{
+                                            // Her sekmede farklı 3 görsel (temanın orijinali gibi döndürme)
+                                            var start = i * 3;
+
+                                            var imagesForTab = allImages
+                                            .Skip(start)
+                                            .Take(3)
+                                            .ToList();
+
+                                            // Görsel sayısı yetmezse başa sar
+                                            if (imagesForTab.Count < 3 && allImages.Any())
+                                            {
+                                                imagesForTab = allImages.Take(3).ToList();
+                                            }
+                                        }
+
+                                        @foreach (var image in imagesForTab)
                                         {
                                             <div class="project-block-one">
-
                                                 <div class="inner-box">
 
                                                     <figure class="image-box">
-                                                        <img src="@ImageUrlResolver.Resolve(image.ImageUrl)" alt="">
+                                                        <img src="@ImageUrlResolver.Resolve(image.ImageUrl)"
+                                                             alt="@image.Title">
                                                     </figure>
 
-                                                    <div class="lower-content">
+                                                    <div class="overlay-box">
+                                                        <div class="overlay-content">
 
-                                                        <div class="view-btn">
                                                             <a href="@ImageUrlResolver.Resolve(image.ImageUrl)"
-                                                               class="lightbox-image"
-                                                               data-fancybox="gallery">
+                                                               class="lightbox-image zoom-btn"
+                                                               data-fancybox="gallery-all">
                                                                 <i class="icon-Zoom"></i>
                                                             </a>
+
+                                                            <h3>@image.Title</h3>
+
                                                         </div>
-
-                                                        <h3>
-                                                            <a href="#">
-                                                                @image.Title
-                                                            </a>
-                                                        </h3>
-
                                                     </div>
 
                                                 </div>
-
                                             </div>
                                         }
 
                                     </div>
-
                                 </div>
                             }
 
                         </div>
-
                     </div>
 
                 </div>
-
             </div>
 
         </div>
-
     </div>
-
 </section>
+
+<style>
+    /* SECTION */
+    .project-section {
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* CAROUSEL CENTER */
+    .project-block-one {
+        display: flex;
+        justify-content: center;
+    }
+
+        /* CARD */
+        .project-block-one .inner-box {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .project-block-one:hover .inner-box {
+            transform: translateY(-8px);
+        }
+
+        /* IMAGE SIZE FIX 308x430 */
+        .project-block-one .image-box {
+            width: 308px;
+            height: 430px;
+            overflow: hidden;
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+            .project-block-one .image-box img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.4s ease;
+            }
+
+        .project-block-one:hover .image-box img {
+            transform: scale(1.08);
+        }
+
+    /* OVERLAY */
+    .overlay-box {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.1));
+        opacity: 0;
+        transition: 0.4s ease;
+        border-radius: 18px;
+        display: flex;
+        align-items: flex-end;
+        padding: 20px;
+    }
+
+    .project-block-one:hover .overlay-box {
+        opacity: 1;
+    }
+
+    .gallery-desc {
+        margin-top: 12px;
+        color: #6e6e6e;
+        font-size: 15px;
+        line-height: 1.7;
+        max-width: 320px;
+    }
+
+    .overlay-content {
+        position: relative;
+        width: 100%;
+    }
+
+        .overlay-content h3 {
+            color: #fff;
+            font-size: 18px;
+            margin: 0;
+        }
+
+    /* ZOOM BUTTON */
+    .zoom-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #fff;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .zoom-btn i {
+            color: #333;
+        }
+</style>

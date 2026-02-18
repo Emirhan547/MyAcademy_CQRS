@@ -1,168 +1,250 @@
 ﻿@using MyAcademyCQRS.Services
-
 @model MyAcademyCQRS.Core.Application.Features.Results.ProductResults.GetShopDetailQueryResult
+
 @{
     ViewData["Title"] = Model.Product.Name;
     Layout = "~/Views/Shared/_UILayout.cshtml";
 }
 
 <!-- Page Title -->
-<section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/page-title.jpg"));">
+<section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/menu-1.jpg")); padding:30px 0;">
     <div class="auto-container">
-        <div class="content-box">
-            <div class="title">
-                <h1>@Model.Product.Name</h1>
-            </div>
-            <ul class="bread-crumb clearfix">
-                <li><a asp-controller="Default" asp-action="Index">Ana Sayfa</a></li>
-                <li><a asp-controller="Shop" asp-action="Index">Mağaza</a></li>
-                <li>@Model.Product.Name</li>
-            </ul>
-        </div>
+      
     </div>
 </section>
-<!-- Page Title End -->
+
 <!-- Shop Details -->
 <section class="shop-details">
-    <div class="auto-container">
-        @if (TempData["SuccessMessage"] is string success)
-        {
-            <div class="alert alert-success">@success</div>
-        }
-        @if (TempData["ErrorMessage"] is string error)
-        {
-            <div class="alert alert-danger">@error</div>
-        }
-    </div>
+    <div class="auto-container product-detail-wrapper">
 
-    <div class="product-details-content">
-        <div class="auto-container">
-            <div class="row clearfix">
-                <!-- Ürün Görseli -->
-                <div class="col-lg-6 col-md-12 col-sm-12 image-column">
-                    <div class="product-details-image">
-                        <figure class="image-box">
-                            <img src="@ImageUrlResolver.Resolve(Model.Product.ImageUrl)" alt="@Model.Product.Name">
-                        </figure>
+        <div class="product-details-content">
+            <div class="row align-items-center">
+
+                <!-- IMAGE -->
+                <div class="col-lg-5 col-md-12">
+                    <div class="product-image-card">
+                        <img src="@ImageUrlResolver.Resolve(Model.Product.ImageUrl)"
+                             alt="@Model.Product.Name"
+                             class="main-product-image">
                     </div>
                 </div>
 
-                <!-- Ürün Detayları -->
-                <div class="col-lg-6 col-md-12 col-sm-12 content-column">
-                    <div class="product-details-content">
-                        <h2>@Model.Product.Name</h2>
+                <!-- CONTENT -->
+                <div class="col-lg-7 col-md-12">
+                    <div class="product-info-card">
+
+                        <h2 class="product-title">@Model.Product.Name</h2>
 
                         <!-- Rating -->
-                        <div class="rating-box clearfix">
-                            <ul class="rating clearfix">
-                                @for (var i = 0; i < 5; i++)
+                        <div class="rating-box">
+                            <ul class="rating-stars">
+                                @for (int i = 1; i <= 5; i++)
                                 {
-                                    if (i < Math.Min(Model.Product.Rating, 5))
+                                    if (i <= Model.Product.Rating)
                                     {
-                                        <li><i class="icon-Star"></i></li>
+                                        <li><i class="icon-Star filled"></i></li>
                                     }
                                     else
                                     {
-                                        <li><i class="icon-Star" style="opacity: 0.3;"></i></li>
+                                        <li><i class="icon-Star"></i></li>
                                     }
                                 }
                             </ul>
-                            <span>(@Model.Product.Rating.ToString("0.0") yorum)</span>
+                            <span class="rating-text">@Model.Product.Rating / 5</span>
                         </div>
 
-                        <!-- Fiyat -->
-                        <h3 class="product-price">$@Model.Product.Price.ToString("0.00")</h3>
-
-                        <!-- Ürün Açıklaması -->
-                        <div class="text">
-                            <p>Usta fırın ekibimizin günlük olarak hazırladığı bu ürün, taze malzeme ve dengeli lezzet yaklaşımıyla hazırlanır. Kahve yanında, kahvaltıda veya gün içi tatlı kaçamaklarında ideal bir seçimdir.</p>
+                        <!-- Price -->
+                        <div class="product-price-modern">
+                            $@Model.Product.Price.ToString("0.00")
                         </div>
 
-                        <!-- Ürün Bilgileri -->
-                        <ul class="other-info clearfix">
-                            <li><span>Kategori:</span> @Model.CategoryName</li>
-                            <li><span>Ürün Kodu:</span> PRD-@Model.Product.Id.ToString("0000")</li>
-                            <li><span>Stok Durumu:</span> <span class="in-stock">Stokta</span></li>
+                        <!-- Description -->
+                        <div class="product-description">
+                            <p>@Model.Product.Description</p>
+                        </div>
+
+                        <!-- Meta -->
+                        <ul class="product-meta-modern">
+                            <li><strong>Kategori:</strong> @Model.CategoryName</li>
+                            <li><strong>Ürün Kodu:</strong> PRD-@Model.Product.Id.ToString("0000")</li>
+                            <li><strong>Stok:</strong> <span class="in-stock">Stokta</span></li>
                         </ul>
 
-                        <!-- Sepete Ekle Formu -->
-                        <form asp-controller="Cart" asp-action="Add" method="post" class="add-to-cart-form">
+                        <!-- Add to Cart -->
+                        <form asp-controller="Cart" asp-action="Add" method="post" class="add-to-cart-modern">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="productId" value="@Model.Product.Id" />
-                            <div class="quantity-box clearfix">
-                                <div class="item-quantity">
-                                    <input type="number" name="quantity" value="1" min="1" class="quantity-input">
-                                </div>
-                                <div class="btn-box">
-                                    <button type="submit" class="theme-btn-two">Sepete Ekle</button>
-                                </div>
+
+                            <div class="cart-row-modern">
+                                <input type="number" name="quantity" value="1" min="1" class="quantity-input-modern">
+
+                                <button type="submit" class="btn-add-modern">
+                                    Sepete Ekle
+                                </button>
                             </div>
                         </form>
 
-                        <!-- Butonlar -->
-                        <div class="btn-box">
-                            <a asp-controller="Shop" asp-action="Index" asp-route-categoryId="@Model.Product.CategoryId" class="theme-btn-one">
-                                <i class="icon-List"></i> Benzer Ürünler
+                        <!-- Buttons -->
+                        <div class="modern-btn-box">
+                            <a asp-controller="Shop"
+                               asp-action="Index"
+                               asp-route-categoryId="@Model.Product.CategoryId"
+                               class="btn-soft">
+                                Benzer Ürünler
                             </a>
-                            <a asp-controller="Shop" asp-action="Index" class="theme-btn-two" style="margin-left: 10px;">
-                                <i class="icon-Back"></i> Mağazaya Dön
+
+                            <a asp-controller="Shop"
+                               asp-action="Index"
+                               class="btn-outline-modern">
+                                Mağazaya Dön
                             </a>
                         </div>
+
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-
-    <!-- İlgili Ürünler -->
-    @if (Model.RelatedProducts.Any())
-    {
-        <div class="related-product sec-pad">
-            <div class="auto-container">
-                <div class="sec-title centred">
-                    <p>İlginizi Çekebilir</p>
-                    <h2>Benzer Ürünler</h2>
-                </div>
-                <div class="row clearfix">
-                    @foreach (var item in Model.RelatedProducts.Take(4))
-                    {
-                        <div class="col-lg-3 col-md-6 col-sm-12 shop-block">
-                            <div class="shop-block-one">
-                                <div class="inner-box">
-                                    <figure class="image-box">
-                                        <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id">
-                                            <img src="@ImageUrlResolver.Resolve(item.ImageUrl)" alt="@item.Name">
-                                        </a>
-                                    </figure>
-                                    <div class="lower-content">
-                                        <span class="price-box">$@item.Price.ToString("0.00")</span>
-                                        <h3>
-                                            <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id">@item.Name</a>
-                                        </h3>
-                                        <ul class="rating clearfix">
-                                            @for (var i = 0; i < 5; i++)
-                                            {
-                                                if (i < Math.Min(item.Rating, 5))
-                                                {
-                                                    <li><i class="icon-Star"></i></li>
-                                                }
-                                                else
-                                                {
-                                                    <li><i class="icon-Star" style="opacity: 0.3;"></i></li>
-                                                }
-                                            }
-                                        </ul>
-                                        <div class="cart-btn">
-                                            <a asp-controller="Shop" asp-action="Detail" asp-route-id="@item.Id" class="theme-btn-two">İncele</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    }
 </section>
-<!-- Shop Details End -->
+
+<style>
+
+    /* GENEL */
+    .shop-details {
+        padding: 30px 0; /* daha da küçüldü */
+        background: #f7f7f7;
+    }
+
+    .product-detail-wrapper {
+        max-width: 1100px; /* biraz daralttık */
+    }
+
+    /* IMAGE */
+    .product-image-card {
+        background: #fff;
+        padding: 15px;
+        border-radius: 14px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.05);
+    }
+
+    .main-product-image {
+        width: 100%;
+        height: 520px; /* bir tık büyüdü */
+        object-fit: cover;
+        border-radius: 14px;
+    }
+
+    /* CONTENT */
+    .product-info-card {
+        padding: 20px 10px;
+    }
+
+    .product-title {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    /* RATING */
+    .rating-stars {
+        display: flex;
+        gap: 6px;
+        list-style: none;
+        padding: 0;
+        margin: 0 0 5px 0;
+    }
+
+        .rating-stars i {
+            font-size: 18px;
+            color: #ddd;
+        }
+
+            .rating-stars i.filled {
+                color: #ffc107;
+            }
+
+    .rating-text {
+        font-size: 13px;
+        color: #777;
+    }
+
+    /* PRICE */
+    .product-price-modern {
+        font-size: 30px;
+        font-weight: 700;
+        color: #d28c6a;
+        margin: 10px 0;
+    }
+
+    /* DESCRIPTION */
+    .product-description {
+        font-size: 14px;
+        line-height: 1.7;
+        color: #666;
+        margin-bottom: 15px;
+    }
+
+    /* META */
+    .product-meta-modern {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 15px;
+    }
+
+        .product-meta-modern li {
+            margin-bottom: 4px;
+        }
+
+    /* CART */
+    .cart-row-modern {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .quantity-input-modern {
+        width: 60px;
+        height: 40px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        text-align: center;
+    }
+
+    .btn-add-modern {
+        background: #d28c6a;
+        color: #fff;
+        padding: 8px 22px;
+        border-radius: 6px;
+        border: none;
+        transition: 0.3s;
+    }
+
+        .btn-add-modern:hover {
+            background: #b87555;
+        }
+
+    /* BUTTONS */
+    .modern-btn-box {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-soft {
+        background: #f3e6df;
+        padding: 8px 16px;
+        border-radius: 6px;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .btn-outline-modern {
+        border: 1px solid #ccc;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        color: #333;
+    }
+
+</style>

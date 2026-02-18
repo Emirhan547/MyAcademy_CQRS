@@ -1,6 +1,7 @@
 ﻿@model IList<MyAcademyCQRS.Core.Application.Features.Results.PromotionResults.GetAllPromotionsQueryResult>
 @{
     ViewData["Title"] = "Kampanyalar";
+    int count = 0;
 }
 
 <div class="flex-1 overflow-y-auto p-8">
@@ -28,8 +29,9 @@
                 <tbody class="divide-y divide-gray-100 dark:divide-white/10">
                     @foreach (var item in Model)
                     {
+                        count++;
                         <tr>
-                            <td class="px-4 py-3 font-medium text-gray-800 dark:text-white">@item.Id</td>
+                            <td class="px-4 py-3 font-medium text-gray-800 dark:text-white">@count</td>
                             <td class="px-4 py-3 text-gray-700 dark:text-gray-200">@item.Title</td>
                             <td class="px-4 py-3 text-gray-700 dark:text-gray-200">@item.Description</td>
                             <td class="px-4 py-3 text-gray-700 dark:text-gray-200">@item.DiscountPrice</td>

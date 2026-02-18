@@ -11,6 +11,8 @@
             <input asp-for="Id" type="hidden" />
             <input asp-for="ImageUrl" type="hidden" />
             <input asp-for="Name" class="w-full rounded-lg" />
+            <textarea asp-for="Description" rows="4" class="w-full rounded-lg"></textarea>
+            <span asp-validation-for="Description" class="text-sm text-red-500"></span>
             <input type="file" name="File" class="w-full rounded-lg" />
             <input asp-for="Price" type="number" step="0.01" class="w-full rounded-lg" />
             <input asp-for="Rating" type="number" class="w-full rounded-lg" />

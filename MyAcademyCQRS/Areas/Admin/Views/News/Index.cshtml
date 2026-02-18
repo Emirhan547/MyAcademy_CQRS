@@ -1,5 +1,8 @@
 ﻿@model IList<MyAcademyCQRS.Core.Application.Features.Results.NewsResults.GetAllNewsQueryResult>
-
+@{
+    ViewData["Title"] = "Haberler";
+    int count = 0;
+}
 <div class="flex-1 overflow-y-auto p-8">
 
     <section class="bg-white dark:bg-[#251e18] rounded-lg shadow-soft border border-primary/10 overflow-hidden">
@@ -34,9 +37,10 @@
                 <tbody class="divide-y divide-gray-100 dark:divide-white/10">
                     @foreach (var item in Model)
                     {
+                        count++;
                         <tr>
                             <td class="px-4 py-3">
-                                @item.Id
+                                @count
                             </td>
 
                             <td class="px-4 py-3">

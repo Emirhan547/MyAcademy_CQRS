@@ -1,16 +1,13 @@
-﻿
-@using MyAcademyCQRS.Models.Auths
+﻿@using MyAcademyCQRS.Models.Auths
 @model ProfileViewModel
 
+<section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/magaza_banner_1920x350_v2.png"));">
 
-<section class="page-title centred" style="background-image: url(@Url.Content("~/BageryPack/Bagery/assets/images/background/page-title.jpg"));">
     <div class="auto-container">
-       
         <div class="content-box">
             <div class="title">
                 <h1>Profilim</h1>
             </div>
-           
             <ul class="bread-crumb clearfix">
                 <li><a asp-controller="Default" asp-action="Index" asp-area="">Ana Sayfa</a></li>
                 <li>Kullanıcı Alanı</li>
@@ -23,6 +20,8 @@
 <section class="shop-section sec-pad user-panel-section">
     <div class="auto-container">
         <div class="row clearfix">
+
+            <!-- SOL MENÜ -->
             <div class="col-lg-4 col-md-12 col-sm-12">
                 <div class="user-nav-card">
                     <h4>Hesap Menüsü</h4>
@@ -32,8 +31,8 @@
                     </ul>
                 </div>
             </div>
-          
-       
+
+            <!-- SAĞ İÇERİK -->
             <div class="col-lg-8 col-md-12 col-sm-12">
                 <div class="user-content-card">
                     <div class="user-card-header">
@@ -41,35 +40,52 @@
                         <p>Hesap bilgilerinizi güncel tutarak sipariş süreçlerinizi daha hızlı tamamlayabilirsiniz.</p>
                     </div>
 
-                    <form asp-action="Update" method="post" class="user-profile-form">
+                    <form asp-action="Update" method="post" class="user-profile-form" id="profileForm">
                         <div class="row clearfix">
                             <div class="col-md-12 form-group">
                                 <label>Ad Soyad</label>
                                 <input asp-for="FullName" class="form-control" placeholder="Ad Soyad" />
                             </div>
+
                             <div class="col-md-12 form-group">
                                 <label>E-posta</label>
                                 <input asp-for="Email" class="form-control" readonly />
                             </div>
+
                             <div class="col-md-12 form-group">
                                 <label>Telefon</label>
                                 <input asp-for="PhoneNumber" class="form-control" placeholder="Telefon Numaranız" />
                             </div>
                         </div>
 
-                        <div class="form-actions">
-                            <button type="submit" class="theme-btn btn-one">Profili Güncelle</button>
-                            <a asp-controller="Order" asp-action="Index" asp-area="User" class="theme-btn btn-two">Siparişlerime Git</a>
+                        <!-- MODERN BUTONLAR -->
+                        <div class="modern-actions">
+                            <button type="submit" class="profile-btn primary-btn" id="updateBtn">
+                                <span class="btn-text">
+                                    <i class="fas fa-user-check"></i> Profili Güncelle
+                                </span>
+                                <span class="btn-loader"></span>
+                            </button>
+
+                            <a asp-controller="Order" asp-action="Index" asp-area="User" class="profile-btn outline-btn">
+                                <i class="fas fa-box-open"></i> Siparişlerime Git
+                            </a>
                         </div>
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
-
 </section>
 
+<!-- TOAST -->
+<div id="toastSuccess" class="profile-toast">
+    Profil başarıyla güncellendi ✔
+</div>
+
 <style>
+    /* CARD STYLES */
     .user-panel-section .user-nav-card,
     .user-panel-section .user-content-card {
         background: #fff;
@@ -79,10 +95,7 @@
         box-shadow: 0 14px 35px rgba(16, 24, 40, 0.08);
     }
 
-    .user-panel-section .user-nav-card h4 {
-        margin-bottom: 20px;
-    }
-
+    /* NAV */
     .user-nav-list li {
         margin-bottom: 14px;
     }
@@ -92,61 +105,137 @@
         border: 1px solid #f3eee6;
         border-radius: 10px;
         padding: 12px 16px;
-        color: #2f2f2f;
         font-weight: 600;
-        transition: all 0.3s ease;
+        transition: all .3s ease;
     }
 
-    .user-nav-list a.active,
-    .user-nav-list a:hover {
-        background: #f17732;
-        border-color: #f17732;
-        color: #fff;
-    }
+        .user-nav-list a.active,
+        .user-nav-list a:hover {
+            background: #f17732;
+            color: #fff;
+        }
 
-    .user-card-header {
-        margin-bottom: 24px;
-        padding-bottom: 16px;
-        border-bottom: 1px solid #f3eee6;
-    }
-
-    .user-card-header h3 {
-        margin-bottom: 8px;
-    }
-
-    .user-card-header p {
-        margin: 0;
-        color: #6e6e6e;
-    }
-
-    .user-profile-form .form-group label {
-        font-weight: 700;
-        color: #202020;
-        margin-bottom: 8px;
-    }
-
+    /* FORM */
     .user-profile-form .form-control {
         height: 52px;
         border-radius: 10px;
         border: 1px solid #ebdfd4;
-        padding: 10px 16px;
     }
 
-    .user-profile-form .form-control:focus {
-        border-color: #f17732;
-    }
-
-    .form-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 10px;
-    }
-
-    @@media (max-width: 991px) {
-        .user-panel-section .user-nav-card,
-        .user-panel-section .user-content-card {
-            padding: 24px;
+        .user-profile-form .form-control:focus {
+            border-color: #f17732;
         }
+
+    /* MODERN BUTTONS */
+    .modern-actions {
+        display: flex;
+        gap: 16px;
+        margin-top: 20px;
+    }
+
+    .profile-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 22px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all .3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* PRIMARY */
+    .primary-btn {
+        background: linear-gradient(135deg,#f17732,#ff914d);
+        color: #fff;
+        border: none;
+        box-shadow: 0 8px 18px rgba(241,119,50,.35);
+    }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(241,119,50,.45);
+        }
+
+    /* OUTLINE */
+    .outline-btn {
+        border: 2px solid #f17732;
+        color: #f17732;
+        background: transparent;
+    }
+
+        .outline-btn:hover {
+            background: #f17732;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+    /* LOADING */
+    .btn-loader {
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(255,255,255,0.4);
+        border-top: 2px solid #fff;
+        border-radius: 50%;
+        display: none;
+        animation: spin .8s linear infinite;
+    }
+
+    @@keyframes spin {
+        to
+
+    {
+        transform: rotate(360deg);
+    }
+
+    }
+
+    /* TOAST */
+    .profile-toast {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #16a34a;
+        color: #fff;
+        padding: 14px 22px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,.2);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all .4s ease;
+        z-index: 9999;
+    }
+
+        .profile-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    @@media (max-width:576px) {
+        .modern-actions
+
+    {
+        flex-direction: column;
+    }
+
     }
 </style>
+
+<script>
+    document.getElementById("profileForm").addEventListener("submit", function () {
+
+        const btn = document.getElementById("updateBtn");
+        btn.querySelector(".btn-text").style.display = "none";
+        btn.querySelector(".btn-loader").style.display = "inline-block";
+
+        setTimeout(() => {
+            document.getElementById("toastSuccess").classList.add("show");
+            setTimeout(() => {
+                document.getElementById("toastSuccess").classList.remove("show");
+            }, 3000);
+        }, 800);
+    });
+</script>

@@ -16,7 +16,9 @@ namespace MyAcademyCQRS.Core.Application.Validators.ProductValidators
 
             RuleFor(x => x.ImageUrl)
               .NotEmpty().When(x => x.File is null).WithMessage("Ürün görseli zorunludur");
-
+            RuleFor(x => x.Description)
+                .NotEmpty().WithMessage("Ürün açıklaması zorunludur")
+                .MaximumLength(1000).WithMessage("Ürün açıklaması en fazla 1000 karakter olabilir");
             RuleFor(x => x.Price)
                 .GreaterThan(0).WithMessage("Fiyat 0'dan büyük olmalıdır");
 

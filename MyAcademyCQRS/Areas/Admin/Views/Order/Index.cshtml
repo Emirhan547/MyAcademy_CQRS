@@ -37,7 +37,7 @@
         <form method="get" class="rounded-2xl bg-white dark:bg-[#251e18] border border-primary/20 p-4 shadow-soft grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
             <div>
                 <label class="text-xs text-gray-500">Sipariş no veya müşteri ara</label>
-                <input type="text" name="searchTerm" value="@Model.SearchTerm" class="mt-1 w-full rounded-lg border-gray-200 dark:bg-white/5" placeholder="ORD, Ahmet..." />
+                <input type="text" name="searchTerm" value="@Model.SearchTerm" class="mt-1 w-full rounded-lg border-gray-200 dark:bg-white/5" placeholder="Sipariş No, İsim..." />
             </div>
             <div>
                 <label class="text-xs text-gray-500">Durum</label>
@@ -89,14 +89,31 @@
                     <tbody class="divide-y divide-gray-100 dark:divide-white/10 text-gray-700 dark:text-gray-200">
                         @if (Model.Orders.Any())
                         {
-                            foreach (var order in Model.Orders)
+                            @foreach (var order in Model.Orders)
                             {
-                                var badgeClass = order.Status switch
+                                var (badgeClass, statusText) = order.Status switch
                                 {
-                                    "Approved" => "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300",
-                                    "Cancelled" => "bg-rose-100 text-rose-700 dark:bg-rose-500/10 dark:text-rose-300",
-                                    _ => "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300"
+                                    "Approved" => (
+                                    "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30",
+                                    "Onaylandı"
+                                    ),
+
+                                    "Cancelled" => (
+                                    "bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300 border border-rose-200 dark:border-rose-500/30",
+                                    "İptal Edildi"
+                                    ),
+
+                                    "Pending" => (
+                                    "bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30",
+                                    "Bekliyor"
+                                    ),
+
+                                    _ => (
+                                    "bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-white border border-gray-200 dark:border-white/10",
+                                    order.Status
+                                    )
                                 };
+
 
                                 <tr>
                                     <td class="px-6 py-4 font-semibold">#@order.OrderNumber</td>
