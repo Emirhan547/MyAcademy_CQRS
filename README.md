@@ -1,6 +1,6 @@
 # 🏗️ Bagery
 
-**Vagery**, ASP.NET Core MVC üzerinde **Clean Architecture (Onion) + CQRS + MediatR** prensipleriyle geliştirilmiş katmanlı bir e-ticaret / bakery yönetim uygulamasıdır.
+**Bagery**, ASP.NET Core MVC üzerinde **Clean Architecture (Onion) + CQRS + MediatR** prensipleriyle geliştirilmiş katmanlı bir e-ticaret / bakery yönetim uygulamasıdır.
 
 Proje; public mağaza deneyimi, kullanıcı akışları, sepet ve sipariş yönetimi ile admin panel içerik yönetimini tek çözüm altında toplar.
 
